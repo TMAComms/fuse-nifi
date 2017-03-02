@@ -28,7 +28,9 @@ VOLUME     /tmac/templates /tmac/archive
 # update config
 RUN mv /nifi/conf/nifi.properties /nifi/conf/nifi.origprops
 RUN mv /nifi/conf/bootstrap.conf /nifi/conf/bootstrap.origconf
+RUN mv /nifi/conf/logback.xml /nifi/conf/logback.origxml
 ADD conf/bootstrap.conf /nifi/conf/bootstrap.conf
+ADD conf/logback.xml /nifi/conf/logback.xml
 ADD conf/nifi.properties /nifi/conf/nifi.properties
 #ADD conf/nifi.properties /tmac/nifi.base
 
@@ -37,7 +39,7 @@ ADD templates/ /tmac/templates/
 WORKDIR    ${NIFI_HOME}
 #RUN        chmod +x ./start_nifi.sh
 EXPOSE 8080
-CMD ["./bin/nifi.sh run"]
+CMD ["sh ./bin/nifi.sh run"]
 
 # For more control, you can copy and build manually
 # FROM golang:latest 

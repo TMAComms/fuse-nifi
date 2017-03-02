@@ -85,10 +85,10 @@
     
     <!-- valid logging levels: TRACE, DEBUG, INFO, WARN, ERROR -->
     
-    <logger name="org.apache.nifi" level="INFO"/>
-    <logger name="org.apache.nifi.processors" level="WARN"/>
+    <logger name="org.apache.nifi" level="DEBUG"/>
+    <logger name="org.apache.nifi.processors" level="INFO"/>
     <logger name="org.apache.nifi.processors.standard.LogAttribute" level="INFO"/>
-    <logger name="org.apache.nifi.controller.repository.StandardProcessSession" level="WARN" />
+    <logger name="org.apache.nifi.controller.repository.StandardProcessSession" level="INFO" />
     
     
     <logger name="org.apache.zookeeper.ClientCnxn" level="ERROR" />
@@ -105,7 +105,7 @@
     <logger name="org.apache.nifi.cluster" level="INFO"/>
 
     <!-- Logger for logging HTTP requests received by the web server. -->
-    <logger name="org.apache.nifi.server.JettyServer" level="INFO"/>
+    <logger name="org.apache.nifi.server.JettyServer" level="DEBUG"/>
 
     <!-- Logger for managing logging statements for jetty -->
     <logger name="org.eclipse.jetty" level="INFO"/>
@@ -126,7 +126,7 @@
     <logger name="org.apache.nifi.web.security" level="INFO" additivity="false">
         <appender-ref ref="USER_FILE"/>
     </logger>
-    <logger name="org.apache.nifi.web.api.config" level="INFO" additivity="false">
+    <logger name="org.apache.nifi.web.api.config" level="DEBUG" additivity="false">
         <appender-ref ref="USER_FILE"/>
     </logger>
     <logger name="org.apache.nifi.authorization" level="INFO" additivity="false">
@@ -143,16 +143,16 @@
     <!--
         Logger for capturing Bootstrap logs and NiFi's standard error and standard out. 
     -->
-    <logger name="org.apache.nifi.bootstrap" level="INFO" additivity="false">
+    <logger name="org.apache.nifi.bootstrap" level="DEBUG" additivity="false">
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
-    <logger name="org.apache.nifi.bootstrap.Command" level="INFO" additivity="false">
+    <logger name="org.apache.nifi.bootstrap.Command" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
 
     <!-- Everything written to NiFi's Standard Out will be logged with the logger org.apache.nifi.StdOut at INFO level -->
-    <logger name="org.apache.nifi.StdOut" level="INFO" additivity="false">
+    <logger name="org.apache.nifi.StdOut" level="DEBUG" additivity="false">
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
     
