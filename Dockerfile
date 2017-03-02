@@ -46,7 +46,11 @@ RUN apt-get clean && rm -rf /downloads/*
 
 RUN  chmod +x /nifi/bin/nifi.sh 
 EXPOSE 8080
-ENTRYPOINT ["/nifi/bin/nifi.sh run"]
+# Run Teiid server and bind to all interface
+CMD ["/bin/sh", "-c", "/nifi/bin/nifi.sh run"]
+
+
+#ENTRYPOINT ["/nifi/bin/nifi.sh run"]
 ##CMD [" run"]
 #entrypoint: "./nifi/bin/nifi.sh run"
 
