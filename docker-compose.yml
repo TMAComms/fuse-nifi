@@ -24,10 +24,11 @@ services:
         - /config/nifi/shared/scriptfiles/:/opt/scriptfiles/
         - /config/nifi/shared/certfiles/:/opt/certfiles/
         #- nifi-datavolume:/config:/config
-#        - /config/nifi/archives/:/tmac/archives/:rw
-#        - /config/nifi/templates/:/tmac/templates/:rw
-   volumes_from: 
-    - nifi-datavolume
+        - /config/nifi/archives/:/tmac/archives/:rw
+        - /config/nifi/templates/:/tmac/templates/:rw
+        - /config/nifi/flow/:/tmac/flow/:rw
+  # volumes_from: 
+ #   - nifi-datavolume
    labels:
        io.rancher.container.hostname_override: "container_name"
        io.rancher.container.pull_image: always
@@ -38,15 +39,17 @@ services:
    privileged: true
    stdin_open: true
    tty: true
-  nifi-datavolume:
-   labels:
-     io.rancher.container.hostname_override: container_name
-     io.rancher.container.start_once: "true"
-   volumes:
-      - /tmac/archives/
-      - /tmac/templates/
-   entrypoint: /bin/true
-   image: tmacomms/fuse-nifi:latest
+
+
+ # nifi-datavolume:
+ #  labels:
+#     io.rancher.container.hostname_override: container_name
+#     io.rancher.container.start_once: "true"
+#   volumes:
+#      - /tmac/archives/
+#      - /tmac/templates/
+   #entrypoint: /bin/true
+##   image: tmacomms/fuse-nifi:latest
 
 
 
