@@ -13,6 +13,7 @@ VOLUME     /tmac/templates /tmac/archive
 # update config
 ADD conf/nifi.properties /opt/nifi/conf/nifi.properties
 ADD conf/nifi.properties /tmac/nifi.base
+ADD templates/ /tmac/templates/
 WORKDIR    ${NIFI_HOME}
 #RUN        chmod +x ./start_nifi.sh
 EXPOSE 8080
