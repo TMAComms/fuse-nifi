@@ -23,7 +23,6 @@ services:
         - /config/nifi/shared/datafiles/:/opt/datafiles/
         - /config/nifi/shared/scriptfiles/:/opt/scriptfiles/
         - /config/nifi/shared/certfiles/:/opt/certfiles/
-        #- nifi-datavolume:/config:/config
         - /config/nifi/archives/:/tmac/archives/:rw
         - /config/nifi/templates/:/tmac/templates/:rw
         - /config/nifi/flow/:/tmac/flow/:rw
