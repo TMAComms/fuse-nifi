@@ -3,7 +3,7 @@ version: '2'
 
 services:
   nifi:
-   image: fuse-nifi:latest
+   image: tmacomms/fuse-nifi:latest
     # image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest
    build:
       context: .
