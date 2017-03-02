@@ -22,17 +22,22 @@ RUN wget http://apache.mirror.amaze.com.au/nifi/1.1.2/nifi-toolkit-1.1.2-bin.tar
 RUN tar -xzvf nifi-1.1.2-bin.tar.gz -C /nifi --strip-components=1
 
 ARG NIFI_HOME
-ENV NIFI_HOME=/opt/nifi
+ENV NIFI_HOME=/nifi
 RUN mkdir /tmac /tmac/templates /tmac/archive
 VOLUME     /tmac/templates /tmac/archive
 # update config
-ADD conf/nifi.properties /opt/nifi/conf/nifi.properties
-ADD conf/nifi.properties /tmac/nifi.base
+RUN mv /nifi/conf/nifi.properties /nifi/conf/nifi.origprops
+RUN mv /nifi/conf/bootstrap.conf /nifi/conf/bootstrap.origconf
+ADD conf/bootstrap.conf /nifi/conf/bootstrap.conf
+ADD conf/nifi.properties /nifi/conf/nifi.properties
+#ADD conf/nifi.properties /tmac/nifi.base
+
+# add sample templates
 ADD templates/ /tmac/templates/
 WORKDIR    ${NIFI_HOME}
 #RUN        chmod +x ./start_nifi.sh
 EXPOSE 8080
-#CMD        ./start_nifi.sh
+CMD ["./bin/nifi.sh run"]
 
 # For more control, you can copy and build manually
 # FROM golang:latest 
