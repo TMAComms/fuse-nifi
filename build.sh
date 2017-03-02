@@ -12,6 +12,7 @@ echo "Setting up base image $tmacFullPath"
 echo "Building image $tmacBaseImage"
 docker build -t $tmacBaseImage .
 
+echo "Tag image $tmacBaseImage"
 docker tag $tmacBaseImage $tmacAzureRegistryPath/$tmacBaseImage
 
 echo "Pushing image to " $tmacFullPath
