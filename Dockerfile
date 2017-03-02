@@ -23,8 +23,8 @@ RUN tar -xzvf nifi-1.1.2-bin.tar.gz -C /nifi --strip-components=1
 
 ARG NIFI_HOME
 ENV NIFI_HOME=/nifi
-RUN mkdir /tmac /tmac/templates /tmac/archive
-VOLUME     /tmac/templates /tmac/archive
+RUN mkdir /tmac /tmac/templates /tmac/archive /tmac/flow
+VOLUME     /tmac/templates /tmac/archive /tmac/flow
 
 #backup config
 RUN mv /nifi/conf/nifi.properties /nifi/conf/nifi.origprops
@@ -38,7 +38,7 @@ ADD conf/nifi.properties /nifi/conf/nifi.properties
 #ADD conf/nifi.properties /tmac/nifi.base
 
 # add sample templates
-ADD templates/ /tmac/templates/
+ADD templates/ /tmac/templates/ 
 WORKDIR  /nifi
 
 # Clean up APT when done.
