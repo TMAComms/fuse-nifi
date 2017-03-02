@@ -37,6 +37,10 @@ ADD conf/nifi.properties /nifi/conf/nifi.properties
 # add sample templates
 ADD templates/ /tmac/templates/
 WORKDIR    ${NIFI_HOME}
+
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /downloads/*
+
 #RUN        chmod +x ./start_nifi.sh
 EXPOSE 8080
 CMD ["sh ./bin/nifi.sh run"]
