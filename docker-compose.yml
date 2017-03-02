@@ -8,7 +8,6 @@ services:
    build:
       context: .
       dockerfile: Dockerfile
-      n
    ports:
       - 8081/tcp
       - 8011:8080/tcp
