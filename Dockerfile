@@ -45,7 +45,7 @@ WORKDIR  /nifi
 RUN apt-get clean && rm -rf /downloads/*
 
 RUN  chmod +x /nifi/bin/nifi.sh 
-EXPOSE 8080
+EXPOSE 8080 8443
 # Run Teiid server and bind to all interface
 CMD ["/bin/sh", "-c", "/nifi/bin/nifi.sh run"]
 

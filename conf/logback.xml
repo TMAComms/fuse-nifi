@@ -86,9 +86,9 @@
     <!-- valid logging levels: TRACE, DEBUG, INFO, WARN, ERROR -->
     
     <logger name="org.apache.nifi" level="DEBUG"/>
-    <logger name="org.apache.nifi.processors" level="INFO"/>
-    <logger name="org.apache.nifi.processors.standard.LogAttribute" level="INFO"/>
-    <logger name="org.apache.nifi.controller.repository.StandardProcessSession" level="INFO" />
+    <logger name="org.apache.nifi.processors" level="DEBUG"/>
+    <logger name="org.apache.nifi.processors.standard.LogAttribute" level="DEBUG"/>
+    <logger name="org.apache.nifi.controller.repository.StandardProcessSession" level="DEBUG" />
     
     
     <logger name="org.apache.zookeeper.ClientCnxn" level="ERROR" />
@@ -96,7 +96,7 @@
     <logger name="org.apache.zookeeper.server.NIOServerCnxnFactory" level="ERROR" />
     <logger name="org.apache.zookeeper.server.quorum" level="ERROR" />
     <logger name="org.apache.zookeeper.ZooKeeper" level="ERROR" />
-    <logger name="org.apache.zookeeper.server.PrepRequestProcessor" level="ERROR" />
+    <logger name="org.apache.zookeeper.server.PrepRequestProcessor" level="DEBUG" />
 
     <logger name="org.apache.curator.framework.recipes.leader.LeaderSelector" level="OFF" />
     <logger name="org.apache.curator.ConnectionState" level="OFF" />
@@ -162,7 +162,7 @@
     </logger>
 
 
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="APP_FILE"/>
     </root>
     
