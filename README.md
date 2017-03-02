@@ -1,29 +1,38 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
 ### What is this repository for? ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Fuse build of nifi docker container
+* Version 1.1.2
 
-### How do I get set up? ###
+## How do I get set up? ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+### Locally 
+** Git clone this repo
+** docker-compose up
 
-### Contribution guidelines ###
+### Via Rancher
+* git clone this repo
+** run ./build.sh which will push this to the registry
+** Use the rancher catalog TMAC - apache-nifi catalog item
 
-* Writing tests
-* Code review
-* Other guidelines
+## Data 
 
-### Who do I talk to? ###
+This image has a lot of data points, refer to your compose file for details
 
-* Repo owner or admin
-* Other community or team contact
+
+        - /logs/nifi:/opt/nifi/logs:rw
+### Used during runtime 
+        - /config/nifi/repos/flowfile_repository/:/opt/nifi/flowfile_repository/
+        - /config/nifi/repos/database_repository/:/opt/nifi/database_repository/
+        - /config/nifi/repos/provenance_repository/:/opt/nifi/provenance_repository/
+        - /config/nifi/repos/content_repository/:/opt/nifi/content_repository/
+### used for artifacts storage (shared)
+        - /config/nifi/shared/datafiles/:/opt/datafiles/
+        - /config/nifi/shared/scriptfiles/:/opt/scriptfiles/
+        - /config/nifi/shared/certfiles/:/opt/certfiles/
+### automatic snapshots of flows 
+        - /config/nifi/archives/:/tmac/archives/:rw
+        - /config/nifi/templates/:/tmac/templates/:rw
+## current flow on ui
+        - /config/nifi/flow/:/tmac/flow/:rw
