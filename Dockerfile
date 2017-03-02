@@ -44,10 +44,18 @@ WORKDIR  /nifi
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /downloads/*
 
+RUN mkdir /etc/service/nifi
+ADD conf/nifiserver.sh /etc/service/nifi/run
+RUN  chmod +x /etc/service/nifi/run
+
 RUN  chmod +x /nifi/bin/nifi.sh 
 EXPOSE 8080 8443
+
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
+
 # Run Teiid server and bind to all interface
-CMD ["/bin/sh", "-c", "/nifi/bin/nifi.sh run"]
+#CMD ["/bin/sh", "-c", "/nifi/bin/nifi.sh run"]
 
 
 #ENTRYPOINT ["/nifi/bin/nifi.sh run"]
