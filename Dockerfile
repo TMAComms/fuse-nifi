@@ -14,7 +14,7 @@ RUN apt-get update && apt-get upgrade -y
 
 
 # Get CrushFTP 7
-RUN mkdir /downloads
+RUN mkdir /downloads /nifi
 WORKDIR /downloads
 
 RUN wget http://apache.mirror.amaze.com.au/nifi/1.1.2/nifi-1.1.2-bin.tar.gz
