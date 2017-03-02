@@ -1,0 +1,11 @@
+
+version: '2'
+
+services:
+  fuse-nifi:
+    image: fuse-nifi:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+        - 8080:8080
