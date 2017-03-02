@@ -2,8 +2,41 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "0.1.0",
-    "command": "echo",
+    "showOutput": "always",
     "isShellCommand": true,
-    "args": ["Hello World"],
-    "showOutput": "always"
+    "showInStatusBar": true,
+    //   "command": "rancher-compose",
+    //   "isShellCommand": true,
+    //   "echoCommand": true,
+    // //    "args": ["--file","${file}","--url ","http://ranch.tmacomms.com:8080/env/1a5/apps/stacks"
+    //   ,"--access-key","6021A1203357FB843FE1","--secret-key","uPx49PYUxG6FrBNqvK7o7d7276J4EPkRmgJxxEdb"
+    //    ],
+    //   "showOutput": "always",
+    // //    "options": {
+    //        "cwd": ""
+    //    },
+    "tasks": [
+        {
+            "command": "rancher-compose",
+            "taskName": "TestStack",
+            "isShellCommand": true,
+            "echoCommand": true,
+            "args": [
+                "--file",
+                "${file}",
+                "--url ",
+                "http://ranch.tmacomms.com:8080/",
+                "--access-key",
+                "6021A1203357FB843FE1",
+                "--secret-key",
+                "uPx49PYUxG6FrBNqvK7o7d7276J4EPkRmgJxxEdb",
+                "--rancher-file",
+                "${fileDirname}\\rancher-compose.yml",
+                "-p",
+                "CITest",
+                "up"
+            ],
+            "showOutput": "always"
+        }
+    ]
 }
