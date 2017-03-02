@@ -11,7 +11,7 @@ ENV NIFI_HOME=/opt/nifi
 RUN mkdir /tmac /tmac/templates /tmac/archive
 VOLUME     /tmac/templates /tmac/archive
 # update config
-COPY conf/nifi.properties ${NIFI_HOME}/conf/nifi.properties
+COPY conf/nifi.properties /opt/nifi/conf/nifi.properties
 WORKDIR    ${NIFI_HOME}
 #RUN        chmod +x ./start_nifi.sh
 EXPOSE 8080

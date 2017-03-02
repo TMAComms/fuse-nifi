@@ -2,24 +2,12 @@
 version: '2'
 
 services:
-  fuse-nifi:
-    image: fuse-nifi:latest
-    build:
+  nifi:
+   image: fuse-nifi:latest
+    # image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest
+   build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - 8080:8080
-
-
-
-      version: '2'
-
-services:
-  nifi:
-   image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest
-   build:
-     context: .
-     dockerfile: Dockerfile
    ports:
       - 8081/tcp
       - 8011:8080/tcp
