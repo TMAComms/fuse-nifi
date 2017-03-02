@@ -25,10 +25,13 @@ ARG NIFI_HOME
 ENV NIFI_HOME=/nifi
 RUN mkdir /tmac /tmac/templates /tmac/archive
 VOLUME     /tmac/templates /tmac/archive
-# update config
+
+#backup config
 RUN mv /nifi/conf/nifi.properties /nifi/conf/nifi.origprops
 RUN mv /nifi/conf/bootstrap.conf /nifi/conf/bootstrap.origconf
 RUN mv /nifi/conf/logback.xml /nifi/conf/logback.origxml
+
+# update config
 ADD conf/bootstrap.conf /nifi/conf/bootstrap.conf
 ADD conf/logback.xml /nifi/conf/logback.xml
 ADD conf/nifi.properties /nifi/conf/nifi.properties
@@ -43,14 +46,7 @@ RUN apt-get clean && rm -rf /downloads/*
 
 #RUN        chmod +x ./start_nifi.sh
 EXPOSE 8080
-CMD ["/nifi/bin/nifi.sh run"]
+ENTRYPOINT ["/nifi/bin/nifi.sh"]
+CMD [" run"]
 
-# For more control, you can copy and build manually
-# FROM golang:latest 
-# LABEL Name=fuse-nifi Version=0.0.1 
-# RUN mkdir /app 
-# ADD . /app/ 
-# WORKDIR /app 
-# RUN go build -o main .
-# EXPOSE 8080 
-# CMD ["/app/main"]
+
