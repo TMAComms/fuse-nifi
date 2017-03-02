@@ -35,7 +35,7 @@ services:
    privileged: true
    stdin_open: true
    tty: true
-   command:  "/nifi/bin/nifi.sh run"
+   
 
 
 
