@@ -43,7 +43,7 @@ RUN apt-get clean && rm -rf /downloads/*
 
 #RUN        chmod +x ./start_nifi.sh
 EXPOSE 8080
-CMD ["sh ./bin/nifi.sh run"]
+CMD ["/nifi/bin/nifi.sh run"]
 
 # For more control, you can copy and build manually
 # FROM golang:latest 
