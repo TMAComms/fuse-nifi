@@ -9,3 +9,62 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:8080
+
+
+
+      version: '2'
+
+services:
+  nifi:
+   image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest
+   build:
+     context: .
+     dockerfile: Dockerfile
+   ports:
+      - 8081/tcp
+      - 8011:8080/tcp
+      - 8443/tcp
+   volumes:
+        #- /tempdata/:/tempdata/:rw
+        #- /config/nifi/config/:/opt/nifi/config/
+        - /logs/nifi:/opt/nifi/logs:rw
+        - /config/nifi/repos/flowfile_repository/:/opt/nifi/flowfile_repository/
+        - /config/nifi/repos/database_repository/:/opt/nifi/database_repository/
+        - /config/nifi/repos/provenance_repository/:/opt/nifi/provenance_repository/
+        - /config/nifi/repos/content_repository/:/opt/nifi/content_repository/
+        - /config/nifi/shared/datafiles/:/opt/datafiles/
+        - /config/nifi/shared/scriptfiles/:/opt/scriptfiles/
+        - /config/nifi/shared/certfiles/:/opt/certfiles/
+        - /config/nifi/archives/:/tmac/archives/:rw
+        - /config/nifi/templates/:/tmac/templates/:rw
+   labels:
+       io.rancher.container.hostname_override: "container_name"
+       io.rancher.container.pull_image: always
+   environment:
+      - CONF_INTERVAL=10
+      - NIFI_HOME=/opt/nifi      
+   restart: always
+   privileged: true
+   stdin_open: true
+   tty: true
+
+
+#  data-nifirepos:
+#   image: busybox
+#   command: /bin/echo
+#   volumes: 
+#     - nifi-repos:/opt/nifi/flowfile_repository
+#     - nifi-repos:/opt/nifi/database_repository
+#     - nifi-repos:/opt/nifi/provenance_repository
+##     - nifi-repos:/opt/nifi/content_repository
+
+#  data-userconfig:
+#   image: busybox
+#   command: /bin/echo
+#   volumes:
+#     - nifi-userconfig:/opt/datafiles
+#     - nifi-userconfig:/opt/scriptfiles
+#     - nifi-userconfig:/opt/certfiles
+
+  
+    
