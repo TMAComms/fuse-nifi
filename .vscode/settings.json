@@ -3,5 +3,8 @@
     "files.autoSave": "afterDelay",
     "workbench.editor.showTabs": true,
     "workbench.editor.showIcons": true,
-    "workbench.statusBar.visible": true
+    "workbench.statusBar.visible": true,
+    "docker.enableLinting": true,
+    "docker.defaultRegistryPath": "tmacomms",
+    "docker.defaultRegistry": "tmacregistry-tmacomms.azurecr.io"
 }
