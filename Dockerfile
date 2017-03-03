@@ -31,11 +31,7 @@ RUN mv /nifi/conf/nifi.properties /nifi/conf/nifi.origprops
 RUN mv /nifi/conf/bootstrap.conf /nifi/conf/bootstrap.origconf
 RUN mv /nifi/conf/logback.xml /nifi/conf/logback.origxml
 
-# update config
-ADD conf/bootstrap.conf /nifi/conf/bootstrap.conf
-ADD conf/logback.xml /nifi/conf/logback.xml
-ADD conf/nifi.properties /nifi/conf/nifi.properties
-#ADD conf/nifi.properties /tmac/nifi.base
+
 
 # add sample templates
 ADD templates/ /tmac/templates/ 
@@ -50,6 +46,12 @@ RUN  chmod +x /etc/service/nifi/run
 
 RUN  chmod +x /nifi/bin/nifi.sh 
 EXPOSE 8080 8443
+
+# update config
+ADD conf/bootstrap.conf /nifi/conf/bootstrap.conf
+ADD conf/logback.xml /nifi/conf/logback.xml
+ADD conf/nifi.properties /nifi/conf/nifi.properties
+#ADD conf/nifi.properties /tmac/nifi.base
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
