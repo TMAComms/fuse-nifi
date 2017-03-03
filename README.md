@@ -19,14 +19,8 @@
 ## Data 
 
 This image has a lot of data points, refer to your compose file for details
-
-
         - /logs/nifi:/opt/nifi/logs:rw
-### Used during runtime 
-        - /config/nifi/repos/flowfile_repository/:/opt/nifi/flowfile_repository/
-        - /config/nifi/repos/database_repository/:/opt/nifi/database_repository/
-        - /config/nifi/repos/provenance_repository/:/opt/nifi/provenance_repository/
-        - /config/nifi/repos/content_repository/:/opt/nifi/content_repository/
+
 ### used for artifacts storage (shared)
         - /config/nifi/shared/datafiles/:/opt/datafiles/
         - /config/nifi/shared/scriptfiles/:/opt/scriptfiles/
@@ -36,3 +30,10 @@ This image has a lot of data points, refer to your compose file for details
         - /config/nifi/templates/:/tmac/templates/:rw
 ### current flow on ui
         - /config/nifi/flow/:/tmac/flow/:rw
+
+
+### Used during runtime (not stored in shared config)  - No longer in use
+- /config/nifi/repos/flowfile_repository/:/opt/nifi/flowfile_repository/
+- /config/nifi/repos/database_repository/:/opt/nifi/database_repository/
+- /config/nifi/repos/provenance_repository/:/opt/nifi/provenance_repository/
+- /config/nifi/repos/content_repository/:/opt/nifi/content_repository/
