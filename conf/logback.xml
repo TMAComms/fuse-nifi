@@ -162,7 +162,7 @@
     </logger>
 
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="APP_FILE"/>
     </root>
     
