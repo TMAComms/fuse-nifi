@@ -41,6 +41,7 @@ WORKDIR  /nifi
 RUN apt-get clean && rm -rf /downloads/*
 
 RUN mkdir /etc/service/nifi
+RUN mkdir /ssl
 ADD conf/nifiserver.sh /etc/service/nifi/run
 RUN  chmod +x /etc/service/nifi/run
 
@@ -50,6 +51,7 @@ EXPOSE 8080 8443
 # update config
 ADD conf/bootstrap.conf /nifi/conf/bootstrap.conf
 ADD conf/logback.xml /nifi/conf/logback.xml
+ADD conf/ssl/* /ssl/
 ADD conf/nifi.properties /nifi/conf/nifi.properties
 #ADD conf/nifi.properties /tmac/nifi.base
 
