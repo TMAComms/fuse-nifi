@@ -1,0 +1,34 @@
+# This is a sample build configuration for Docker.
+# Check our guides at https://confluence.atlassian.com/x/O1toN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+# image: atlassian/default-image:latest
+
+# enable Docker for your repository
+options:
+  docker: true
+#image: maven:3.3.9
+
+pipelines:
+  default:
+    - step:
+        script: # Modify the commands below to build your repository.
+          - mvn -B verify # -B batch mode makes Maven less verbose
+          - ls -l target
+          - export IMAGE_NAME=tmacomms/fuse-nifi:latest
+          - export tmacAzureRegistryPath=tmacregistry-tmacomms.azurecr.io
+          #tmacommsyour-Dockerhub-account/your-docker-image-name:$BITBUCKET_COMMIT
+          # build the Docker image (this will use the Dockerfile in the root of the repo)
+          - docker login tmacregistry-tmacomms.azurecr.io -u tmacregistry -p mCsU/6AXX+SsTt79hqT=NZW1KDpjWdVk
+          #- docker pull tmacregistry-tmacomms.azurecr.io/tmacomms/basejdk8:latest
+          - docker build -t $IMAGE_NAME .
+          - export FULLIMAGE_NAME=$tmacAzureRegistryPath/$IMAGE_NAME   
+          - docker tag $IMAGE_NAME $FULLIMAGE_NAME
+          # In order to authenticate with the Docker Hub registry, you'll need
+          # to configure $DOCKER_HUB_USERNAME and $DOCKER_HUB_PASSWORD as environment variables
+          # in your repository settings.
+          #- docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+          # push the new Docker image to the Docker registry
+          - docker push $FULLIMAGE_NAME
+          

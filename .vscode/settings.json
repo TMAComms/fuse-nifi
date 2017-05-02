@@ -6,5 +6,12 @@
     "workbench.statusBar.visible": true,
     "docker.enableLinting": true,
     "docker.defaultRegistryPath": "tmacomms",
-    "docker.defaultRegistry": "tmacregistry-tmacomms.azurecr.io"
+    "docker.defaultRegistry": "tmacregistry-tmacomms.azurecr.io",
+
+    "pipelines.username": "andreipapay",
+    "pipelines.password": "Jt74YbDzMAwRRF4k9TrA",
+    "pipelines.repository": "https://bitbucket.org/tmacomms/fuse-nifi/",
+    "pipelines.notificationsForBuildResults": false
+
+
 }

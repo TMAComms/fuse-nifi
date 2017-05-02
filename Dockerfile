@@ -1,4 +1,4 @@
-FROM tmacomms/basejdk8
+FROM tmacregistry-tmacomms.azurecr.io/tmacomms/basejdk8:latest
 LABEL Name=fuse-nifi Version=1.1.2
 MAINTAINER Andrei <andrei@tmacomms.com>
 ENV        BANNER_TEXT="" \
