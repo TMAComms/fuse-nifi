@@ -8,12 +8,16 @@
 # enable Docker for your repository
 options:
   docker: true
+<<<<<<< HEAD
 #image: maven:3.3.9
+=======
+>>>>>>> a50e256b1203471a6ce4e3ec921d263b6c1174b4
 
 pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
+<<<<<<< HEAD
           - mvn -B verify # -B batch mode makes Maven less verbose
           - ls -l target
           - export IMAGE_NAME=tmacomms/fuse-nifi:latest
@@ -32,3 +36,14 @@ pipelines:
           # push the new Docker image to the Docker registry
           - docker push $FULLIMAGE_NAME
           
+=======
+          # Set $DOCKER_HUB_USERNAME and $DOCKER_HUB_PASSWORD as environment variables in repository settings
+          - export IMAGE_NAME=your-Dockerhub-account/your-docker-image-name:$BITBUCKET_COMMIT
+
+          # build the Docker image (this will use the Dockerfile in the root of the repo)
+          - docker build -t $IMAGE_NAME .
+          # authenticate with the Docker Hub registry
+          - docker login --username $DOCKER_HUB_USERNAME --password $DOCKER_HUB_PASSWORD
+          # push the new Docker image to the Docker registry
+          - docker push $IMAGE_NAME
+>>>>>>> a50e256b1203471a6ce4e3ec921d263b6c1174b4
