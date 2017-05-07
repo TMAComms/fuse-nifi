@@ -17,9 +17,8 @@ RUN apt-get update && apt-get upgrade -y
 RUN mkdir /downloads /nifi
 WORKDIR /downloads
 
-RUN wget http://apache.mirror.amaze.com.au/nifi/1.1.2/nifi-1.1.2-bin.tar.gz
-RUN wget http://apache.mirror.amaze.com.au/nifi/1.1.2/nifi-toolkit-1.1.2-bin.tar.gz
-RUN tar -xzvf nifi-1.1.2-bin.tar.gz -C /nifi --strip-components=1
+RUN wget http://apache.mirror.amaze.com.au/nifi/1.1.2/nifi-1.1.2-bin.tar.gz && wget http://apache.mirror.amaze.com.au/nifi/1.1.2/nifi-toolkit-1.1.2-bin.tar.gz && tar -xzvf nifi-1.1.2-bin.tar.gz -C /nifi --strip-components=1 && rm -rf /downloads/*
+
 
 ARG NIFI_HOME
 ENV NIFI_HOME=/nifi
