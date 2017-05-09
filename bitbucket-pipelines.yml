@@ -14,7 +14,7 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - ls -l 
-          - export IMAGE_NAME=tmacomms/fuse-nifi:$BITBUCKET_COMMIT
+          - export IMAGE_NAME=tmacomms/fuse-nifi:latest
           - export tmacAzureRegistryPath=tmacregistry-tmacomms.azurecr.io
           #tmacommsyour-Dockerhub-account/your-docker-image-name:$BITBUCKET_COMMIT
           # build the Docker image (this will use the Dockerfile in the root of the repo)
