@@ -31,6 +31,12 @@ This image has a lot of data points, refer to your compose file for details
 ### current flow on ui
         - /config/nifi/flow/:/tmac/flow/:rw
 
+# provenance storage of data
+Store or 6 weeks, configured in nifi.properties 
+n docker image its located in /tmac/provenance_repository
+
+        - /config/nifi/provenance_repository/:/tmac/provenance_repository/:rw
+
 
 ### Used during runtime (not stored in shared config)  - No longer in use
 - /config/nifi/repos/flowfile_repository/:/opt/nifi/flowfile_repository/
