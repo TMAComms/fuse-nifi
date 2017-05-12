@@ -1,10 +1,10 @@
 FROM tmacregistry-tmacomms.azurecr.io/tmacomms/basejdk8:latest
-LABEL Name=fuse-nifi Version=1.1.2
+LABEL Name=fuse-nifi Version=1.2.0
 MAINTAINER Andrei <andrei@tmacomms.com>
 ENV        BANNER_TEXT="" \
            S2S_PORT=""
 #COPY       start_nifi.sh /${NIFI_HOME}/
-#FROM xemuliam/nifi-base:1.1.2
+#FROM xemuliam/nifi-base:1.2.0
 
 # CrushFTP requires root
 #  tmacregistry-tmacomms.azurecr.io/tmacomms/basejdk8
@@ -17,7 +17,7 @@ RUN apt-get update && apt-get upgrade -y
 RUN mkdir /downloads /nifi
 WORKDIR /downloads
 
-RUN wget http://apache.mirror.amaze.com.au/nifi/1.1.2/nifi-1.1.2-bin.tar.gz && wget http://apache.mirror.amaze.com.au/nifi/1.1.2/nifi-toolkit-1.1.2-bin.tar.gz && tar -xzvf nifi-1.1.2-bin.tar.gz -C /nifi --strip-components=1 && rm -rf /downloads/*
+RUN wget https://www.apache.org/dyn/closer.lua?path=/nifi/1.2.0/nifi-1.2.0-bin.tar.gz && wget https://www.apache.org/dyn/closer.lua?path=/nifi/1.2.0/nifi-toolkit-1.2.0-bin.tar.gz && tar -xzvf nifi-toolkit-1.2.0-bin.tar.gz -C /nifi --strip-components=1 && rm -rf /downloads/*
 
 
 ARG NIFI_HOME
