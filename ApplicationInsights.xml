@@ -3,7 +3,7 @@
 <ApplicationInsights 
     xmlns="http://schemas.microsoft.com/ApplicationInsights/2013/Settings" schemaVersion="2014-05-30">
     <!-- The key from the portal: -->
-    <InstrumentationKey>1f26f3d4-df01-411d-bc88-2e4681cc9b18</InstrumentationKey>
+    <InstrumentationKey>c7ae3c50-d9e1-42ec-83c2-e7e3680eef88</InstrumentationKey>
     <!-- HTTP request component (not required for bare API) -->
     <TelemetryModules>
         <Add type="com.microsoft.applicationinsights.web.extensibility.modules.WebRequestTrackingTelemetryModule"/>
@@ -18,5 +18,6 @@
         <Add type="com.microsoft.applicationinsights.web.extensibility.initializers.WebSessionTelemetryInitializer"/>
         <Add type="com.microsoft.applicationinsights.web.extensibility.initializers.WebUserTelemetryInitializer"/>
         <Add type="com.microsoft.applicationinsights.web.extensibility.initializers.WebUserAgentTelemetryInitializer"/>
+        <Add type="com.microsoft.applicationinsights.extensibility.initializer.docker.DockerContextInitializer"/>
     </TelemetryInitializers>
 </ApplicationInsights>
