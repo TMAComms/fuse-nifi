@@ -13,15 +13,9 @@ services:
       - 8011:8080/tcp
       - 8443/tcp
    volumes:
-        #- /tempdata/:/tempdata/:rw
-        #- /config/nifi/config/:/opt/nifi/config/
-        - /logs/nifi:/opt/nifi/logs:rw
-        - /config/nifi/shared/datafiles/:/opt/datafiles/
-        - /config/nifi/shared/scriptfiles/:/opt/scriptfiles/
-        - /config/nifi/shared/certfiles/:/opt/certfiles/
-        - /config/nifi/archives/:/tmac/archives/:rw
-        - /config/nifi/templates/:/tmac/templates/:rw
-        - /config/nifi/flow/:/tmac/flow/:rw
+      - /datadrive/logs/nifi:/opt/nifi/logs:rw
+      - /datadrive/nifi/shared/:/opt/:rw
+      - /datadrive/nifi/working/:/tmac/:rw
   # volumes_from: 
  #   - nifi-datavolume
    labels:
