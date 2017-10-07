@@ -16,8 +16,6 @@ services:
       - /datadrive/logs/nifi:/opt/nifi/logs:rw
       - /datadrive/nifi/shared/:/opt/:rw
       - /datadrive/nifi/working/:/tmac/:rw
-  # volumes_from: 
- #   - nifi-datavolume
    labels:
        io.rancher.container.hostname_override: "container_name"
        io.rancher.container.pull_image: always
@@ -28,7 +26,21 @@ services:
    privileged: true
    stdin_open: true
    tty: true
+  schemaRegistry:
+   image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-schemaregistry:latest
+   stdin_open: true
+   restart: on-failure   
+   tty: true
+   expose: 
+   - 9090/tcp
+#   ports:
+#    - 9090:9090/tcp
+   labels:
+      io.rancher.container.pull_image: always
 
+
+  # volumes_from: 
+ #   - nifi-datavolume
 
  # nifi-datavolume:
  #  labels:

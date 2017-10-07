@@ -1,0 +1,12 @@
+*.retry
+.DS_Store
+._*
+.vagrant
+*~
+*.retry
+.vs/slnx.sqlite
+boxes/centos/.vagrant
+*.vhd
+*.avhd
+boxes/centos/gofabric8
+boxes/centos/oc
