@@ -1,0 +1,26 @@
+
+version: '2'
+
+services:
+ nifi:
+  image: fuse-nifi:dev
+  build:
+      context: .
+      dockerfile: Dockerfile.base
+  ports:
+      - 8443/tcp
+      - 8011:8080/tcp
+  restart: always
+  privileged: true
+  stdin_open: true
+  tty: true
+
+    #nifi-datavolume:
+ #  labels:
+#     io.rancher.container.hostname_override: container_name
+#     io.rancher.container.start_once: "true"
+#   volumes:
+#      - /tmac/archives/
+#      - /tmac/templates/
+
+--restart unless-stopped

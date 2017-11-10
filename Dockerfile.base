@@ -1,0 +1,19 @@
+FROM apache/nifi:1.4.0
+LABEL Name=fuse-nifi Version=1.4.0
+MAINTAINER Andrei <andrei@tmacomms.com>
+ENV        BANNER_TEXT="" \
+           S2S_PORT=""
+#FROM openjdk:8-jre
+USER root
+RUN echo 'Acquire::HTTP::Proxy "http://squid.tmacomms.com:3128";' >> /etc/apt/apt.conf.d/01proxy \
+ && echo 'Acquire::HTTPS::Proxy "";' >> /etc/apt/apt.conf.d/01proxy
+
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get update && \
+    apt-get install -y software-properties-common unzip tar zip sudo wget curl && apt-get update && \
+    apt-get install -y git mercurial apt-transport-https ca-certificates git
+
+RUN mkdir /downloads /nifi
+WORKDIR /downloads
+USER nifi
+

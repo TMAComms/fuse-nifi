@@ -23,7 +23,7 @@ services:
        io.rancher.container.pull_image: always
    environment:
       - CONF_INTERVAL=10
-      - NIFI_HOME=/opt/nifi      
+      - EVSENVIRONMENT=development      
    restart: always
    privileged: true
    stdin_open: true
