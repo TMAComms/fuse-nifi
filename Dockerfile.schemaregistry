@@ -1,0 +1,37 @@
+FROM openjdk:8-jre
+LABEL Name=fuse-schemaregistry Version=0.3
+MAINTAINER Andrei <andrei@tmacomms.com>
+ENV        BANNER_TEXT="" \
+           S2S_PORT=""
+ENV REGISTRY_HOME=/schema-registry
+#COPY       start_nifi.sh /${NIFI_HOME}/
+#FROM xemuliam/nifi-base:1.1.2
+
+USER root
+RUN apt-get update && apt-get upgrade -y
+
+
+# Get CrushFTP 7
+RUN mkdir /downloads /schema-registry
+WORKDIR /downloads
+
+RUN wget https://github.com/hortonworks/registry/releases/download/v0.3.0/hortonworks-registry-0.3.0.tar.gz  && tar -xzvf hortonworks-registry-0.3.0.tar.gz -C $REGISTRY_HOME --strip-components=1 && rm -rf /downloads/*
+
+RUN cp $REGISTRY_HOME/conf/registry.yaml.inmemory.example $REGISTRY_HOME/conf/registry.yaml     
+
+# start the server in fore-ground  
+# To start in daemon mode    
+# sudo  $REGISTRY_HOME/bin/registry start
+
+
+COPY src/myinit.sh /sbin/my_init.sh
+RUN  chmod +x /sbin/my_init.sh
+
+EXPOSE 9090
+
+
+# Use baseimage-docker's init system.
+CMD ["/schema-registry/bin/registry-server-start.sh","/schema-registry/conf/registry.yaml"]
+#/sbin/my_init
+
+#exec "$REGISTRY_HOME/bin/registry-server-start.sh $REGISTRY_HOME/conf/registry.yaml"

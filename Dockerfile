@@ -4,10 +4,20 @@ LABEL Name=fuse-nifi Version=1.4.0
 MAINTAINER Andrei <andrei@tmacomms.com>
 ENV        BANNER_TEXT="" \
            S2S_PORT=""
-#FROM openjdk:8-jre
-RUN echo 'Acquire::HTTP::Proxy "http://squid.tmacomms.com:3128";' >> /etc/apt/apt.conf.d/01proxy \
- && echo 'Acquire::HTTPS::Proxy "";' >> /etc/apt/apt.conf.d/01proxy
 USER root
+
+RUN wget -S -nc -progress=dot -O /usr/local/share/ca-certificates/tmac-devops.crt  https://caddy.tmacomms.com/myca.crt
+#RUN mkdir /usr/share/ca-certificates/tmacomms -p && chmod -R 0755 /usr/share/ca-certificates/tmacomms 
+
+ENV http_proxy="http://squid.tmacomms.com:3128"
+ENV https_proxy="http://squid.tmacomms.com:3128"
+ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
+
+
+RUN apt-get update &&   apt-get install -y apt-transport-https ca-certificates 
+RUN update-ca-certificates
+
+
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get update && \
     apt-get install -y software-properties-common unzip tar zip sudo wget curl && apt-get update && \

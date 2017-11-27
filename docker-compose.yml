@@ -1,13 +1,14 @@
 
-version: '2'
+version: '3.2'
 
 services:
   nifi:
-   image: tmacomms/fuse-nifi:latest
-    # image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest
+   image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest
    build:
       context: .
       dockerfile: Dockerfile
+      cache_from:
+       - openjdk:8-jre        
    ports:
       - 8081/tcp
       - 8011:8080/tcp
@@ -26,51 +27,19 @@ services:
    privileged: true
    stdin_open: true
    tty: true
-  schemaRegistry:
+   links:   
+    - schemaregistry:registry
+  schemaregistry:
    image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-schemaregistry:latest
+   build:
+    context: .
+    dockerfile: Dockerfile.schemaregistry
+    cache_from:
+     - openjdk:8-jre    
    stdin_open: true
    restart: on-failure   
    tty: true
    expose: 
    - 9090/tcp
-#   ports:
-#    - 9090:9090/tcp
    labels:
       io.rancher.container.pull_image: always
-
-
-  # volumes_from: 
- #   - nifi-datavolume
-
- # nifi-datavolume:
- #  labels:
-#     io.rancher.container.hostname_override: container_name
-#     io.rancher.container.start_once: "true"
-#   volumes:
-#      - /tmac/archives/
-#      - /tmac/templates/
-   #entrypoint: /bin/true
-##   image: tmacomms/fuse-nifi:latest
-
-
-
-
-#  data-nifirepos:
-#   image: busybox
-#   command: /bin/echo
-#   volumes: 
-#     - nifi-repos:/opt/nifi/flowfile_repository
-#     - nifi-repos:/opt/nifi/database_repository
-#     - nifi-repos:/opt/nifi/provenance_repository
-##     - nifi-repos:/opt/nifi/content_repository
-
-#  data-userconfig:
-#   image: busybox
-#   command: /bin/echo
-#   volumes:
-#     - nifi-userconfig:/opt/datafiles
-#     - nifi-userconfig:/opt/scriptfiles
-#     - nifi-userconfig:/opt/certfiles
-
-  
-    
