@@ -6,22 +6,19 @@ ENV        BANNER_TEXT="" \
            S2S_PORT=""
 USER root
 
-RUN wget -S -nc -progress=dot -O /usr/local/share/ca-certificates/tmac-devops.crt  https://caddy.tmacomms.com/myca.crt
-#RUN mkdir /usr/share/ca-certificates/tmacomms -p && chmod -R 0755 /usr/share/ca-certificates/tmacomms 
+#RUN wget -S -nc -progress=dot -O /usr/local/share/ca-certificates/tmac-devops.crt  https://caddy.tmacomms.com/myca.crt
 
-ENV http_proxy="http://squid.tmacomms.com:3128"
-ENV https_proxy="http://squid.tmacomms.com:3128"
-ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
+#ENV http_proxy="http://squid.tmacomms.com:3128"
+#ENV https_proxy="http://squid.tmacomms.com:3128"
+#ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
 
 
-RUN apt-get update &&   apt-get install -y apt-transport-https ca-certificates 
+RUN apt-get update &&   apt-get install -y apt-transport-https ca-certificates wget 
 RUN update-ca-certificates
 
-
-RUN apt-get update && apt-get upgrade -y
 RUN apt-get update && \
     apt-get install -y software-properties-common unzip tar zip sudo wget curl && apt-get update && \
-    apt-get install -y git mercurial apt-transport-https ca-certificates git
+    apt-get install -y git mercurial apt-transport-https ca-certificates git nano 
 
 # Get CrushFTP 7
 RUN mkdir -m 0755 /downloads /nifi/ /tmac/templates /tmac/archive /tmac/flow /etc/service/nifi  /ssl /download/baseconfig/ -p 
@@ -54,12 +51,12 @@ RUN groupadd -g $GID nifi || groupmod -n nifi `getent group $GID | cut -d: -f1` 
 #RUN curl -fSL $MIRROR/$NIFI_BINARY_URL -o $NIFI_BASE_DIR/nifi-$NIFI_VERSION-bin.tar.gz \
 #    && echo "$(curl https://archive.apache.org/dist/$NIFI_BINARY_URL.sha256) *$NIFI_BASE_DIR/nifi-$NIFI_VERSION-bin.tar.gz" | sha256sum -c - \
 #    && 
-
+RUN wget -O /downloads/nifi-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-1.4.0-bin.tar.gz
+RUN wget -O /downloads/nifi-toolkit-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz
 USER nifi
-ADD artifcats/  /downloads/
+ADD artifacts/  /downloads/
 RUN ls -l
-RUN  tar -xvzf /downloads/nifi-$NIFI_VERSION-bin.tar.gz -C $NIFI_BASE_DIR 
-
+RUN tar -xvzf /downloads/nifi-$NIFI_VERSION-bin.tar.gz -C $NIFI_BASE_DIR 
 
 #RUN wget http://apache.mirror.digitalpacific.com.au/$NIFI_TOOLKIT_URL -O /downloads/nifi-toolkit-$NIFI_VERSION-bin.tar.gz 
 #RUN   
@@ -88,10 +85,10 @@ RUN rm -rf /downloads/*
 
 
 # update config
-ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
-ADD conf/logback.xml /nifi/conf/logback.xml
-ADD conf/ssl/* /ssl/
-ADD conf/nifi.properties $NIFI_HOME/conf/nifi.properties
+ADD config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
+ADD config/nifi/logback.xml /nifi/conf/logback.xml
+ADD config/ssl/* /ssl/
+ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
 #ADD conf/nifi.properties /tmac/nifi.base
 
 #ADD conf/nifiserver.sh /etc/service/nifi/run
@@ -117,12 +114,4 @@ EXPOSE 8080 8181
 
 # Run Teiid server and bind to all interface
 CMD ["/bin/sh", "-c", "$NIFI_HOME/bin/nifi.sh run"]
-#ENTRYPOINT ["bin/nifi.sh"]
-#CMD ["run"]
-#CMD ["bash"]
-#ENTRYPOINT ["./bin/nifi.sh run"]
-##CMD [" run"]
-#entrypoint: "./nifi/bin/nifi.sh run"
 
-# Define default command.
-#CMD ["/sbin/my_init", "/bin/bash"]
