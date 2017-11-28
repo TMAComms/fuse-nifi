@@ -65,9 +65,7 @@ RUN tar -xvzf /downloads/nifi-$NIFI_VERSION-bin.tar.gz -C $NIFI_BASE_DIR
 
 # backup config
 
-
-
-RUN mkdir /download/baseconfig -p && cp $NIFI_HOME/conf/* /download/baseconfig
+RUN sudo mkdir /download/baseconfig -p && sudo cp $NIFI_HOME/conf/* /download/baseconfig
 
 # add sample templates
 ADD templates/ /tmac/templates/ 
