@@ -49,11 +49,15 @@ RUN groupadd -g $GID nifi || groupmod -n nifi `getent group $GID | cut -d: -f1` 
 #RUN curl -fSL $MIRROR/$NIFI_BINARY_URL -o $NIFI_BASE_DIR/nifi-$NIFI_VERSION-bin.tar.gz \
 #    && echo "$(curl https://archive.apache.org/dist/$NIFI_BINARY_URL.sha256) *$NIFI_BASE_DIR/nifi-$NIFI_VERSION-bin.tar.gz" | sha256sum -c - \
 #    && && tar -xzvf nifi-1.4.0-bin.tar.gz -C /nifi --strip-components=1 && rm -rf /downloads/*
-RUN wget -N --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-1.4.0-bin.tar.gz && tar -xzvf /downloads/nifi-1.4.0-bin.tar.gz -C /nifi --strip-components=1 && rm -rf /downloads/*
+RUN wget -N --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-1.4.0-bin.tar.gz 
+RUN tar -xzvf /downloads/nifi-1.4.0-bin.tar.gz -C /nifi --strip-components=1 
+
+# && rm -rf /downloads/*
 RUN wget -N --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-toolkit-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz
 #USER nifi
-ADD artifacts/  /downloads/
 RUN ls -l
+RUN ls -l /nifi 
+
 #RUN tar -xvzf /downloads/nifi-$NIFI_VERSION-bin.tar.gz -C $NIFI_BASE_DIR 
 # backup base conifg
 RUN sudo cp -r $NIFI_HOME/conf/* /download/baseconfig
@@ -77,7 +81,7 @@ ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
 
 
 RUN ls -l  $NIFI_HOME
-RUN chmod +x $NIFI_HOME/bin/nifi.sh 
+#RUN chmod +x $NIFI_HOME/bin/nifi.sh 
 
 VOLUME /tmac/templates /tmac/archive /tmac/flow
 WORKDIR $NIFI_HOME
