@@ -76,7 +76,11 @@ detectOS() {
             darwin=true
             ;;
     esac
-
+    # For AIX, set an environment variable
+    if ${aix}; then
+         export LDR_CNTRL=MAXDATA=0xB0000000@DSA
+         echo ${LDR_CNTRL}
+    fi
     # In addition to those, go around the linux space and query the widely
     # adopted /etc/os-release to detect linux variants
     if [ -f /etc/os-release ]

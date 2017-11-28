@@ -21,7 +21,7 @@
     
     <appender name="APP_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${org.apache.nifi.bootstrap.config.log.dir}/nifi-app.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!--
               For daily rollover, use 'app_%d.log'.
               For hourly rollover, use 'app_%d{yyyy-MM-dd_HH}.log'.
@@ -29,15 +29,13 @@
               To ZIP rolled files, replace '.log' with '.log.zip'.
             -->
             <fileNamePattern>${org.apache.nifi.bootstrap.config.log.dir}/nifi-app_%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>100MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxFileSize>100MB</maxFileSize>
             <!-- keep 30 log files worth of history -->
             <maxHistory>30</maxHistory>
         </rollingPolicy>
+        <immediateFlush>true</immediateFlush>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>%date %level [%thread] %logger{40} %msg%n</pattern>
-            <immediateFlush>true</immediateFlush>
         </encoder>
     </appender>
     
@@ -86,9 +84,10 @@
     <!-- valid logging levels: TRACE, DEBUG, INFO, WARN, ERROR -->
     
     <logger name="org.apache.nifi" level="INFO"/>
-    <logger name="org.apache.nifi.processors" level="INFO"/>
+    <logger name="org.apache.nifi.processors" level="WARN"/>
     <logger name="org.apache.nifi.processors.standard.LogAttribute" level="INFO"/>
-    <logger name="org.apache.nifi.controller.repository.StandardProcessSession" level="INFO" />
+    <logger name="org.apache.nifi.processors.standard.LogMessage" level="INFO"/>
+    <logger name="org.apache.nifi.controller.repository.StandardProcessSession" level="WARN" />
     
     
     <logger name="org.apache.zookeeper.ClientCnxn" level="ERROR" />
@@ -96,7 +95,9 @@
     <logger name="org.apache.zookeeper.server.NIOServerCnxnFactory" level="ERROR" />
     <logger name="org.apache.zookeeper.server.quorum" level="ERROR" />
     <logger name="org.apache.zookeeper.ZooKeeper" level="ERROR" />
-    <logger name="org.apache.zookeeper.server.PrepRequestProcessor" level="INFO" />
+    <logger name="org.apache.zookeeper.server.PrepRequestProcessor" level="ERROR" />
+
+    <logger name="org.apache.calcite.runtime.CalciteException" level="OFF" />
 
     <logger name="org.apache.curator.framework.recipes.leader.LeaderSelector" level="OFF" />
     <logger name="org.apache.curator.ConnectionState" level="OFF" />
@@ -105,7 +106,7 @@
     <logger name="org.apache.nifi.cluster" level="INFO"/>
 
     <!-- Logger for logging HTTP requests received by the web server. -->
-    <logger name="org.apache.nifi.server.JettyServer" level="INFO" />
+    <logger name="org.apache.nifi.server.JettyServer" level="INFO"/>
 
     <!-- Logger for managing logging statements for jetty -->
     <logger name="org.eclipse.jetty" level="INFO"/>
@@ -143,10 +144,10 @@
     <!--
         Logger for capturing Bootstrap logs and NiFi's standard error and standard out. 
     -->
-    <logger name="org.apache.nifi.bootstrap" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.bootstrap" level="INFO" additivity="false">
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
-    <logger name="org.apache.nifi.bootstrap.Command" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.bootstrap.Command" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
@@ -157,7 +158,7 @@
     </logger>
     
     <!-- Everything written to NiFi's Standard Error will be logged with the logger org.apache.nifi.StdErr at ERROR level -->
-    <logger name="org.apache.nifi.StdErr" level="INFO" additivity="false">
+    <logger name="org.apache.nifi.StdErr" level="ERROR" additivity="false">
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
 

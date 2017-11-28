@@ -12,7 +12,6 @@ services:
    ports:
       - 8081/tcp
       - 8011:8080/tcp
-      - 8443/tcp
    volumes:
       - /datadrive/logs/nifi:/opt/nifi/logs:rw
       - /datadrive/nifi/shared/:/opt/:rw
