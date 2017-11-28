@@ -67,8 +67,7 @@ RUN tar -xvzf /downloads/nifi-$NIFI_VERSION-bin.tar.gz -C $NIFI_BASE_DIR
 
 
 
-#RUN cp  /nifi/conf/* /download/baseconfig/
-
+RUN mkdir /download/baseconfig -p && cp $NIFI_HOME/conf/* /download/baseconfig
 
 # add sample templates
 ADD templates/ /tmac/templates/ 
@@ -76,10 +75,7 @@ WORKDIR  /nifi
 
 # Clean up APT when done.
 #RUN sudo apt-get clean && rm -rf /downloads/*
-RUN rm -rf /downloads/*
-
-
-
+RUN rm -rf /downloads/nifi*
 
 # update config
 ADD config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
@@ -88,27 +84,19 @@ ADD config/ssl/* /ssl/
 ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
 #ADD conf/nifi.properties /tmac/nifi.base
 
-#ADD conf/nifiserver.sh /etc/service/nifi/run
-#RUN chmod +x /etc/service/nifi/run
+
 RUN ls -l  $NIFI_HOME
-#RUN chmod +x $NIFI_HOME/bin/nifi.sh 
+RUN chmod +x $NIFI_HOME/bin/nifi.sh 
 
-#D:\bb\fuse\fuse-nifi\conf\nifi..properties
-
-# Use baseimage-docker's init system.
-#CMD ["/sbin/my_init"]
-VOLUME     /tmac/templates /tmac/archive /tmac/flow
+VOLUME /tmac/templates /tmac/archive /tmac/flow
 WORKDIR $NIFI_HOME
 #USER nifi
 
-#/etc/service/nifi
 
 # Web HTTP Port & Remote Site-to-Site Ports
 EXPOSE 8080 8181
 # Startup NiFi
-#ENTRYPOINT ["bin/nifi.sh"]
-#CMD ["run"]
 
-# Run Teiid server and bind to all interface
+# Run NIFI Server
 CMD ["/bin/sh", "-c", "$NIFI_HOME/bin/nifi.sh run"]
 
