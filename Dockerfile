@@ -87,9 +87,13 @@ ONBUILD RUN chmod +x $NIFI_HOME/bin/nifistarter.sh
 WORKDIR $NIFI_HOME
 
 VOLUME ["$NIFI_HOME/conf"]
+VOLUME ["$NIFI_HOME/flowfile_repository"]
+VOLUME ["$NIFI_HOME/database_repository"]
+VOLUME ["$NIFI_HOME/content_repository"]
+VOLUME ["$NIFI_HOME/provenance_repository"]
 
 # Web HTTP Port & Remote Site-to-Site Ports
-EXPOSE 8080 8181 8733
+EXPOSE 8080 8181 8733 9090 8081
 # Startup NiFi
 
 #ONBUILD ADD config /tmacbaseconfig
