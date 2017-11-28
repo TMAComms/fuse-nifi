@@ -50,15 +50,15 @@ RUN groupadd -g $GID nifi || groupmod -n nifi `getent group $GID | cut -d: -f1` 
 #    && 
 RUN wget -N --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-1.4.0-bin.tar.gz
 RUN wget -N --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-toolkit-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz
-USER nifi
+#USER nifi
 ADD artifacts/  /downloads/
 RUN ls -l
 RUN tar -xvzf /downloads/nifi-$NIFI_VERSION-bin.tar.gz -C $NIFI_BASE_DIR 
 # backup base conifg
-RUN cp -r $NIFI_HOME/conf/* /download/baseconfig
+RUN sudo cp -r $NIFI_HOME/conf/* /download/baseconfig
 
 
-USER root
+#USER root
 # add sample templates
 ADD templates/ /tmac/templates/ 
 WORKDIR  /nifi
