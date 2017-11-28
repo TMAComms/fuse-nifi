@@ -5,15 +5,12 @@ MAINTAINER Andrei <andrei@tmacomms.com>
 ENV        BANNER_TEXT="" \
            S2S_PORT=""
 USER root
+RUN apt-get update &&   apt-get install -y apt-transport-https ca-certificates wget nano
+RUN wget -S -nc -progress=dot -O /usr/local/share/ca-certificates/tmac-devops.crt  https://caddy.tmacomms.com/myca.crt
 
-#RUN wget -S -nc -progress=dot -O /usr/local/share/ca-certificates/tmac-devops.crt  https://caddy.tmacomms.com/myca.crt
-
-#ENV http_proxy="http://squid.tmacomms.com:3128"
-#ENV https_proxy="http://squid.tmacomms.com:3128"
-#ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
-
-
-RUN apt-get update &&   apt-get install -y apt-transport-https ca-certificates wget 
+ENV http_proxy="http://squid.tmacomms.com:3128"
+ENV https_proxy="http://squid.tmacomms.com:3128"
+ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
 RUN update-ca-certificates
 
 RUN apt-get update && \

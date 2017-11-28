@@ -6,7 +6,14 @@ ENV        BANNER_TEXT="" \
 ENV REGISTRY_HOME=/schema-registry
 
 USER root
-RUN apt-get update && apt-get install wget -y
+RUN apt-get update &&   apt-get install -y apt-transport-https ca-certificates wget nano
+RUN wget -S -nc -progress=dot -O /usr/local/share/ca-certificates/tmac-devops.crt  https://caddy.tmacomms.com/myca.crt
+
+ENV http_proxy="http://squid.tmacomms.com:3128"
+ENV https_proxy="http://squid.tmacomms.com:3128"
+ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
+RUN update-ca-certificates
+
 
 
 # Get CrushFTP 7
