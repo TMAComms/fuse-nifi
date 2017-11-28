@@ -1,5 +1,5 @@
 #FROM tmacregistry-tmacomms.azurecr.io/tmacomms/basejdk8:latest
-FROM openjdk:8-jre
+FROM openjdk:8-jre 
 LABEL Name=fuse-nifi Version=1.4.0
 MAINTAINER Andrei <andrei@tmacomms.com>
 ENV        BANNER_TEXT="" \
@@ -14,12 +14,12 @@ ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
 RUN update-ca-certificates
 
 RUN apt-get update && \
-    apt-get install -y software-properties-common unzip tar zip sudo wget curl && apt-get update && \
-    apt-get install -y git mercurial apt-transport-https ca-certificates git nano 
+    apt-get install -y software-properties-common unzip tar zip sudo wget curl \
+                      mercurial apt-transport-https ca-certificates git nano 
 
 # Get CrushFTP 7
-RUN mkdir -m 0755 /downloads /nifi/ /tmac/templates /tmac/archive /tmac/flow /etc/service/nifi  /ssl /download/baseconfig/ -p 
-RUN ls -l /
+RUN mkdir -m 0755 /downloads/baseconfig /nifi/ /tmac/templates /tmac/archive /tmac/flow /etc/service/nifi  /ssl /download/baseconfig/ -p 
+
 WORKDIR /downloads
 
 ARG UID=1000
@@ -54,22 +54,11 @@ USER nifi
 ADD artifacts/  /downloads/
 RUN ls -l
 RUN tar -xvzf /downloads/nifi-$NIFI_VERSION-bin.tar.gz -C $NIFI_BASE_DIR 
-
-#RUN wget http://apache.mirror.digitalpacific.com.au/$NIFI_TOOLKIT_URL -O /downloads/nifi-toolkit-$NIFI_VERSION-bin.tar.gz 
-#RUN   
-    #&& rm $NIFI_BASE_DIR/nifi-$NIFI_VERSION-bin.tar.gz \
-    #&& chown -R nifi:nifi $NIFI_HOME
-
-
-#RUN wget http://apache.mirror.digitalpacific.com.au/nifi/1.4.0/nifi-1.4.0-bin.tar.gz && wget http://apache.mirror.digitalpacific.com.au/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz && tar -xzvf nifi-1.4.0-bin.tar.gz -C /nifi --strip-components=1 && rm -rf /downloads/*
-
-# backup config
+# backup base conifg
+RUN cp -r $NIFI_HOME/conf/* /download/baseconfig
 
 
 USER root
-RUN mkdir /download/baseconfig -p && cp -r $NIFI_HOME/conf/* /download/baseconfig
-USER nifi
-
 # add sample templates
 ADD templates/ /tmac/templates/ 
 WORKDIR  /nifi
