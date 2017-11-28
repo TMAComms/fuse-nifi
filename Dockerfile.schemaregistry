@@ -34,7 +34,7 @@ RUN  chmod +x /sbin/my_init.sh
 
 EXPOSE 9090
 
-
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Use baseimage-docker's init system.
 CMD ["/schema-registry/bin/registry-server-start.sh","/schema-registry/conf/registry.yaml"]
 #/sbin/my_init

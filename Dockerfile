@@ -85,6 +85,7 @@ WORKDIR $NIFI_HOME
 # Web HTTP Port & Remote Site-to-Site Ports
 EXPOSE 8080 8181
 # Startup NiFi
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Run NIFI Server
 CMD ["/bin/sh", "-c", "$NIFI_HOME/bin/nifi.sh run"]
