@@ -20,8 +20,8 @@ RUN update-ca-certificates
 RUN mkdir /downloads /schema-registry
 WORKDIR /downloads
 
-#RUN wget https://github.com/hortonworks/registry/releases/download/v0.4.0/hortonworks-registry-0.4.0.tar.gz  && tar -xzvf hortonworks-registry-0.4.0.tar.gz -C $REGISTRY_HOME --strip-components=1 && rm -rf /downloads/*
-RUN wget -N --show-progress --progress=bar:force --no-cookies --no-check-certificate https://github.com/hortonworks/registry/releases/download/v0.4.0/registry-0.4.0.tar.gz  && tar -xzvf registry-0.4.0.tar.gz -C $REGISTRY_HOME --strip-components=1 && rm -rf /downloads/*
+#RUN wget http://github.com/hortonworks/registry/releases/download/v0.4.0/hortonworks-registry-0.4.0.tar.gz  && tar -xzvf hortonworks-registry-0.4.0.tar.gz -C $REGISTRY_HOME --strip-components=1 && rm -rf /downloads/*
+RUN wget -N --show-progress --progress=bar:force --no-cookies --no-check-certificate http://github.com/hortonworks/registry/releases/download/v0.4.0/registry-0.4.0.tar.gz  && tar -xzvf registry-0.4.0.tar.gz -C $REGISTRY_HOME --strip-components=1 && rm -rf /downloads/*
 RUN cp $REGISTRY_HOME/conf/registry.yaml.inmemory.example $REGISTRY_HOME/conf/registry.yaml     
 
 # start the server in fore-ground  

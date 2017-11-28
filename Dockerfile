@@ -25,7 +25,7 @@ WORKDIR /downloads
 ARG UID=1000
 ARG GID=1000
 ARG NIFI_VERSION=1.4.0
-ARG MIRROR=https://archive.apache.org/dist
+ARG MIRROR=http://archive.apache.org/dist
 
 ENV NIFI_BASE_DIR=/opt/nifi 
 ENV NIFI_HOME=$NIFI_BASE_DIR/nifi-$NIFI_VERSION \
