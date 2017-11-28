@@ -64,8 +64,7 @@ ADD templates/ /tmac/templates/
 WORKDIR  /nifi
 
 # Clean up APT when done.
-#RUN sudo apt-get clean && rm -rf /downloads/*
-RUN rm -rf /downloads/nifi*
+RUN sudo apt-get clean && rm -rf /downloads/nifi*
 
 # update config
 ADD config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
