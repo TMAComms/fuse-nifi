@@ -15,7 +15,7 @@ RUN update-ca-certificates
 
 RUN apt-get update && \
     apt-get install -y software-properties-common unzip tar zip sudo wget curl \
-                      mercurial apt-transport-https ca-certificates git nano 
+                      mercurial apt-transport-https ca-certificates git nano sudo
 
 # Get CrushFTP 7
 RUN mkdir -m 0755 /downloads/baseconfig /nifi/ /tmac/templates /tmac/archive /tmac/flow /etc/service/nifi  /ssl /download/baseconfig/ -p 
