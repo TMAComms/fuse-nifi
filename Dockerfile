@@ -28,9 +28,10 @@ ARG NIFI_VERSION=1.4.0
 ARG MIRROR=http://archive.apache.org/dist
 
 ENV NIFI_BASE_DIR=/opt/nifi 
-ENV NIFI_HOME=$NIFI_BASE_DIR/nifi-$NIFI_VERSION \
-    NIFI_BINARY_URL=/nifi/$NIFI_VERSION/nifi-$NIFI_VERSION-bin.tar.gz \
-    NIFI_TOOLKIT_URL=/nifi/$NIFI_VERSION/nifi-toolkit-$NIFI_VERSION-bin.tar.gz
+ENV NIFI_HOME=/opt/nifi 
+ENV NIFI_TOOLKIT_URL=/nifi/$NIFI_VERSION/nifi-toolkit-$NIFI_VERSION-bin.tar.gz
+ENV NIFI_BINARY_URL=/nifi/$NIFI_VERSION/nifi-$NIFI_VERSION-bin.tar.gz
+#$NIFI_BASE_DIR/nifi-$NIFI_VERSION \
 
 # Setup NiFi user
 RUN groupadd -g $GID nifi || groupmod -n nifi `getent group $GID | cut -d: -f1` \
