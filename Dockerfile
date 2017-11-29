@@ -70,14 +70,14 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # update config
 ADD config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
-ONBUILD ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
+ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 ADD config/ssl/* /ssl/
-ONBUILD ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
-ONBUILD ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.base
-ONBUILD ADD config/nifi/nifistarter.sh $NIFI_HOME/bin/nifistarter.sh
+ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
+ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.base
+ADD config/nifi/nifistarter.sh $NIFI_HOME/bin/nifistarter.sh
 
 #RUN ls -l  $NIFI_HOME
-ONBUILD RUN chmod +x $NIFI_HOME/bin/nifistarter.sh
+RUN chmod +x $NIFI_HOME/bin/nifistarter.sh
 
 WORKDIR $NIFI_HOME
 
