@@ -79,6 +79,10 @@ ADD config/nifi/nifistarter.sh $NIFI_HOME/bin/nifistarter.sh
 #RUN ls -l  $NIFI_HOME
 RUN chmod +x $NIFI_HOME/bin/nifistarter.sh
 
+# Set the timezone.
+RUN echo "Australia/Melbourne" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+
 WORKDIR $NIFI_HOME
 
 VOLUME ["$NIFI_HOME/conf"]
@@ -96,4 +100,5 @@ EXPOSE 8080 8181 8733 9090 8081
 USER root
 # Run NIFI Server
 CMD ["/bin/sh", "-c", "$NIFI_HOME/bin/nifi.sh run"]
+
 
