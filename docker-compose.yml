@@ -1,44 +1,38 @@
-
 version: '3.2'
-
 services:
   nifi:
-   image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:dev
-   build:
-      context: .
-      dockerfile: Dockerfile
-      cache_from:
-       - openjdk:8-jre        
-   ports:
+    image: 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:dev'
+    build: .
+    ports:
       - 8081/tcp
-      - 8011:8080/tcp
-   volumes:
-      - /datadrive/logs/nifi:/opt/nifi/logs:rw
-      - /datadrive/nifi/shared/:/opt/:rw
-      - /datadrive/nifi/working/:/tmac/:rw
-   labels:
-       io.rancher.container.hostname_override: "container_name"
-       io.rancher.container.pull_image: always
-   environment:
+      - '8011:8080/tcp'
+    volumes:
+      - '/datadrive/logs/nifi:/opt/nifi/logs:rw'
+      - '/datadrive/nifi/shared/:/opt/:rw'
+      - '/datadrive/nifi/working/:/tmac/:rw'
+    labels:
+      io.rancher.container.hostname_override: container_name
+      io.rancher.container.pull_image: always
+    environment:
       - CONF_INTERVAL=10
-      - EVSENVIRONMENT=development      
-   restart: always
-   privileged: true
-   stdin_open: true
-   tty: true
-   links:   
-    - schemaregistry:registry
+      - EVSENVIRONMENT=development
+    restart: always
+    privileged: true
+    stdin_open: true
+    tty: true
+    links:
+      - 'schemaregistry:registry'
   schemaregistry:
-   image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-schemaregistry:dev
-   build:
-    context: .
-    dockerfile: Dockerfile.schemaregistry
-    cache_from:
-     - openjdk:8-jre    
-   stdin_open: true
-   restart: on-failure   
-   tty: true
-   expose: 
-   - 9090/tcp
-   labels:
+    image: 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-schemaregistry:dev'
+    build:
+      context: .
+      dockerfile: Dockerfile.schemaregistry
+      cache_from:
+        - 'openjdk:8-jre'
+    stdin_open: true
+    restart: on-failure
+    tty: true
+    expose:
+      - 9090/tcp
+    labels:
       io.rancher.container.pull_image: always
