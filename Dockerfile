@@ -25,8 +25,7 @@ ARG UID=1000
 ARG GID=1000
 ARG NIFI_VERSION=1.4.0
 ARG MIRROR=http://archive.apache.org/dist
-
-ENV NIFI_BASE_DIR=/opt/nifi 
+ARG NIFI_HOME=/opt/nifi 
 ENV NIFI_HOME=/opt/nifi 
 
 
@@ -43,9 +42,6 @@ RUN groupadd -g $GID nifi || groupmod -n nifi `getent group $GID | cut -d: -f1` 
 #USER nifi
 
 # Download, validate, and expand Apache NiFi binary.
-#RUN curl -fSL $MIRROR/$NIFI_BINARY_URL -o $NIFI_BASE_DIR/nifi-$NIFI_VERSION-bin.tar.gz \
-#    && echo "$(curl https://archive.apache.org/dist/$NIFI_BINARY_URL.sha256) *$NIFI_BASE_DIR/nifi-$NIFI_VERSION-bin.tar.gz" | sha256sum -c - \
-#    && && tar -xzvf nifi-1.4.0-bin.tar.gz -C /nifi --strip-components=1 && rm -rf /downloads/*
 RUN wget -N --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-1.4.0-bin.tar.gz 
 RUN tar -xzvf /downloads/nifi-1.4.0-bin.tar.gz -C $NIFI_HOME --strip-components=1 && rm /downloads/nifi-1.4.0-bin.tar.gz
 
@@ -58,11 +54,10 @@ RUN tar -xzvf /downloads/nifi-toolkit-1.4.0-bin.tar.gz -C $NIFI_HOME --strip-com
 RUN ls -l
 RUN ls -l $NIFI_HOME
 
-#RUN tar -xvzf /downloads/nifi-$NIFI_VERSION-bin.tar.gz -C $NIFI_BASE_DIR 
+
 # backup base conifg
 RUN sudo cp -r $NIFI_HOME/conf/* /downloads/baseconfig
 
-#RUN wget http://apache.mirror.digitalpacific.com.au/nifi/1.4.0/nifi-1.4.0-bin.tar.gz && wget http://apache.mirror.digitalpacific.com.au/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz && tar -xzvf nifi-1.4.0-bin.tar.gz -C /nifi --strip-components=1 && rm -rf /downloads/*
 
 #USER root
 # add sample templates
