@@ -48,9 +48,9 @@ RUN wget -N --show-progress --progress=bar:force --no-cookies --no-check-certifi
 RUN tar -xzvf /downloads/nifi-1.4.0-bin.tar.gz -C $NIFI_HOME --strip-components=1 && rm /downloads/nifi-1.4.0-bin.tar.gz
 
 #toolkit
-#RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-toolkit-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz
-#RUN tar -xzvf /downloads/nifi-toolkit-1.4.0-bin.tar.gz -C $NIFI_HOME --strip-components=1 && rm /downloads/nifi-toolkit-1.4.0-bin.tar.gz
-#RUN chown -R nifi:nifi $NIFI_HOME 
+RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-toolkit-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz
+RUN tar -xzvf /downloads/nifi-toolkit-1.4.0-bin.tar.gz -C /opt/toolkit --strip-components=1 && rm /downloads/nifi-toolkit-1.4.0-bin.tar.gz
+RUN chown -R nifi:nifi /opt/toolkit 
 
 WORKDIR $NIFI_HOME
 # Clean up APT when done.
@@ -60,7 +60,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN cp -r $NIFI_HOME/conf/* /downloads/baseconfig
 
 # update config
-#ADD templates/ $NIFI_HOME/conf/templates/
+ADD templates/* $NIFI_HOME/conf/templates/
 ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 ADD config/ssl/* /ssl/
 RUN chown -R nifi:nifi /ssl 
