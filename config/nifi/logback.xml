@@ -79,7 +79,7 @@
         </encoder>
     </appender>
     <!-- valid logging levels: TRACE, DEBUG, INFO, WARN, ERROR -->
-    <logger name="org.apache.nifi" level="INFO"/>
+    <logger name="org.apache.nifi" level="TRACE"/>
     <logger name="org.apache.nifi.processors" level="WARN"/>
     <logger name="org.apache.nifi.processors.standard.LogAttribute" level="INFO"/>
     <logger name="org.apache.nifi.processors.standard.LogMessage" level="INFO"/>
@@ -110,13 +110,13 @@
         log events to the root logger. These messages are only sent to the
         user-log appender.
     -->
-    <logger name="org.apache.nifi.web.security" level="INFO" additivity="false">
+    <logger name="org.apache.nifi.web.security" level="INFO" additivity="true">
         <appender-ref ref="USER_FILE"/>
     </logger>
     <logger name="org.apache.nifi.web.api.config" level="INFO" additivity="false">
         <appender-ref ref="USER_FILE"/>
     </logger>
-    <logger name="org.apache.nifi.authorization" level="INFO" additivity="false">
+    <logger name="org.apache.nifi.authorization" level="TRACE" additivity="false">
         <appender-ref ref="USER_FILE"/>
     </logger>
     <logger name="org.apache.nifi.cluster.authorization" level="INFO" additivity="false">
@@ -128,10 +128,10 @@
     <!--
         Logger for capturing Bootstrap logs and NiFi's standard error and standard out. 
     -->
-    <logger name="org.apache.nifi.bootstrap" level="TRACE" additivity="false">
+    <logger name="org.apache.nifi.bootstrap" level="DEBUG" additivity="false">
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
-    <logger name="org.apache.nifi.bootstrap.Command" level="TRACE" additivity="false">
+    <logger name="org.apache.nifi.bootstrap.Command" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
