@@ -59,7 +59,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN cp -r $NIFI_HOME/conf/* /downloads/baseconfig
 
 # update config
-ADD templates/ /tmac/templates/ 
+ADD templates/ $NIFI_HOME/conf/templates/
 ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 ADD config/ssl/* /ssl/
 ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
