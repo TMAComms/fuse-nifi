@@ -17,6 +17,7 @@ RUN     apk update && apk add --upgrade bash curl bind-tools nano && \
         rm -rf *.tar.gz && \
         apk del curl && \
         rm -rf /var/cache/apk/*
+    
 
 COPY config/nifi/docker-entrypoint.sh /
 COPY config/nifi/* /downloads/
