@@ -1,10 +1,9 @@
 #!/bin/sh
 
-# `/sbin/setuser memcache` runs the given command as the user `memcache`.
-# If you omit that part, the command will be run as root.
-#exec /nifi/bin/nifi.sh run
-
 export NIFI_HOME=/opt/nifi 
 $NIFI_HOME/bin/nifi-env.sh
+echo "Resetting owner on /opt/nifi:
+sudo chown -R nifi:nifi /opt/nifi/
+echo "Resetting owner on /opt/nifi done"
 tail -F $NIFI_HOME/logs/nifi-app.log &  $NIFI_HOME/bin/nifi.sh run
 
