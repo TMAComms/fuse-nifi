@@ -21,6 +21,7 @@ ARG NIFI_VERSION=1.4.0
 ARG MIRROR=http://archive.apache.org/dist
 ARG NIFI_HOME=/opt/nifi 
 ENV NIFI_HOME=/opt/nifi 
+RUN echo "nifi ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
 
 RUN apt-get update && \
     apt-get install -y software-properties-common unzip tar zip sudo wget curl \
@@ -33,7 +34,7 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 # Setup NiFi user
 RUN groupadd -g $GID nifi || groupmod -n nifi `getent group $GID | cut -d: -f1` \
     && useradd --shell /bin/bash -u $UID -g $GID -m nifi \
-    && mkdir -p $NIFI_HOME/conf/templates /downloads/baseconfig /tmac/templates /tmac/flow/archive /tmac/working /ssl \
+    && mkdir -p $NIFI_HOME/conf/templates $NIFI_HOME/provenance_repository $NIFI_HOME/flowfile_repository  $NIFI_HOME/database_repository  $NIFI_HOME/content_repository /downloads/baseconfig /tmac/templates /tmac/flow/archive /tmac/working /ssl \
     && chown -R nifi:nifi $NIFI_HOME \
     && chown -R nifi:nifi /downloads \
     && chown -R nifi:nifi /ssl \
@@ -49,7 +50,7 @@ RUN tar -xzvf /downloads/nifi-1.4.0-bin.tar.gz -C $NIFI_HOME --strip-components=
 #toolkit
 RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-toolkit-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz
 RUN tar -xzvf /downloads/nifi-toolkit-1.4.0-bin.tar.gz -C $NIFI_HOME --strip-components=1 && rm /downloads/nifi-toolkit-1.4.0-bin.tar.gz
-
+RUN chown -R nifi:nifi $NIFI_HOME 
 
 
 # Clean up APT when done.
