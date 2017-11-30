@@ -51,10 +51,6 @@ RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificat
         && tar -xzvf /downloads/nifi-toolkit-1.4.0-bin.tar.gz -C /opt/toolkit --strip-components=1 && rm /downloads/nifi-toolkit-1.4.0-bin.tar.gz 
 
 
-WORKDIR $NIFI_HOME
-# Clean up APT when done.
-
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 # backup base conifg
 RUN cp -r $NIFI_HOME/conf/* /downloads/baseconfig
 
@@ -62,23 +58,16 @@ RUN cp -r $NIFI_HOME/conf/* /downloads/baseconfig
 ADD templates/* $NIFI_HOME/conf/templates/
 ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 ADD config/ssl/* /ssl/
-RUN chown -R nifi:nifi /ssl 
 ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
 ADD config/nifi/nifistarter.sh $NIFI_HOME/bin/nifistarter.sh
 
-#RUN ls -l  $NIFI_HOME
-RUN chmod +x $NIFI_HOME/bin/nifistarter.sh && chown -R nifi:nifi $NIFI_HOME 
-RUN rpl "BANNERTOREPLACE" $ASPNETCORE_ENVIRONMENT $NIFI_HOME/conf/nifi.properties
+RUN chmod +x $NIFI_HOME/bin/nifistarter.sh && chown -R nifi:nifi $NIFI_HOME && chown -R nifi:nifi /ssl  && \
+     rpl "BANNERTOREPLACE" $ASPNETCORE_ENVIRONMENT $NIFI_HOME/conf/nifi.properties 
 
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
-# run server up once to check permssions and create dirs
-#RUN $NIFI_HOME/bin/nifi.sh status
-#RUN chown -R nifi:nifi $NIFI_HOME 
-#RUN chmod g+s /opt/nifi
-#RUN chmod -R 0777 /opt/nifi
-
-#RUN setfacl -d -m u::rwX,g::rwX,o::- /opt/nifi/
-
+WORKDIR $NIFI_HOME
+# Clean up APT when done.
 USER nifi
 
 VOLUME ["$NIFI_HOME/conf"]
