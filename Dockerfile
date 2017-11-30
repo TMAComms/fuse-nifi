@@ -1,26 +1,26 @@
 #FROM tmacregistry-tmacomms.azurecr.io/tmacomms/basejdk8:latest
 FROM openjdk:8-jre 
 LABEL Name=fuse-nifi Version=1.4.0
-MAINTAINER Andrei <andrei@tmacomms.com>
 ENV        BANNER_TEXT="" \
            S2S_PORT=""
 USER root
 RUN apt-get update &&   apt-get install -y apt-transport-https ca-certificates wget nano
 RUN wget -S -nc -progress=dot -O /usr/local/share/ca-certificates/tmac-devops.crt  https://caddy.tmacomms.com/myca.crt
 
-ENV http_proxy="http://squid.tmacomms.com:3128"
-ENV https_proxy="http://squid.tmacomms.com:3128"
-ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
+## removed as runnign in azure agent
+#ENV http_proxy="http://squid.tmacomms.com:3128"
+#ENV https_proxy="http://squid.tmacomms.com:3128"
+#ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
 RUN update-ca-certificates
 
 RUN apt-get update && \
     apt-get install -y software-properties-common unzip tar zip sudo wget curl \
-                      mercurial apt-transport-https ca-certificates git nano sudo
+                      mercurial apt-transport-https ca-certificates git nano sudo rpl
 
 # Get CrushFTP 7
 RUN mkdir -m 0755 /downloads/baseconfig /tmac/templates  /ssl  -p 
 
-
+ARG ASPNETCORE_ENVIRONMENT=development
 ARG UID=1000
 ARG GID=1000
 ARG NIFI_VERSION=1.4.0
@@ -73,8 +73,9 @@ ADD config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 ADD config/ssl/* /ssl/
 ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
-ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.base
+#ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.base
 ADD config/nifi/nifistarter.sh $NIFI_HOME/bin/nifistarter.sh
+
 
 #RUN ls -l  $NIFI_HOME
 RUN chmod +x $NIFI_HOME/bin/nifistarter.sh
@@ -96,6 +97,7 @@ EXPOSE 8080 8181 8733 9090 8081
 # Startup NiFi
 
 #ONBUILD ADD config /tmacbaseconfig
+RUN rpl "BANNERTOREPLACE" $ASPNETCORE_ENVIRONMENT $NIFI_HOME/conf/nifi.properties
 
 USER root
 # Run NIFI Server
