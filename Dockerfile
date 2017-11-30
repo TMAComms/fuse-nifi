@@ -21,11 +21,10 @@ ARG NIFI_VERSION=1.4.0
 ARG MIRROR=http://archive.apache.org/dist
 ARG NIFI_HOME=/opt/nifi 
 ENV NIFI_HOME=/opt/nifi 
-RUN echo "nifi ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
-
 RUN apt-get update && \
     apt-get install -y software-properties-common unzip tar zip sudo wget curl \
                       mercurial apt-transport-https ca-certificates git nano sudo rpl
+RUN echo "nifi ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers
 
 # Set the timezone.
 RUN echo "Australia/Melbourne" > /etc/timezone
