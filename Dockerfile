@@ -68,6 +68,7 @@ ADD config/nifi/nifistarter.sh $NIFI_HOME/bin/nifistarter.sh
 
 #RUN ls -l  $NIFI_HOME
 RUN chmod +x $NIFI_HOME/bin/nifistarter.sh && chown -R nifi:nifi $NIFI_HOME 
+RUN chown -R nifi:nifi /ssl
 RUN rpl "BANNERTOREPLACE" $ASPNETCORE_ENVIRONMENT $NIFI_HOME/conf/nifi.properties
 
 WORKDIR $NIFI_HOME
