@@ -19,14 +19,14 @@ RUN     apk update && apk add --upgrade bash curl bind-tools nano && \
         rm -rf /var/cache/apk/*
     
 
-COPY config/nifi/docker-entrypoint.sh /
+COPY config/nifi/docker-entrypoint.sh /docker-entrypoint.sh
 COPY config/nifi/* /downloads/
 COPY templates/* /downloads/templates/
-
+RUN chmod 0777 /docker-entrypoint.sh
 
 WORKDIR ${NIFI_HOME}
 
 EXPOSE 8080 8081 8443
 
-ENTRYPOINT      ["/docker-entrypoint.sh"]
+#ENTRYPOINT      ["/docker-entrypoint.sh"]
 CMD             ["/opt/nifi/bin/nifi.sh", "run"]
