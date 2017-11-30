@@ -57,18 +57,19 @@ RUN cp -r $NIFI_HOME/conf/* /downloads/baseconfig
 # update config
 ADD templates/* $NIFI_HOME/conf/templates/
 ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
+#ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 ADD config/ssl/* /ssl/
 ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
 ADD config/nifi/nifistarter.sh $NIFI_HOME/bin/nifistarter.sh
 
-RUN chmod +x $NIFI_HOME/bin/nifistarter.sh && chown -R nifi:nifi $NIFI_HOME && chown -R nifi:nifi /ssl  && \
-     rpl "BANNERTOREPLACE" $ASPNETCORE_ENVIRONMENT $NIFI_HOME/conf/nifi.properties 
+RUN chmod +x $NIFI_HOME/bin/nifistarter.sh && chown -R nifi:nifi $NIFI_HOME && chown -R nifi:nifi /ssl  
+    
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
 WORKDIR $NIFI_HOME
 # Clean up APT when done.
-USER nifi
+
 
 VOLUME ["$NIFI_HOME/conf"]
 VOLUME ["/tmac/flow"]
