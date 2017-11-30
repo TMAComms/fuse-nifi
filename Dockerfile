@@ -86,6 +86,8 @@ EXPOSE 8080 8181 8733 9090 8081
 
 USER nifi
 # Run NIFI Server
-CMD ["/bin/sh", "-c", "$NIFI_HOME/bin/nifi.sh run"]
+#CMD ["/bin/sh", "-c", "$NIFI_HOME/bin/nifi.sh run"]
+CMD ["/bin/sh", "-c", "/opt/nifi/bin/nifistarter.sh"]
+
 
 
