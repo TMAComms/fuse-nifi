@@ -85,24 +85,24 @@
     
     <!-- valid logging levels: TRACE, DEBUG, INFO, WARN, ERROR -->
     
-    <logger name="org.apache.nifi" level="INFO"/>
-    <logger name="org.apache.nifi.processors" level="INFO"/>
-    <logger name="org.apache.nifi.processors.standard.LogAttribute" level="INFO"/>
-    <logger name="org.apache.nifi.controller.repository.StandardProcessSession" level="INFO" />
+    <logger name="org.apache.nifi" level="DEBUG"/>
+    <logger name="org.apache.nifi.processors" level="TRACE"/>
+    <logger name="org.apache.nifi.processors.standard.LogAttribute" level="TRACE"/>
+    <logger name="org.apache.nifi.controller.repository.StandardProcessSession" level="TRACE" />
     
     
-    <logger name="org.apache.zookeeper.ClientCnxn" level="ERROR" />
+    <logger name="org.apache.zookeeper.ClientCnxn" level="DEBUG" />
     <logger name="org.apache.zookeeper.server.NIOServerCnxn" level="ERROR" />
     <logger name="org.apache.zookeeper.server.NIOServerCnxnFactory" level="ERROR" />
     <logger name="org.apache.zookeeper.server.quorum" level="ERROR" />
-    <logger name="org.apache.zookeeper.ZooKeeper" level="ERROR" />
+    <logger name="org.apache.zookeeper.ZooKeeper" level="DEBUG" />
     <logger name="org.apache.zookeeper.server.PrepRequestProcessor" level="INFO" />
 
     <logger name="org.apache.curator.framework.recipes.leader.LeaderSelector" level="OFF" />
     <logger name="org.apache.curator.ConnectionState" level="OFF" />
     
     <!-- Logger for managing logging statements for nifi clusters. -->
-    <logger name="org.apache.nifi.cluster" level="INFO"/>
+    <logger name="org.apache.nifi.cluster" level="DEBUG"/>
 
     <!-- Logger for logging HTTP requests received by the web server. -->
     <logger name="org.apache.nifi.server.JettyServer" level="INFO" />
@@ -126,7 +126,7 @@
     <logger name="org.apache.nifi.web.security" level="DEBUG" additivity="true">
         <appender-ref ref="USER_FILE"/>
     </logger>
-    <logger name="org.apache.nifi.web.api.config" level="INFO" additivity="true">
+    <logger name="org.apache.nifi.web.api.config" level="DEBUG" additivity="true">
         <appender-ref ref="USER_FILE"/>
     </logger>
     <logger name="org.apache.nifi.authorization" level="DEBUG" additivity="true">
