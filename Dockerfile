@@ -11,6 +11,8 @@ RUN wget -S -nc -progress=dot -O /usr/local/share/ca-certificates/tmac-devops.cr
 #ENV http_proxy="http://squid.tmacomms.com:3128"
 #ENV https_proxy="http://squid.tmacomms.com:3128"
 #ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
+ENV http_proxy=""
+ENV https_proxy=""
 RUN update-ca-certificates
 
 RUN apt-get update && \
