@@ -29,6 +29,9 @@ RUN echo "nifi ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers
 # Set the timezone.
 RUN echo "Australia/Melbourne" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
+## based on install guide 
+COPY config/baseos/limits.conf /etc/security/limits.conf
+COPY config/baseos/sysctl.conf /etc/sysctl.conf
 
 # Setup NiFi user
 RUN groupadd -g $GID nifi || groupmod -n nifi `getent group $GID | cut -d: -f1` \
@@ -37,7 +40,8 @@ RUN groupadd -g $GID nifi || groupmod -n nifi `getent group $GID | cut -d: -f1` 
     && chown -R nifi:nifi $NIFI_HOME \
     && chown -R nifi:nifi /downloads \
     && chown -R nifi:nifi /ssl \
-    && chown -R nifi:nifi /tmac 
+    && chown -R nifi:nifi /tmac \
+    && chmod g+s $NIFI_HOME
 
 
 USER nifi
