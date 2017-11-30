@@ -20,7 +20,7 @@ RUN apt-get update && \
                       mercurial apt-transport-https ca-certificates git nano sudo rpl
 
 # Get CrushFTP 7
-RUN mkdir -m 0755 /downloads/baseconfig /tmac/templates  /ssl  -p 
+RUN mkdir -m 0755 /downloads/baseconfig /tmac/templates /tmac/flow/archive /tmac/working /ssl  -p 
 
 ARG ASPNETCORE_ENVIRONMENT=development
 ARG UID=1000
@@ -71,7 +71,6 @@ WORKDIR $NIFI_HOME
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # update config
-ADD config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 ADD config/ssl/* /ssl/
 ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
@@ -89,10 +88,12 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 WORKDIR $NIFI_HOME
 
 VOLUME ["$NIFI_HOME/conf"]
-VOLUME ["$NIFI_HOME/flowfile_repository"]
+VOLUME ["/tmac/flow"]
 VOLUME ["$NIFI_HOME/database_repository"]
 VOLUME ["$NIFI_HOME/content_repository"]
 VOLUME ["$NIFI_HOME/provenance_repository"]
+VOLUME ["$NIFI_HOME/flowfile_repository"]
+
 
 # Web HTTP Port & Remote Site-to-Site Ports
 EXPOSE 8080 8181 8733 9090 8081
