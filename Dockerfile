@@ -40,17 +40,17 @@ RUN groupadd -g $GID nifi || groupmod -n nifi `getent group $GID | cut -d: -f1` 
     && chown -R nifi:nifi $NIFI_HOME \
     && chown -R nifi:nifi /downloads \
     && chown -R nifi:nifi /ssl \
-    && chown -R nifi:nifi /tmac \
-    && chmod g+s $NIFI_HOME
+    && chown -R nifi:nifi /tmac 
+    
 
 # Download, validate, and expand Apache NiFi binary.
 RUN wget -N --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-1.4.0-bin.tar.gz 
 RUN tar -xzvf /downloads/nifi-1.4.0-bin.tar.gz -C $NIFI_HOME --strip-components=1 && rm /downloads/nifi-1.4.0-bin.tar.gz
 
 #toolkit
-RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-toolkit-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz
-RUN tar -xzvf /downloads/nifi-toolkit-1.4.0-bin.tar.gz -C $NIFI_HOME --strip-components=1 && rm /downloads/nifi-toolkit-1.4.0-bin.tar.gz
-RUN chown -R nifi:nifi $NIFI_HOME 
+#RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-toolkit-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz
+#RUN tar -xzvf /downloads/nifi-toolkit-1.4.0-bin.tar.gz -C $NIFI_HOME --strip-components=1 && rm /downloads/nifi-toolkit-1.4.0-bin.tar.gz
+#RUN chown -R nifi:nifi $NIFI_HOME 
 
 WORKDIR $NIFI_HOME
 # Clean up APT when done.
@@ -60,25 +60,24 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN cp -r $NIFI_HOME/conf/* /downloads/baseconfig
 
 # update config
-ADD templates/ $NIFI_HOME/conf/templates/
+#ADD templates/ $NIFI_HOME/conf/templates/
 ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 ADD config/ssl/* /ssl/
-ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
+RUN chown -R nifi:nifi /ssl 
+#ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
 #ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.base
 ADD config/nifi/nifistarter.sh $NIFI_HOME/bin/nifistarter.sh
 
 #RUN ls -l  $NIFI_HOME
 RUN chmod +x $NIFI_HOME/bin/nifistarter.sh && chown -R nifi:nifi $NIFI_HOME 
-RUN chown -R nifi:nifi $NIFI_HOME 
-RUN chown -R nifi:nifi /ssl
 RUN rpl "BANNERTOREPLACE" $ASPNETCORE_ENVIRONMENT $NIFI_HOME/conf/nifi.properties
 
 
 # run server up once to check permssions and create dirs
-RUN $NIFI_HOME/bin/nifi.sh status
-RUN chown -R nifi:nifi $NIFI_HOME 
+#RUN $NIFI_HOME/bin/nifi.sh status
+#RUN chown -R nifi:nifi $NIFI_HOME 
 #RUN chmod g+s /opt/nifi
-RUN chmod -R 0777 /opt/nifi
+#RUN chmod -R 0777 /opt/nifi
 
 #RUN setfacl -d -m u::rwX,g::rwX,o::- /opt/nifi/
 
@@ -97,7 +96,6 @@ EXPOSE 8080 8181 8733 9090 8081
 
 
 # Run NIFI Server
-#CMD ["/bin/sh", "-c", "$NIFI_HOME/bin/nifi.sh run"]
 CMD ["/bin/sh", "-c", "/opt/nifi/bin/nifistarter.sh"]
 
 
