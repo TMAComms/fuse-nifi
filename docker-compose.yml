@@ -1,8 +1,9 @@
-version: '3.2'
+version: '3'
 services:
   nifi:
     image: 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:dev'
-    build: .
+    build: 
+      context: .
     ports:
       - 8081/tcp
       - '8011:8080/tcp'
@@ -23,8 +24,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.schemaregistry
-      cache_from:
-        - 'openjdk:8-jre'
     stdin_open: true
     restart: on-failure
     tty: true
