@@ -1,7 +1,7 @@
 version: '3'
 services:
   nifi:
-    image: 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:dev'
+    image: 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest'
     build: 
       context: .
     ports:
@@ -20,7 +20,7 @@ services:
     links:
       - 'schemaregistry:registry'
   schemaregistry:
-    image: 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-schemaregistry:dev'
+    image: 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-schemaregistry:latest'
     build:
       context: .
       dockerfile: Dockerfile.schemaregistry
