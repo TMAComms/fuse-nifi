@@ -1,3 +1,0 @@
-[submodule "thirdparty/nifi-connectors/nifi-azure-blob-connection-service-bundle"]
-	path = thirdparty/nifi-connectors/nifi-azure-blob-connection-service-bundle
-	url = https://github.com/keedio/nifi-azure-blob-connection-service-bundle.git
