@@ -1,9 +1,8 @@
 FROM apache/nifi:1.4.0
 LABEL Name=fuse-nifi Version=1.4.0
-MAINTAINER Andrei <andrei@tmacomms.com>
-ENV        BANNER_TEXT="" \
-           S2S_PORT=""
 #FROM openjdk:8-jre
+ENV NIFI_HOME=/opt/nifi/nifi-1.4.0
+ENV NIFI_BASE=/opt/nifi
 USER root
 RUN echo 'Acquire::HTTP::Proxy "http://squid.tmacomms.com:3128";' >> /etc/apt/apt.conf.d/01proxy \
  && echo 'Acquire::HTTPS::Proxy "";' >> /etc/apt/apt.conf.d/01proxy
@@ -11,7 +10,7 @@ RUN echo 'Acquire::HTTP::Proxy "http://squid.tmacomms.com:3128";' >> /etc/apt/ap
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get update && \
     apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl && apt-get update && \
-    apt-get install -y git mercurial apt-transport-https ca-certificates git bash 
+    apt-get install -y git mercurial apt-transport-https ca-certificates git bash ncdu dos2unix nano 
 
 RUN mkdir /downloads /nifi  /tmac/templates /tmac/archive /tmac/flow -p
 WORKDIR /downloads
@@ -39,10 +38,11 @@ RUN sudo chown -R nifi:nifi /opt/nifi
 
 #VOLUME /tmac/templates /tmac/archive /tmac/flow
 WORKDIR $NIFI_HOME
-ADD conf/tmac-nifi.sh bin/tmac-nifi.sh
+ADD config/tmac-nifi.sh bin/tmac-nifi.sh
 RUN sudo chmod 0777 bin/tmac-nifi.sh
-ADD conf/ssl/* /ssl/
+ADD config/ssl/* /ssl/
 
+# create a copy of the base config
 RUN mkdir -p /config-base && cp -R /opt/nifi/nifi-1.4.0/conf/* /config-base/
 RUN sudo chown -R nifi:nifi /config-base && sudo chmod -R 0777 /config-base
 
@@ -50,7 +50,9 @@ VOLUME /config-base
 
 # Web HTTP Port & Remote Site-to-Site Ports
 EXPOSE 8080 8181
+RUN echo "starting from ${NIFI_HOME}"  
 # Startup NiFi
-ENTRYPOINT ["bin/nifi.sh"]
+#ENTRYPOINT ["/opt/nifi/nifi-1.4.0/bin/tmac-nifi.sh"]
 
-CMD ["run"]
+#CMD ""
+
