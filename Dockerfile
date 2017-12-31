@@ -1,118 +1,90 @@
 #FROM tmacregistry-tmacomms.azurecr.io/tmacomms/basejdk8:latest
-FROM openjdk:8-jre
+FROM openjdk:8-jre 
 LABEL Name=fuse-nifi Version=1.4.0
-MAINTAINER Andrei <andrei@tmacomms.com>
 ENV        BANNER_TEXT="" \
            S2S_PORT=""
-#FROM openjdk:8-jre
-RUN echo 'Acquire::HTTP::Proxy "http://squid.tmacomms.com:3128";' >> /etc/apt/apt.conf.d/01proxy \
- && echo 'Acquire::HTTPS::Proxy "";' >> /etc/apt/apt.conf.d/01proxy
-USER root
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get update && \
-    apt-get install -y software-properties-common unzip tar zip sudo wget curl && apt-get update && \
-    apt-get install -y git mercurial apt-transport-https ca-certificates git
 
-# Get CrushFTP 7
-RUN mkdir -m 0755 /downloads /nifi/ /tmac/templates /tmac/archive /tmac/flow /etc/service/nifi  /ssl /download/baseconfig/ -p 
-RUN ls -l /
-WORKDIR /downloads
+RUN apt-get update &&   apt-get install -y apt-transport-https ca-certificates wget nano acl unzip 
+RUN wget -S -nc -progress=dot -O /usr/local/share/ca-certificates/tmac-devops.crt  https://caddy.tmacomms.com/myca.crt
 
+## removed as runnign in azure agent
+#ENV http_proxy="http://squid.tmacomms.com:3128"
+#ENV https_proxy="http://squid.tmacomms.com:3128"
+#ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
+ENV http_proxy=""
+ENV https_proxy=""
+RUN update-ca-certificates
+ARG ASPNETCORE_ENVIRONMENT=development
 ARG UID=1000
 ARG GID=1000
 ARG NIFI_VERSION=1.4.0
-ARG MIRROR=https://archive.apache.org/dist
+ARG MIRROR=http://archive.apache.org/dist
+ARG NIFI_HOME=/opt/nifi
+ENV NIFI_HOME=/opt/nifi 
+RUN apt-get update && \
+    apt-get install -qq -y software-properties-common unzip tar zip sudo wget curl \
+                      mercurial apt-transport-https ca-certificates git nano sudo rpl
+RUN echo "nifi ALL=(ALL) NOPASSWD:ALL" | tee -a /etc/sudoers
 
-ENV NIFI_BASE_DIR=/opt/nifi 
-ENV NIFI_HOME=$NIFI_BASE_DIR/nifi-$NIFI_VERSION \
-    NIFI_BINARY_URL=/nifi/$NIFI_VERSION/nifi-$NIFI_VERSION-bin.tar.gz \
-    NIFI_TOOLKIT_URL=/nifi/$NIFI_VERSION/nifi-toolkit-$NIFI_VERSION-bin.tar.gz
+# Set the timezone.
+RUN echo "Australia/Melbourne" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
+## based on install guide 
+COPY config/baseos/limits.conf /etc/security/limits.conf
+COPY config/baseos/sysctl.conf /etc/sysctl.conf
 
 # Setup NiFi user
 RUN groupadd -g $GID nifi || groupmod -n nifi `getent group $GID | cut -d: -f1` \
     && useradd --shell /bin/bash -u $UID -g $GID -m nifi \
-    && mkdir -p $NIFI_HOME/conf/templates \
-    && chown -R nifi:nifi $NIFI_BASE_DIR \
+    && mkdir -p $NIFI_HOME/conf/templates $NIFI_HOME/provenance_repository $NIFI_HOME/flowfile_repository  /opt/toolkit $NIFI_HOME/database_repository  $NIFI_HOME/content_repository /downloads/baseconfig /tmac/templates /tmac/flow/archive /tmac/working /ssl \
+    && chown -R nifi:nifi $NIFI_HOME \
     && chown -R nifi:nifi /downloads \
     && chown -R nifi:nifi /ssl \
-    && chown -R nifi:nifi /tmac \
-    && chown -R nifi:nifi /nifi 
-
-#USER nifi
+    && chown -R nifi:nifi /tmac 
+    
 
 # Download, validate, and expand Apache NiFi binary.
-#RUN curl -fSL $MIRROR/$NIFI_BINARY_URL -o $NIFI_BASE_DIR/nifi-$NIFI_VERSION-bin.tar.gz \
-#    && echo "$(curl https://archive.apache.org/dist/$NIFI_BINARY_URL.sha256) *$NIFI_BASE_DIR/nifi-$NIFI_VERSION-bin.tar.gz" | sha256sum -c - \
-#    && 
+RUN wget -N --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-1.4.0-bin.tar.gz \
+       && tar -xzvf /downloads/nifi-1.4.0-bin.tar.gz -C $NIFI_HOME --strip-components=1 && rm /downloads/nifi-1.4.0-bin.tar.gz
 
-USER nifi
-ADD artifcats/  /downloads/
-RUN ls -l
-RUN  tar -xvzf /downloads/nifi-$NIFI_VERSION-bin.tar.gz -C $NIFI_BASE_DIR 
+#toolkit
+RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-toolkit-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz \
+        && tar -xzvf /downloads/nifi-toolkit-1.4.0-bin.tar.gz -C /opt/toolkit --strip-components=1 && rm /downloads/nifi-toolkit-1.4.0-bin.tar.gz 
 
 
-#RUN wget http://apache.mirror.digitalpacific.com.au/$NIFI_TOOLKIT_URL -O /downloads/nifi-toolkit-$NIFI_VERSION-bin.tar.gz 
-#RUN   
-    #&& rm $NIFI_BASE_DIR/nifi-$NIFI_VERSION-bin.tar.gz \
-    #&& chown -R nifi:nifi $NIFI_HOME
-
-
-#RUN wget http://apache.mirror.digitalpacific.com.au/nifi/1.4.0/nifi-1.4.0-bin.tar.gz && wget http://apache.mirror.digitalpacific.com.au/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz && tar -xzvf nifi-1.4.0-bin.tar.gz -C /nifi --strip-components=1 && rm -rf /downloads/*
-
-# backup config
-
-
-
-#RUN cp  /nifi/conf/* /download/baseconfig/
-
-
-# add sample templates
-ADD templates/ /tmac/templates/ 
-WORKDIR  /nifi
-
-# Clean up APT when done.
-#RUN sudo apt-get clean && rm -rf /downloads/*
-RUN rm -rf /downloads/*
-
-
-
+# backup base conifg
+RUN cp -r $NIFI_HOME/conf/* /downloads/baseconfig
 
 # update config
-ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
-ADD conf/logback.xml /nifi/conf/logback.xml
-ADD conf/ssl/* /ssl/
-ADD conf/nifi.properties $NIFI_HOME/conf/nifi.properties
-#ADD conf/nifi.properties /tmac/nifi.base
+ADD templates/* $NIFI_HOME/conf/templates/
+ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
+#ADD config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
+ADD config/ssl/* /ssl/
+ADD config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
+ADD config/nifi/nifistarter.sh $NIFI_HOME/bin/nifistarter.sh
 
-#ADD conf/nifiserver.sh /etc/service/nifi/run
-#RUN chmod +x /etc/service/nifi/run
-RUN ls -l  $NIFI_HOME
-#RUN chmod +x $NIFI_HOME/bin/nifi.sh 
+RUN chmod +x $NIFI_HOME/bin/nifistarter.sh && chown -R nifi:nifi $NIFI_HOME && chown -R nifi:nifi /ssl  
+    
 
-#D:\bb\fuse\fuse-nifi\conf\nifi..properties
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
-# Use baseimage-docker's init system.
-#CMD ["/sbin/my_init"]
-VOLUME     /tmac/templates /tmac/archive /tmac/flow
 WORKDIR $NIFI_HOME
-#USER nifi
+# Clean up APT when done.
 
-#/etc/service/nifi
+
+VOLUME ["$NIFI_HOME/conf"]
+VOLUME ["/tmac/flow"]
+VOLUME ["$NIFI_HOME/database_repository"]
+VOLUME ["$NIFI_HOME/content_repository"]
+VOLUME ["$NIFI_HOME/provenance_repository"]
+VOLUME ["$NIFI_HOME/flowfile_repository"]
+
 
 # Web HTTP Port & Remote Site-to-Site Ports
-EXPOSE 8080 8181
-# Startup NiFi
-#ENTRYPOINT ["bin/nifi.sh"]
-#CMD ["run"]
+EXPOSE 8080 8181 8733 9090 8081
 
-# Run Teiid server and bind to all interface
-CMD ["/bin/sh", "-c", "$NIFI_HOME/bin/nifi.sh run"]
-#ENTRYPOINT ["bin/nifi.sh"]
-#CMD ["run"]
-#CMD ["bash"]
-#ENTRYPOINT ["./bin/nifi.sh run"]
-##CMD [" run"]
-#entrypoint: "./nifi/bin/nifi.sh run"
 
-# Define default command.
-#CMD ["/sbin/my_init", "/bin/bash"]
+# Run NIFI Server
+CMD ["/bin/sh", "-c", "/opt/nifi/bin/nifistarter.sh"]
+
+
+

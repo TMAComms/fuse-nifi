@@ -1,0 +1,44 @@
+FROM openjdk:8-jre
+LABEL Name=fuse-schemaregistry Version=0.4
+MAINTAINER Andrei <andrei@tmacomms.com>
+ENV        BANNER_TEXT="" \
+           S2S_PORT=""
+ENV REGISTRY_HOME=/schema-registry
+
+USER root
+RUN apt-get update &&   apt-get install -y apt-transport-https ca-certificates wget nano
+RUN wget -S -nc -progress=dot -O /usr/local/share/ca-certificates/tmac-devops.crt  https://caddy.tmacomms.com/myca.crt
+
+ENV http_proxy="http://squid.tmacomms.com:3128"
+ENV https_proxy="http://squid.tmacomms.com:3128"
+ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
+RUN update-ca-certificates
+
+
+
+# Get CrushFTP 7
+RUN mkdir /downloads /schema-registry
+WORKDIR /downloads
+ 
+
+RUN wget -N --show-progress --progress=bar:force --no-cookies -O /downloads/registry-0.4.0.tar.gz --no-check-certificate http://github.com/hortonworks/registry/releases/download/v0.4.0/registry-0.4.0.tar.gz  
+RUN tar -xzvf /downloads/registry-0.4.0.tar.gz -C $REGISTRY_HOME --strip-components=1 && rm  /downloads/registry-0.4.0.tar.gz
+RUN cp $REGISTRY_HOME/conf/registry.yaml.inmemory.example $REGISTRY_HOME/conf/registry.yaml     
+
+# start the server in fore-ground  
+# To start in daemon mode    
+# sudo  $REGISTRY_HOME/bin/registry start
+
+
+COPY config/schemaregistry/myinit.sh /sbin/my_init.sh
+RUN  chmod +x /sbin/my_init.sh
+
+EXPOSE 9090
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# Use baseimage-docker's init system.
+CMD ["/schema-registry/bin/registry-server-start.sh","/schema-registry/conf/registry.yaml"]
+#/sbin/my_init
+
+#exec "$REGISTRY_HOME/bin/registry-server-start.sh $REGISTRY_HOME/conf/registry.yaml"
+#exec "$REGISTRY_HOME/bin/registry-server-start.sh $REGISTRY_HOME/conf/registry.yaml"
