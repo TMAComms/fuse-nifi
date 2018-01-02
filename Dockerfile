@@ -12,7 +12,7 @@ RUN apt-get update && \
     apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl && apt-get update 
 RUN apt-get install -y git mercurial apt-transport-https ca-certificates git bash ncdu dos2unix nano  
 
-RUN mkdir /downloads /nifi  /tmac/templates /tmac/archive /tmac/flow -p
+RUN mkdir /downloads /nifi  /tmac/templates /tmac/archive /tmac/flow /baseconfig/original/ -p
 WORKDIR /downloads
 
 # remove proxy 
@@ -21,6 +21,10 @@ RUN rm /etc/apt/apt.conf.d/01proxy
 RUN apt-get clean && rm -rf /source/*
 
 # update config
+# copy a base versio of config 
+# create a copy of the base config
+RUN mkdir -p /config-base/original && cp -R $NIFI_HOME/conf/* /config-base/original/
+RUN sudo chown -R nifi:nifi /config-base && sudo chmod -R 0777 /config-base
 
 #ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 #ADD conf/logback.xml $NIFI_HOME/conf/logback.xml

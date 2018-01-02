@@ -5,8 +5,8 @@ services:
     build: 
       context: .
     ports:
-      - 8081/tcp
-      - 8080/tcp
+      - 8377:8081/tcp
+      - 8366:8080/tcp
       #- 8443/tcp
     labels:
       io.rancher.container.hostname_override: container_name
@@ -15,9 +15,23 @@ services:
       - CONF_INTERVAL=10
       - EVSENVIRONMENT=development
       - NIFI_HOME=/opt/nifi/nifi-1.4.0
-    restart: never
+    restart: always
     privileged: true
     stdin_open: true
     tty: true
+    links:
+      - 'schemaregistry:registry'
     volumes:
      - ./temp/:/opt/nifi/nifi-1.4.0/work/
+  schemaregistry:
+    image: 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-schemaregistry:latest'
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.schemaregistry
+    stdin_open: true
+    restart: on-failure
+    tty: true
+    expose:
+      - 9090/tcp
+    labels:
+      io.rancher.container.pull_image: always
