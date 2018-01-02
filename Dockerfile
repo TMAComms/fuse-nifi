@@ -16,7 +16,7 @@ RUN mkdir /downloads /nifi  /tmac/templates /tmac/archive /tmac/flow /baseconfig
 WORKDIR /downloads
 
 # remove proxy 
-RUN rm /etc/apt/apt.conf.d/01proxy
+#RUN rm /etc/apt/apt.conf.d/01proxy
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /source/*
 
