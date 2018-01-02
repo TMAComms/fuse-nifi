@@ -9,8 +9,8 @@ RUN echo 'Acquire::HTTP::Proxy "http://squid.tmacomms.com:3128";' >> /etc/apt/ap
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get update && \
-    apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl && apt-get update && \
-    apt-get install -y git mercurial apt-transport-https ca-certificates git bash ncdu dos2unix nano 
+    apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl && apt-get update 
+RUN apt-get install -y git mercurial apt-transport-https ca-certificates git bash ncdu dos2unix nano  
 
 RUN mkdir /downloads /nifi  /tmac/templates /tmac/archive /tmac/flow -p
 WORKDIR /downloads
@@ -25,7 +25,9 @@ RUN apt-get clean && rm -rf /source/*
 #ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 #ADD conf/logback.xml $NIFI_HOME/conf/logback.xml
 # ADD conf/ssl/* /ssl/
-# ADD conf/nifi.properties $NIFI_HOME/conf/nifi.properties
+COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
+COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
+#COPY config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 
 # add sample templates
 ADD templates/ /tmac/templates/ 
@@ -49,10 +51,11 @@ RUN sudo chown -R nifi:nifi /config-base && sudo chmod -R 0777 /config-base
 VOLUME /config-base
 
 # Web HTTP Port & Remote Site-to-Site Ports
-EXPOSE 8080 8181
+EXPOSE 8080 8181 8443
 RUN echo "starting from ${NIFI_HOME}"  
 # Startup NiFi
-#ENTRYPOINT ["/opt/nifi/nifi-1.4.0/bin/tmac-nifi.sh"]
+ENTRYPOINT ["/opt/nifi/nifi-1.4.0/bin/tmac-nifi.sh"]
+#USER nifi
 
-#CMD ""
+CMD ""
 

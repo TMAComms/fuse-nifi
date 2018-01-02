@@ -19,3 +19,5 @@ blobs\sha256\*
 images
 boxes
 artifcats
+temp/
+working/
