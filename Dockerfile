@@ -4,8 +4,8 @@ LABEL Name=fuse-nifi Version=1.4.0
 ENV NIFI_HOME=/opt/nifi/nifi-1.4.0
 ENV NIFI_BASE=/opt/nifi
 USER root
-RUN echo 'Acquire::HTTP::Proxy "http://squid.tmacomms.com:3128";' >> /etc/apt/apt.conf.d/01proxy \
- && echo 'Acquire::HTTPS::Proxy "";' >> /etc/apt/apt.conf.d/01proxy
+#RUN echo 'Acquire::HTTP::Proxy "http://squid.tmacomms.com:3128";' >> /etc/apt/apt.conf.d/01proxy \
+# && echo 'Acquire::HTTPS::Proxy "";' >> /etc/apt/apt.conf.d/01proxy
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get update && \
