@@ -15,7 +15,7 @@ services:
       - CONF_INTERVAL=10
       - EVSENVIRONMENT=development
       - NIFI_HOME=/opt/nifi/nifi-1.4.0
-    restart: never
+    #restart: never
     privileged: true
     stdin_open: true
     tty: true
