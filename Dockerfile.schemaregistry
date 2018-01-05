@@ -16,7 +16,6 @@ RUN update-ca-certificates
 
 
 
-# Get CrushFTP 7
 RUN mkdir /downloads /schema-registry
 WORKDIR /downloads
  
