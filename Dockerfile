@@ -20,11 +20,6 @@ WORKDIR /downloads
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /source/*
 
-# update config
-# copy a base versio of config 
-# create a copy of the base config
-RUN mkdir -p /config-base/original && cp -R $NIFI_HOME/conf/* /config-base/original/
-RUN sudo chown -R nifi:nifi /config-base && sudo chmod -R 0777 /config-base
 
 #ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 #ADD conf/logback.xml $NIFI_HOME/conf/logback.xml
@@ -34,8 +29,15 @@ COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 #COPY config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 
 # add sample templates
-ADD templates/ /tmac/templates/ 
+ADD templates/ /config/templates/ 
 RUN sudo chown -R nifi:nifi /opt/nifi
+
+
+# update config
+# copy a base versio of config 
+# create a copy of the base config
+RUN mkdir -p /config/base/ && cp -R $NIFI_HOME/conf/* /config/base
+RUN sudo chown -R nifi:nifi /config && sudo chmod -R 0777 /config
 
 #ADD conf/nifiserver.sh /etc/service/nifi/run
 #RUN chmod +x $NIFI_HOME/bin/tmac-nifi.sh
@@ -52,7 +54,7 @@ ADD config/ssl/* /ssl/
 RUN mkdir -p /config-base && cp -R /opt/nifi/nifi-1.4.0/conf/* /config-base/
 RUN sudo chown -R nifi:nifi /config-base && sudo chmod -R 0777 /config-base
 
-VOLUME /config-base
+VOLUME /config
 
 # Web HTTP Port & Remote Site-to-Site Ports
 EXPOSE 8080 8181 8443

@@ -6,6 +6,18 @@ echo "TMAC Nifi starter " ${NIFI_HOME}
 # `/sbin/setuser memcache` runs the given command as the user `memcache`.
 # If you omit that part, the command will be run as root.
 
+
+workifile="/config/working/nifi.properties"
+if [ -f "$file" ]
+then
+	echo "$file found."
+    echo "workign folder already moved to persistant storage - skipping"
+else
+	echo "$file not found.  Creating copy to persistant storage"
+    mkdir -p /config/working/
+    cp -R /config/base/* /config/working/
+fi
+
 #sed -i.bak "s/<author type=''>/<author type='Local'>/g" a.xml
 
 mkdir $NIFI_HOME/logs -p 
