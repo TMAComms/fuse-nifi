@@ -1,4 +1,4 @@
-FROM apache/nifi:1.4.0
+FROM tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:140base
 LABEL Name=fuse-nifi Version=1.4.0
 #FROM openjdk:8-jre
 ENV NIFI_HOME=/opt/nifi/nifi-1.4.0
