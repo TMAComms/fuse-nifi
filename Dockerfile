@@ -12,8 +12,14 @@ RUN apt-get update && \
     apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl && apt-get update 
 RUN apt-get install -y git mercurial apt-transport-https ca-certificates git bash ncdu dos2unix nano  
 
-RUN mkdir /downloads /nifi  /tmac/templates /tmac/archive /tmac/flow /baseconfig/original/ -p
+RUN mkdir /downloads /nifi  /tmac/templates /tmac/archive /tmac/flow /baseconfig/original/ /opt/toolkit -p
 WORKDIR /downloads
+
+
+#toolkit
+RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-toolkit-1.4.0-bin.tar.gz http://apache.melbourneitmirror.net/nifi/1.4.0/nifi-toolkit-1.4.0-bin.tar.gz
+RUN tar -xzvf /downloads/nifi-toolkit-1.4.0-bin.tar.gz -C /opt/toolkit --strip-components=1 && rm /downloads/nifi-toolkit-1.4.0-bin.tar.gz 
+
 
 # remove proxy 
 #RUN rm /etc/apt/apt.conf.d/01proxy
@@ -24,7 +30,9 @@ RUN apt-get clean && rm -rf /source/*
 #ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 #ADD conf/logback.xml $NIFI_HOME/conf/logback.xml
 # ADD conf/ssl/* /ssl/
-COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
+COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
+COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.base.properties
+COPY config/nifi/nifi.openid.properties $NIFI_HOME/conf/nifi.properties
 COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 #COPY config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 

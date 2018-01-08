@@ -2,11 +2,12 @@ version: '3'
 services:
   nifi:
     image: 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest'
+    network_mode: "host"
     build: 
       context: .
     ports:
-      - 8081/tcp
-      - 8080/tcp
+      - 0.0.0.0:8080:8080/tcp
+      - 0.0.0.0:8443:8443/tcp
       #- 8443/tcp
     labels:
       io.rancher.container.hostname_override: container_name
@@ -15,9 +16,16 @@ services:
       - CONF_INTERVAL=10
       - EVSENVIRONMENT=development
       - NIFI_HOME=/opt/nifi/nifi-1.4.0
-    restart: never
+    #restart: never
     privileged: true
     stdin_open: true
     tty: true
     volumes:
      - ./temp/:/opt/nifi/nifi-1.4.0/work/
+#networks:
+#  host:
+#    external: true     
+networks:
+  default:
+    external:
+      name: host

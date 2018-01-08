@@ -106,7 +106,7 @@
     <logger name="org.apache.nifi.cluster" level="INFO"/>
 
     <!-- Logger for logging HTTP requests received by the web server. -->
-    <logger name="org.apache.nifi.server.JettyServer" level="WARN"/>
+    <logger name="org.apache.nifi.server.JettyServer" level="INFO"/>
 
     <!-- Logger for managing logging statements for jetty -->
     <logger name="org.eclipse.jetty" level="WARN"/>

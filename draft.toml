@@ -1,0 +1,8 @@
+[environments]
+  [environments.development]
+    name = "nifiserver"
+    namespace = "nifi"
+    wait = false
+    watch = false
+    watch_delay = 2
+

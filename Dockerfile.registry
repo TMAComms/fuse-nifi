@@ -1,0 +1,28 @@
+FROM tmacregistry-tmacomms.azurecr.io/tmacomms/tmac-tools:latest
+LABEL Name=nifiregistry Version=1.0
+USER root
+RUN mkdir /src -p
+RUN apt-get update && apt-get install maven -y
+RUN git clone https://git-wip-us.apache.org/repos/asf/nifi-registry.git /src/nifiregistry
+WORKDIR /src/nifiregistry
+RUN  git checkout master
+RUN mvn dependency:go-offline
+RUN  mvn clean install
+RUN  ./bin/nifi-registry.sh start
+# cd nifi-registry-assembly/target/nifi-registry-<VERSION>-bin/nifi-registry-<VERSION>/
+
+
+
+
+#RUN sudo chmod +x /scripts/*.sh
+# set up client tools
+#RUN ./scripts/setuprancherclient.sh
+#RUN curl https://raw.githubusercontent.com/joemiller/docker-tail/master/docker-tail > /usr/local/bin/docker-tail && chmod +x /usr/local/bin/docker-tail 
+
+#RUN ./scripts/setup-habitus.sh
+# ansible-playbook -i "localhoste," -c local linuxsoe.yaml
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+#USER tmacdevops
+#CMD [bash]
