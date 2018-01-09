@@ -8,12 +8,12 @@ echo "TMAC Nifi starter " ${NIFI_HOME}
 
 
 workifile="$NIFI_HOME/conf/nifi.properties"
-if [ -f "$file" ]
+if [ -f "$workifile" ]
 then
-	echo "$file found."
+	echo "$workifile found."
     echo "workign folder already moved to persistant storage - skipping"
 else
-	echo "$file not found.  Creating copy to persistant storage"
+	echo "$workifile not found.  Creating copy to persistant storage"
     mkdir -p $NIFI_HOME/conf/
     cp -R /config/base/* $NIFI_HOME/conf/
 fi
