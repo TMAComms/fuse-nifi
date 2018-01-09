@@ -8,7 +8,7 @@ USER root
 
 #ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
-COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.base.properties
+#COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.base.properties
 COPY config/nifi/nifi.openid.properties $NIFI_HOME/conf/nifi.properties
 COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 #COPY config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
