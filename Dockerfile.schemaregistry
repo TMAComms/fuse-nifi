@@ -41,3 +41,5 @@ CMD ["/schema-registry/bin/registry-server-start.sh","/schema-registry/conf/regi
 
 #exec "$REGISTRY_HOME/bin/registry-server-start.sh $REGISTRY_HOME/conf/registry.yaml"
 #exec "$REGISTRY_HOME/bin/registry-server-start.sh $REGISTRY_HOME/conf/registry.yaml"
+
+
