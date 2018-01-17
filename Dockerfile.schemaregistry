@@ -1,5 +1,5 @@
 FROM openjdk:8-jre
-LABEL Name=fuse-schemaregistry Version=0.4
+LABEL Name=fuse-schemaregistry Version=0.3
 MAINTAINER Andrei <andrei@tmacomms.com>
 ENV        BANNER_TEXT="" \
            S2S_PORT=""
@@ -20,8 +20,8 @@ RUN mkdir /downloads /schema-registry
 WORKDIR /downloads
  
 
-RUN wget -N --show-progress --progress=bar:force --no-cookies -O /downloads/registry-0.4.0.tar.gz --no-check-certificate http://github.com/hortonworks/registry/releases/download/v0.4.0/registry-0.4.0.tar.gz  
-RUN tar -xzvf /downloads/registry-0.4.0.tar.gz -C $REGISTRY_HOME --strip-components=1 && rm  /downloads/registry-0.4.0.tar.gz
+RUN wget -N --show-progress --progress=bar:force --no-cookies -O /downloads/registry-0.3.0.tar.gz --no-check-certificate http://github.com/hortonworks/registry/releases/download/v0.3.0/registry-0.3.0.tar.gz  
+RUN tar -xzvf /downloads/registry-0.3.0.tar.gz -C $REGISTRY_HOME --strip-components=1 && rm  /downloads/registry-0.3.0.tar.gz
 RUN cp $REGISTRY_HOME/conf/registry.yaml.inmemory.example $REGISTRY_HOME/conf/registry.yaml     
 
 # start the server in fore-ground  
