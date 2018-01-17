@@ -1,6 +1,5 @@
 FROM openjdk:8-jre
 LABEL Name=fuse-schemaregistry Version=0.3
-MAINTAINER Andrei <andrei@tmacomms.com>
 ENV        BANNER_TEXT="" \
            S2S_PORT=""
 ENV REGISTRY_HOME=/schema-registry
