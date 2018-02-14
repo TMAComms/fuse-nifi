@@ -1,7 +1,7 @@
 [environments]
   [environments.development]
-    name = "fuse-nifi"
+    name = "nifi"
     namespace = "default"
     wait = false
-    watch = false
+    watch = true
     watch_delay = 2

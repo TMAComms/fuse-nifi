@@ -1,0 +1,30 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    k8s-app: traefik-ingress-lb    
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}    
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    traefik.frontend.rule: "Host: fusenifi.{{ .Values.netclusterdnszone }}"    
+    kubernetes.io/tls-acme: "true"      
+    kubernetes.io/ingress.allow-http: "true"
+    traefik.frontend.entryPoints: http,https    
+spec:
+  tls:
+  - secretName: fusenifi-certs
+    hosts: 
+    - "Host: fusenifi.{{ .Values.netclusterdnszone }}"  
+  rules:
+  - host: {{ .Release.Name }}.{{ .Values.basedomain }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: fusenifi
+          servicePort: {{ .Values.service.externalPort }}
+{{- end -}}
