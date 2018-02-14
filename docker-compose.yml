@@ -1,31 +1,45 @@
 version: '3'
 services:
   nifi:
-    image: 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest'
-    network_mode: "host"
+    image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest
+    #apache/nifi:1.5.0  
+    # 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest'
+#    network_mode: "host"
     build: 
       context: .
+      dockerfile: Dockerfile
     ports:
       - 0.0.0.0:8080:8080/tcp
       - 0.0.0.0:8443:8443/tcp
       #- 8443/tcp
     labels:
-      io.rancher.container.hostname_override: container_name
+      io.rancher.container.hostname_override: nifi15
       io.rancher.container.pull_image: always
     environment:
       - CONF_INTERVAL=10
       - EVSENVIRONMENT=development
-      - NIFI_HOME=/opt/nifi/nifi-1.4.0
+#      - NIFI_HOME=/opt/nifi/nifi-1.5.0
+
     #restart: never
     privileged: true
     stdin_open: true
     tty: true
-    volumes:
-     - ./temp/:/opt/nifi/nifi-1.4.0/work/
+  registry:
+   image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifiregistry:latest
+   build: 
+    context: .
+    dockerfile: Dockerfile.registry
+   ports:
+      - 0.0.0.0:18080:18080/tcp    
+   privileged: true
+   stdin_open: true
+   tty: true
+#    volumes:
+#     - ./temp/:/opt/nifi/nifi-1.4.0/work/
 #networks:
 #  host:
 #    external: true     
-networks:
-  default:
-    external:
-      name: host
+#networks:
+#  default:
+#    external:
+#      name: host

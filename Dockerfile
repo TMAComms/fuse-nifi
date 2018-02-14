@@ -1,17 +1,10 @@
 #FROM tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:150base
-FROM apache/nifi:1.5.0
+FROM tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:1.5.0
 LABEL Name=fuse-nifi Version=1.5.0
 #FROM openjdk:8-jre
 ENV NIFI_HOME=/opt/nifi/nifi-1.5.0
 ENV NIFI_BASE=/opt/nifi
 USER root
-#RUN echo 'Acquire::HTTP::Proxy "http://squid.tmacomms.com:3128";' >> /etc/apt/apt.conf.d/01proxy \
-# && echo 'Acquire::HTTPS::Proxy "";' >> /etc/apt/apt.conf.d/01proxy
-
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get update && \
-    apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl && apt-get update 
-RUN apt-get install -y git mercurial apt-transport-https ca-certificates git bash ncdu dos2unix nano  
 
 
 
