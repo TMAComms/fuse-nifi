@@ -1,7 +1,7 @@
-FROM tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:140base
-LABEL Name=fuse-nifi Version=1.4.0
+FROM tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:150base
+LABEL Name=fuse-nifi Version=1.5.0
 #FROM openjdk:8-jre
-ENV NIFI_HOME=/opt/nifi/nifi-1.4.0
+ENV NIFI_HOME=/opt/nifi/nifi-1.5.0
 ENV NIFI_BASE=/opt/nifi
 USER root
 
@@ -24,6 +24,7 @@ RUN sudo chown -R nifi:nifi /opt/nifi
 RUN mkdir -p /config/base/ && cp -R $NIFI_HOME/conf/* /config/base && sudo chown -R nifi:nifi /config && sudo chmod -R 0777 /config
 
 
+
 WORKDIR $NIFI_HOME
 ADD config/tmac-nifi.sh bin/tmac-nifi.sh
 RUN sudo chmod 0777 bin/tmac-nifi.sh
@@ -34,7 +35,7 @@ VOLUME /config
 # Web HTTP Port & Remote Site-to-Site Ports
 EXPOSE 8080 8181 8443
 # Startup NiFi
-ENTRYPOINT ["/opt/nifi/nifi-1.4.0/bin/tmac-nifi.sh"]
+ENTRYPOINT ["/opt/nifi/nifi-1.5.0/bin/tmac-nifi.sh"]
 #USER nifi
 
 CMD ""
