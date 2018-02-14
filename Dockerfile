@@ -24,6 +24,7 @@ RUN sudo chown -R nifi:nifi /opt/nifi
 RUN mkdir -p /config/base/ && cp -R $NIFI_HOME/conf/* /config/base && sudo chown -R nifi:nifi /config && sudo chmod -R 0777 /config
 
 
+
 WORKDIR $NIFI_HOME
 ADD config/tmac-nifi.sh bin/tmac-nifi.sh
 RUN sudo chmod 0777 bin/tmac-nifi.sh
