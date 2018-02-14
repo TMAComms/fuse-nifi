@@ -1,7 +1,7 @@
-FROM tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:140base
-LABEL Name=fuse-nifi Version=1.4.0
+FROM tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:150base
+LABEL Name=fuse-nifi Version=1.5.0
 #FROM openjdk:8-jre
-ENV NIFI_HOME=/opt/nifi/nifi-1.4.0
+ENV NIFI_HOME=/opt/nifi/nifi-1.5.0
 ENV NIFI_BASE=/opt/nifi
 USER root
 
