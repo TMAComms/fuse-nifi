@@ -1,28 +1,18 @@
-FROM tmacregistry-tmacomms.azurecr.io/tmacomms/tmac-tools:latest
-LABEL Name=nifiregistry Version=1.0
+FROM openjdk:8u151-jdk
+LABEL Name=nifiregistry Version=0.10
 USER root
-RUN mkdir /src -p
-RUN apt-get update && apt-get install maven -y
-RUN git clone https://git-wip-us.apache.org/repos/asf/nifi-registry.git /src/nifiregistry
-WORKDIR /src/nifiregistry
-RUN  git checkout master
-RUN mvn dependency:go-offline
-RUN  mvn clean install
-RUN  ./bin/nifi-registry.sh start
-# cd nifi-registry-assembly/target/nifi-registry-<VERSION>-bin/nifi-registry-<VERSION>/
+ENV NIFI_REGISTRYBASE=/opt/nifiregistry
 
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl git apt-transport-https ca-certificates git bash ncdu dos2unix nano  \
+     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
+RUN mkdir /downloads /opt/nifiregistry
+#toolkit
+RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-registry-0.1.0-bin.tar.gz http://mirror.ventraip.net.au/apache/nifi/nifi-registry/nifi-registry-0.1.0/nifi-registry-0.1.0-bin.tar.gz \
+        && tar -xzvf /downloads/nifi-registry-0.1.0-bin.tar.gz -C $NIFI_REGISTRYBASE --strip-components=1 && rm /downloads/nifi-registry-0.1.0-bin.tar.gz 
+RUN ls -l $NIFI_REGISTRYBASE/bin
+EXPOSE 18080
+ENTRYPOINT ["/opt/nifiregistry/bin/nifi-registry.sh","run"]
+CMD ["RUN"]
 
-
-#RUN sudo chmod +x /scripts/*.sh
-# set up client tools
-#RUN ./scripts/setuprancherclient.sh
-#RUN curl https://raw.githubusercontent.com/joemiller/docker-tail/master/docker-tail > /usr/local/bin/docker-tail && chmod +x /usr/local/bin/docker-tail 
-
-#RUN ./scripts/setup-habitus.sh
-# ansible-playbook -i "localhoste," -c local linuxsoe.yaml
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-#USER tmacdevops
-#CMD [bash]
