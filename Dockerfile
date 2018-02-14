@@ -35,7 +35,7 @@ VOLUME /config
 # Web HTTP Port & Remote Site-to-Site Ports
 EXPOSE 8080 8181 8443
 # Startup NiFi
-ENTRYPOINT ["/opt/nifi/nifi-1.4.0/bin/tmac-nifi.sh"]
+ENTRYPOINT ["/opt/nifi/nifi-1.5.0/bin/tmac-nifi.sh"]
 #USER nifi
 
 CMD ""
