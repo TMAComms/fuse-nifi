@@ -39,8 +39,6 @@ COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 # create a copy of the base config
 #RUN mkdir -p /config/base/ && cp -R $NIFI_HOME/conf/* /config/base && sudo chown -R nifi:nifi /config && sudo chmod -R 0777 /config
 
-WORKDIR $NIFI_HOME
-ADD config/tmac-nifi.sh ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
 
 #RUN sudo chmod 0777 bin/tmac-nifi.sh
 ADD config/ssl/* /ssl/
@@ -53,7 +51,10 @@ EXPOSE 8080 8181 8443
 #ENTRYPOINT ["/opt/nifi/nifi-1.5.0/bin/tmac-nifi.sh"]
 #USER nifi
 
-#CMD ""
+USER nifi
+WORKDIR $NIFI_HOME
+ADD config/tmac-nifi.sh ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
+RUN chmod 0777 ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
 
 # Apply configuration and start NiFi
 CMD ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
