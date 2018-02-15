@@ -4,13 +4,20 @@ LABEL Name=fuse-nifi Version=1.5.0
 #FROM openjdk:8-jre
 ENV NIFI_HOME=/opt/nifi/nifi-1.5.0
 ENV NIFI_BASE=/opt/nifi
+ENV NIFI_TOOLKIT=/opt/nifitoolkit
+ENV NIFITOOLKIT_FILE=nifi-toolkit-1.5.0-bin.tar.gz
 #USER root
 
 # Install kubectl binary via curl
-RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
-  &&  chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
+#RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
+#  &&  chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
 
-RUN /bin/hostname -i
+RUN mkdir /opt/nifitoolkit /downloads
+
+
+RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/${NIFITOOLKIT_FILE} http://apache.mirror.amaze.com.au/nifi/1.5.0/${NIFITOOLKIT_FILE} 
+RUN tar -xzvf /downloads/${NIFITOOLKIT_FILE} -C $NIFI_TOOLKIT --strip-components=1 && rm /downloads/${NIFITOOLKIT_FILE}
+
 
 
 
