@@ -17,7 +17,7 @@ ENV NIFI_BASE=/opt/nifi
 
 #ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 #COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
-#COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.base.properties
+COPY config/nifi.properties $NIFI_HOME/conf/nifi.properties
 #COPY config/nifi/nifi.openid.properties $NIFI_HOME/conf/nifi.properties
 COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 #COPY config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
@@ -37,7 +37,7 @@ COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 WORKDIR $NIFI_HOME
 #ADD config/tmac-nifi.sh bin/tmac-nifi.sh
 #RUN sudo chmod 0777 bin/tmac-nifi.sh
-#ADD config/ssl/* /ssl/
+ADD config/ssl/* /ssl/
 
 VOLUME /config
 
