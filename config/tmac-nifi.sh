@@ -20,8 +20,8 @@ cp /etc/hosts /etc/hosts.tmacbak
 echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
 
 echo "Setting up local ip " ${TMPHOSTIP}
-NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
-export NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
+#NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
+#export NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
 
 echo "TMAC Nifi running up nifi " 
 ${NIFI_BASE_DIR}/scripts/start.sh
