@@ -6,13 +6,20 @@ ENV NIFI_HOME=/opt/nifi/nifi-1.5.0
 ENV NIFI_BASE=/opt/nifi
 #USER root
 
+# Install kubectl binary via curl
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
+  &&  chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
+
+RUN /bin/hostname -i
 
 
-LABEL Name=fuse-nifi Version=1.5.0
-#FROM openjdk:8-jre
-ENV NIFI_HOME=/opt/nifi/nifi-1.5.0
-ENV NIFI_BASE=/opt/nifi
-#USER root
+
+# apt-get update && apt-get install -y apt-transport-https && curl -s http://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
+#     cat <<EOF >/etc/apt/sources.list.d/kubernetes.list \
+#     deb http://apt.kubernetes.io/ kubernetes-xenial main \
+#     EOF
+#RUN apt-get update -q && apt-get install -y -q kubelet kubectl
+
 
 
 #ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
@@ -32,10 +39,9 @@ COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 # create a copy of the base config
 #RUN mkdir -p /config/base/ && cp -R $NIFI_HOME/conf/* /config/base && sudo chown -R nifi:nifi /config && sudo chmod -R 0777 /config
 
-
-
 WORKDIR $NIFI_HOME
-#ADD config/tmac-nifi.sh bin/tmac-nifi.sh
+ADD config/tmac-nifi.sh ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
+
 #RUN sudo chmod 0777 bin/tmac-nifi.sh
 ADD config/ssl/* /ssl/
 
@@ -49,3 +55,5 @@ EXPOSE 8080 8181 8443
 
 #CMD ""
 
+# Apply configuration and start NiFi
+CMD ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
