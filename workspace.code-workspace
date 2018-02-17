@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "D:\\bb\\fuse\\lemur"
+		}
+	],
+	"settings": {
+		"files.autoSave": "afterDelay",
+		"workbench.editor.showTabs": true,
+		"workbench.editor.showIcons": true,
+		"workbench.statusBar.visible": true,
+		"docker.defaultRegistryPath": "tmacomms",
+		"docker.defaultRegistry": "tmacregistry-tmacomms.azurecr.io"
+	}
+}
