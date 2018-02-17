@@ -1,7 +1,9 @@
 version: '3'
 services:
+
+## docker run -it --rm -p 8080:8080 -e NIFI_WEB_HTTP_HOST=tmac-devops1681939944003.australiaeast.cloudapp.azure.com -v nifi:/tmac fusenifi
   nifi:
-    image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest
+    image: tmacregistry-tmacomms.azurecr.io/tmacomms/fusenifi:latest
     #apache/nifi:1.5.0  
     # 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest'
 #    network_mode: "host"
