@@ -33,12 +33,17 @@ RUN tar -xzvf /downloads/${NIFITOOLKIT_FILE} -C $NIFI_TOOLKIT --strip-components
 #COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
 #COPY config/nifi.properties $NIFI_HOME/conf/nifi.properties
 #COPY config/nifi/nifi.openid.properties $NIFI_HOME/conf/nifi.properties
+
+COPY tlskit/generated/nifilocal/nifi.properties $NIFI_HOME/conf/nifi.properties
+COPY tlskit/generated/nifilocal/truststore.jks $NIFI_HOME/conf/truststore.jks
+COPY tlskit/generated/nifilocal/keystore.jks $NIFI_HOME/conf/keystore.jks
+
 COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 #COPY config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 
 # add sample templates
 ADD templates/ $NIFI_HOME/conf/templates/ 
-RUN sudo chown -R nifi:nifi $NIFI_HOME/conf/templates/ 
+RUN sudo chown -R nifi:nifi $NIFI_HOME/conf/
 
 
 # update config
