@@ -35,9 +35,9 @@ echo "Update ssl config done"
 configbase=$NIFI_HOME/conf/nifi.properties
 echo "Update openid settings for " ${EVS_SERVICEDNS} 
 echo "File to update " ${configbase} 
-sed -i "s/{EVS_AUTHDISCOVERYURL}/${EVS_AUTHDISCOVERYURL}/" configbase
-sed -i "s/{EVS_AUTHCLIENTID}/${EVS_AUTHCLIENTID}/" configbase
-sed -i "s/{EVS_AUTHCLIENTSECRET}/${EVS_AUTHCLIENTSECRET}/" configbase
+sed -i "s~{EVS_AUTHDISCOVERYURL}~${EVS_AUTHDISCOVERYURL}~" configbase
+sed -i "s~{{EVS_AUTHCLIENTID}~{${EVS_AUTHCLIENTID}~" configbase
+sed -i "s~{EVS_AUTHCLIENTSECRET}~${EVS_AUTHCLIENTSECRET}~" configbase
 echo "Update openid settings completed " 
 
 echo "Setting up local ip " ${TMPHOSTIP}
@@ -46,3 +46,4 @@ echo "Setting up local ip " ${TMPHOSTIP}
 
 echo "TMAC Nifi running up nifi " 
 ${NIFI_BASE_DIR}/scripts/start.sh
+
