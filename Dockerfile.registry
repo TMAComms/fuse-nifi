@@ -16,7 +16,7 @@ RUN ls -l $NIFI_REGISTRYBASE/bin
 # update config
 # copy a base versio of config 
 # create a copy of the base config
-RUN mkdir -p /config/base/ && cp -R $NIFI_REGISTRYBASE/conf/* /config/base && sudo chown -R nifi:nifi /config && sudo chmod -R 0777 /config
+RUN mkdir -p /config/base/ && cp -R $NIFI_REGISTRYBASE/conf/* /config/base &&  sudo chmod -R 0777 /config
 
 WORKDIR $NIFI_REGISTRYBASE
 ADD config/nifiregistry/tmac-nifi.sh ${NIFI_REGISTRYBASE}/scripts/tmac-nifi.sh
