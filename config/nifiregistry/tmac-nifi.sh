@@ -41,12 +41,6 @@ cp /etc/hosts /etc/hosts.tmacbak
 echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
 
 
-echo "Update ssl config for " ${EVS_SERVICEDNS}
-#cp -f /tlskit/generated/${EVS_SERVICEDNS}/nifi.properties $NIFI_HOME/conf/nifi.properties
-cp -f /tlskit/generated/${EVS_SERVICEDNS}/truststore.jks $NIFI_REGISTRYBASE/conf/truststore.jks
-cp -f /tlskit/generated/${EVS_SERVICEDNS}/keystore.jks $NIFI_REGISTRYBASE/conf/keystore.jks
-echo "Update ssl config done"
-
 
 
 echo "Setting up local ip " ${TMPHOSTIP}

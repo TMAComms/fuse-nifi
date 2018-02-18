@@ -44,7 +44,14 @@ services:
     context: .
     dockerfile: Dockerfile.registry
    ports:
-      - 9445:18080/tcp    
+      - 18080:18080/tcp    
+   environment:
+      - CONF_INTERVAL=10
+      - EVSENVIRONMENT=development
+      - NIFI_WEB_HTTPS_HOST=nifiregistry-dev.tmacomms.com  
+      - NIFI_WEB_HTTPS_PORT=9443
+#      - NIFI_REMOTE_INPUT_HOST=localhost
+      - EVS_SERVICEDNS=nifiregistry-dev.tmacomms.com      
    privileged: true
    stdin_open: true
    tty: true
