@@ -12,6 +12,7 @@ RUN mkdir /downloads /opt/nifiregistry
 RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-registry-0.1.0-bin.tar.gz http://mirror.ventraip.net.au/apache/nifi/nifi-registry/nifi-registry-0.1.0/nifi-registry-0.1.0-bin.tar.gz \
         && tar -xzvf /downloads/nifi-registry-0.1.0-bin.tar.gz -C $NIFI_REGISTRYBASE --strip-components=1 && rm /downloads/nifi-registry-0.1.0-bin.tar.gz 
 
+COPY tlskit/ /tlskit/
 
 # update config
 # copy a base versio of config 
