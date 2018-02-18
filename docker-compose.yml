@@ -13,6 +13,7 @@ services:
     ports:
       - 0.0.0.0:8080:8080/tcp
       - 0.0.0.0:8443:8443/tcp
+      - 0.0.0.0:9443:9443/tcp      
       #- 8443/tcp
     labels:
       io.rancher.container.hostname_override: nifi15
@@ -20,15 +21,19 @@ services:
     environment:
       - CONF_INTERVAL=10
       - EVSENVIRONMENT=development
-      - NIFI_WEB_HTTP_PORT=8080
-      - NIFI_WEB_HTTP_HOST=localhost
+      - NIFI_WEB_HTTPS_HOST=nifilocal
+      - NIFI_WEB_HTTPS_PORT=9443
       - NIFI_REMOTE_INPUT_HOST=localhost
       - EVS_SERVICEDNS=nifi
-      #- NIFI_REMOTE_INPUT_SOCKET_PORT=-10000
 
-#      - NIFI_HOME=/opt/nifi/nifi-1.5.0
+      - EVS_SERVICEDNS=nifilocal
+      #- NIFI_REMOTE_INPUT_SOCKET_PORT=-10000
+      - NIFI_HOME=/opt/nifi/nifi-1.5.0
     volumes:
-     - ./temp/:/tmac/
+     - /datadrive/nifi/work:/opt/nifi/nifi-1.5.0/work \
+     - /datadrive/nifi/toolkit:/toolkit 
+    
+
     #restart: never
     privileged: true
     stdin_open: true
@@ -52,3 +57,8 @@ services:
 #  default:
 #    external:
 #      name: host
+
+
+volumes:
+  nificonfig:
+  
