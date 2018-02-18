@@ -41,6 +41,19 @@ cp /etc/hosts /etc/hosts.tmacbak
 echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
 
 
+echo "Update ssl config for " ${EVS_SERVICEDNS}
+#cp -f /tlskit/generated/${EVS_SERVICEDNS}/nifi.properties $NIFI_HOME/conf/nifi.properties
+cp -f /tlskit/generated/${EVS_SERVICEDNS}/truststore.jks $NIFI_REGISTRYBASE/conf/truststore.jks
+cp -f /tlskit/generated/${EVS_SERVICEDNS}/keystore.jks $NIFI_REGISTRYBASE/conf/keystore.jks
+echo "Update ssl config done"
+
+
+echo "Update openid settings for " ${EVS_SERVICEDNS} 
+sed -i "s~{EVS_AUTHDISCOVERYURL}~${EVS_AUTHDISCOVERYURL}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
+sed -i "s~{EVS_AUTHCLIENTID}~${EVS_AUTHCLIENTID}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
+sed -i "s~{EVS_AUTHCLIENTSECRET}~${EVS_AUTHCLIENTSECRET}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
+echo "Update openid settings completed " 
+
 
 
 echo "Setting up local ip " ${TMPHOSTIP}

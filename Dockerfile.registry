@@ -14,6 +14,8 @@ RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificat
 
 COPY tlskit/ /tlskit/
 
+COPY comfig/nifiregistry/nifi-registry.properties /opt/nifiregistry/conf/#nifi-registry.properties
+
 # update config
 # copy a base versio of config 
 # create a copy of the base config

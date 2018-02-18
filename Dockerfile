@@ -24,14 +24,14 @@ RUN tar -xzvf /downloads/${NIFITOOLKIT_FILE} -C $NIFI_TOOLKIT --strip-components
 
 #ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 #COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
-#COPY config/nifi.properties $NIFI_HOME/conf/nifi.properties
+COPY config/nifi.properties $NIFI_HOME/conf/nifi.properties
 #COPY config/nifi/nifi.openid.properties $NIFI_HOME/conf/nifi.properties
 #COPY tlskit/genssl.sh /opt/nifi/genssl.sh
 #RUN sudo chmod 0777 /opt/nifi/genssl.sh
 
 ENV TLSPATH=nifi-dev.tmacomms.com
 COPY tlskit/ /tlskit/
-COPY tlskit/generated/${TLSPATH}/nifi.properties $NIFI_HOME/conf/nifi.properties
+COPY comfig/nifiregistry/#nifi-registry.properties $NIFI_HOME/conf/#nifi-registry.properties
 COPY tlskit/generated/${TLSPATH}/truststore.jks $NIFI_HOME/conf/truststore.jks
 COPY tlskit/generated/${TLSPATH}/keystore.jks $NIFI_HOME/conf/keystore.jks
 
@@ -52,7 +52,7 @@ RUN sudo chown -R nifi:nifi $NIFI_HOME/conf/ && chmod 0777 /tlskit/genssl.sh
 # create a copy of the base config
 RUN mkdir -p /config/base/ && cp -R $NIFI_HOME/conf/* /config/base && sudo chown -R nifi:nifi /config && sudo chmod -R 0777 /config
 
-
+#nifi-registry.properties
 #RUN sudo chmod 0777 bin/tmac-nifi.sh
 ADD config/ssl/* /ssl/
 
