@@ -33,7 +33,8 @@ services:
     volumes:
      - /datadrive/nifi/work:/opt/nifi/nifi-1.5.0/work \
      - /datadrive/nifi/toolkit:/toolkit 
-    
+    links:
+      - registry
 
     #restart: never
     privileged: true
