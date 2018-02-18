@@ -10,6 +10,7 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
+    hostname: nifi-dev.tmacomms.com
     ports:
       - 0.0.0.0:8080:8080/tcp
       - 0.0.0.0:8443:8443/tcp
@@ -21,12 +22,12 @@ services:
     environment:
       - CONF_INTERVAL=10
       - EVSENVIRONMENT=development
-      - NIFI_WEB_HTTPS_HOST=nifilocal
+      - NIFI_WEB_HTTPS_HOST=nifi-dev.tmacomms.com
       - NIFI_WEB_HTTPS_PORT=9443
-      - NIFI_REMOTE_INPUT_HOST=localhost
-      - EVS_SERVICEDNS=nifi
+#      - NIFI_REMOTE_INPUT_HOST=localhost
+      - EVS_SERVICEDNS=nifi-dev.tmacomms.com
 
-      - EVS_SERVICEDNS=nifilocal
+      
       #- NIFI_REMOTE_INPUT_SOCKET_PORT=-10000
       - NIFI_HOME=/opt/nifi/nifi-1.5.0
     volumes:
