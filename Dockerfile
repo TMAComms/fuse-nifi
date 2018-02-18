@@ -42,6 +42,8 @@ COPY tlskit/generated/${TLSPATH}/nifi.properties $NIFI_HOME/conf/nifi.properties
 COPY tlskit/generated/${TLSPATH}/truststore.jks $NIFI_HOME/conf/truststore.jks
 COPY tlskit/generated/${TLSPATH}/keystore.jks $NIFI_HOME/conf/keystore.jks
 
+
+COPY config/authorizers.xml $NIFI_HOME/conf/authorizers.xml
 COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 #COPY config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 
