@@ -44,6 +44,8 @@ COPY tlskit/generated/${TLSPATH}/keystore.jks $NIFI_HOME/conf/keystore.jks
 
 
 COPY config/authorizers.xml $NIFI_HOME/conf/authorizers.xml
+#  https://community.hortonworks.com/questions/131557/nifi-authorizercreationexception-unable-to-locate.html
+RUN rm -f $NIFI_HOME/conf/authorizations.xml $NIFI_HOME/conf/users.xml
 COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 #COPY config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 

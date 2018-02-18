@@ -28,7 +28,11 @@
 
             NOTE: Any identity mapping rules specified in nifi.properties will also be applied to the user identities,
             so the values should be the unmapped identities (i.e. full DN from a certificate).
-    -->
+    
+
+
+
+
     <userGroupProvider>
         <identifier>file-user-group-provider</identifier>
         <class>org.apache.nifi.authorization.FileUserGroupProvider</class>
@@ -50,6 +54,18 @@
         <class>org.apache.nifi.authorization.StandardManagedAuthorizer</class>
         <property name="Access Policy Provider">file-access-policy-provider</property>
     </authorizer>
+
+-->
+
+  <authorizer>
+        <identifier>file-provider</identifier>
+        <class>org.apache.nifi.authorization.FileAuthorizer</class>
+        <property name="Authorizations File">./conf/authorizations.xml</property>
+        <property name="Users File">./conf/users.xml</property>
+        <property name="Initial Admin Identity">CN=user, OU=NIFI</property>
+        <property name="Legacy Authorized Users File"></property>
+    </authorizer>        
+
     <!--
         The LdapUserGroupProvider will retrieve users and groups from an LDAP server. The users and groups
         are not configurable.
