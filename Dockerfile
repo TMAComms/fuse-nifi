@@ -31,7 +31,7 @@ COPY config/nifi.properties $NIFI_HOME/conf/nifi.properties
 
 ENV TLSPATH=nifi-dev.tmacomms.com
 COPY tlskit/ /tlskit/
-COPY comfig/nifiregistry/#nifi-registry.properties $NIFI_HOME/conf/#nifi-registry.properties
+#COPY comfig/nifiregistry/#nifi-registry.properties $NIFI_HOME/conf/#nifi-registry.properties
 COPY tlskit/generated/${TLSPATH}/truststore.jks $NIFI_HOME/conf/truststore.jks
 COPY tlskit/generated/${TLSPATH}/keystore.jks $NIFI_HOME/conf/keystore.jks
 
