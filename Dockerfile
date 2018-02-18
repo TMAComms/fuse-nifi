@@ -70,5 +70,6 @@ ADD config/tmac-nifi.sh ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
 RUN sudo chmod 0777 ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
 
 # Apply configuration and start NiFi
-ENTRYPOINT  ["${NIFI_BASE_DIR}/scripts/tmac-nifi.sh"]
-#CMD ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
+#ENTRYPOINT  ["${NIFI_BASE_DIR}/scripts/tmac-nifi.sh"]
+
+CMD ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh

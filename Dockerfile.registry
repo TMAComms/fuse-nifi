@@ -24,7 +24,8 @@ RUN sudo chmod 0777 /opt/nifiregistry/scripts/tmac-nifi.sh
 
 
 EXPOSE 18080
-ENTRYPOINT  ["/opt/nifiregistry/scripts/tmac-nifi.sh"]
+CMD ["/opt/nifiregistry/scripts/tmac-nifi.sh"]
+#ENTRYPOINT  ["/opt/nifiregistry/scripts/tmac-nifi.sh"]
 # ENTRYPOINT ["/opt/nifiregistry/bin/nifi-registry.sh","run"]
 #CMD ["RUN"]
 
