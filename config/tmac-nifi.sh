@@ -32,12 +32,12 @@ cp -f /tlskit/generated/${EVS_SERVICEDNS}/truststore.jks $NIFI_HOME/conf/trustst
 cp -f /tlskit/generated/${EVS_SERVICEDNS}/keystore.jks $NIFI_HOME/conf/keystore.jks
 echo "Update ssl config done"
 
-configbase=$NIFI_HOME/conf/nifi.properties
+
 echo "Update openid settings for " ${EVS_SERVICEDNS} 
-echo "File to update " ${configbase} 
-sed -i "s~{EVS_AUTHDISCOVERYURL}~${EVS_AUTHDISCOVERYURL}~" configbase
-sed -i "s~{{EVS_AUTHCLIENTID}~{${EVS_AUTHCLIENTID}~" configbase
-sed -i "s~{EVS_AUTHCLIENTSECRET}~${EVS_AUTHCLIENTSECRET}~" configbase
+
+sed -i "s~{EVS_AUTHDISCOVERYURL}~${EVS_AUTHDISCOVERYURL}~" $NIFI_HOME/conf/nifi.properties
+sed -i "s~{{EVS_AUTHCLIENTID}~{${EVS_AUTHCLIENTID}~" $NIFI_HOME/conf/nifi.properties
+sed -i "s~{EVS_AUTHCLIENTSECRET}~${EVS_AUTHCLIENTSECRET}~" $NIFI_HOME/conf/nifi.properties
 echo "Update openid settings completed " 
 
 echo "Setting up local ip " ${TMPHOSTIP}
