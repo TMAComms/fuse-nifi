@@ -257,7 +257,7 @@
         requests.
 
         - Access Policy Provider - The identifier for an Access Policy Provider defined above.
-    -->
+    
     <authorizer>
         <identifier>managed-authorizer</identifier>
         <class>org.apache.nifi.authorization.StandardManagedAuthorizer</class>
@@ -265,7 +265,7 @@
     </authorizer>
 
 
-    
+        -->
 
     <!--
         NOTE: This Authorizer has been replaced with the more granular approach configured above with the Standard
