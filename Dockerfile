@@ -50,7 +50,7 @@ COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 #COPY config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 
 # add sample templates
-ADD templates/ $NIFI_HOME/conf/templates/ 
+COPY config/templates/ $NIFI_HOME/conf/templates/ 
 RUN sudo chown -R nifi:nifi $NIFI_HOME/conf/ && chmod 0777 /tlskit/genssl.sh
 
 
