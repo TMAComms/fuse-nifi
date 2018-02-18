@@ -144,7 +144,7 @@
     <!--
         Logger for capturing Bootstrap logs and NiFi's standard error and standard out. 
     -->
-    <logger name="org.apache.nifi.bootstrap" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.bootstrap" level="INFO" additivity="false">
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
     <logger name="org.apache.nifi.bootstrap.Command" level="INFO" additivity="false">
