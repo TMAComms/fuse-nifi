@@ -13,6 +13,10 @@ echo "Vars: NIFI_WEB_HTTPS_HOST = " ${NIFI_WEB_HTTPS_HOST}
 echo "Vars: NIFI_REMOTE_INPUT_HOST = " ${NIFI_REMOTE_INPUT_HOST}
 echo "Vars: EVS_SERVICEDNS = " ${EVS_SERVICEDNS}
 
+echo "Vars: EVS_AUTHDISCOVERYURL = " ${EVS_AUTHDISCOVERYURL}
+echo "Vars: EVS_AUTHCLIENTID = " ${EVS_AUTHCLIENTID}
+echo "Vars: EVS_AUTHCLIENTSECRET = " ${EVS_AUTHCLIENTSECRET}
+
 
 
 TMPHOSTIP=$(ip route get 1 | awk '{print $NF;exit}')
@@ -27,6 +31,12 @@ cp -f /tlskit/generated/${EVS_SERVICEDNS}/nifi.properties $NIFI_HOME/conf/nifi.p
 cp -f /tlskit/generated/${EVS_SERVICEDNS}/truststore.jks $NIFI_HOME/conf/truststore.jks
 cp -f /tlskit/generated/${EVS_SERVICEDNS}/keystore.jks $NIFI_HOME/conf/keystore.jks
 echo "Update ssl config done"
+
+echo "Update openid settings for " ${EVS_SERVICEDNS}
+#sed -i "s/{KEYCLOAK_DBCONSTRING}/${KEYCLOAK_DBCONSTRING}/" ${JBOSS_HOME}/standalone/configuration/standalone.xml
+sed -i "s/{EVS_AUTHDISCOVERYURL}/${EVS_AUTHDISCOVERYURL}/" $NIFI_HOME/conf/nifi.properties
+sed -i "s/{EVS_AUTHCLIENTID}/${EVS_AUTHCLIENTID}/" $NIFI_HOME/conf/nifi.properties
+sed -i "s/{EVS_AUTHCLIENTSECRET}/${EVS_AUTHCLIENTSECRET}/" $NIFI_HOME/conf/nifi.properties
 
 echo "Setting up local ip " ${TMPHOSTIP}
 #NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
