@@ -33,8 +33,10 @@ RUN tar -xzvf /downloads/${NIFITOOLKIT_FILE} -C $NIFI_TOOLKIT --strip-components
 #COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
 #COPY config/nifi.properties $NIFI_HOME/conf/nifi.properties
 #COPY config/nifi/nifi.openid.properties $NIFI_HOME/conf/nifi.properties
+COPY tlskit/genssl.sh /opt/nifi/genssl.sh
+RUN sudo chmod 0777 /opt/nifi/genssl.sh
 
-COPY tlskit/generated/nifilocal/nifi.properties $NIFI_HOME/conf/nifi.properties
+#COPY tlskit/generated/nifilocal/nifi.properties $NIFI_HOME/conf/nifi.properties
 COPY tlskit/generated/nifilocal/truststore.jks $NIFI_HOME/conf/truststore.jks
 COPY tlskit/generated/nifilocal/keystore.jks $NIFI_HOME/conf/keystore.jks
 

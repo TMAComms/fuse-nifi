@@ -14,4 +14,4 @@ echo "Vars: NIFI_REMOTE_INPUT_HOST = " ${NIFI_REMOTE_INPUT_HOST}
 echo "Vars: EVS_SERVICEDNS = " ${EVS_SERVICEDNS}
 
 # generates ssl related config
-/opt/nifitoolkit/bin/tls-toolkit.sh standalone -n localhost,nifilocal,nifi.prod.us.tmacomms.com,nifi.dev.us.tmacomms.com,nifi-dev.tmacomms.com,nifi-prod.tmacomms.com  -o /toolkit/generated -S Smile4ow -K Smile4ow -f /toolkit/nifibase.properties -C "CN=user, OU=NIFI"
+/opt/nifitoolkit/bin/tls-toolkit.sh standalone -n localhost,nifilocal,nifi.prod.us.tmacomms.com,nifi.dev.us.tmacomms.com,nifi-dev.tmacomms.com,nifi-prod.tmacomms.com  -o /toolkit/generated -S 77record -K 77record -f $NIFI_HOME/conf/nifi.properties -C "CN=user, OU=NIFI"
