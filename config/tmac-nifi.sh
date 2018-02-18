@@ -18,6 +18,24 @@ echo "Vars: EVS_AUTHCLIENTID = " ${EVS_AUTHCLIENTID}
 echo "Vars: EVS_AUTHCLIENTSECRET = " ${EVS_AUTHCLIENTSECRET}
 
 
+echo "TMAC Nifi starter " ${NIFI_HOME}
+
+# `/sbin/setuser memcache` runs the given command as the user `memcache`.
+# If you omit that part, the command will be run as root.
+
+
+workifile="$NIFI_HOME/conf/nifi.properties"
+if [ -f "$workifile" ]
+then
+	echo "$workifile found."
+    echo "workign folder already moved to persistant storage - skipping"
+else
+	echo "$workifile not found.  Creating copy to persistant storage"
+    mkdir -p $NIFI_HOME/conf/
+    cp -R /config/base/* $NIFI_HOME/conf/
+fi
+
+
 
 TMPHOSTIP=$(ip route get 1 | awk '{print $NF;exit}')
 echo "Container IP " ${TMPHOSTIP}

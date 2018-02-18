@@ -50,7 +50,7 @@ RUN sudo chown -R nifi:nifi $NIFI_HOME/conf/ && chmod 0777 /tlskit/genssl.sh
 # update config
 # copy a base versio of config 
 # create a copy of the base config
-#RUN mkdir -p /config/base/ && cp -R $NIFI_HOME/conf/* /config/base && sudo chown -R nifi:nifi /config && sudo chmod -R 0777 /config
+RUN mkdir -p /config/base/ && cp -R $NIFI_HOME/conf/* /config/base && sudo chown -R nifi:nifi /config && sudo chmod -R 0777 /config
 
 
 #RUN sudo chmod 0777 bin/tmac-nifi.sh
