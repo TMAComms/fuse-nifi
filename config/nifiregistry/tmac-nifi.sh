@@ -22,11 +22,11 @@ echo "TMAC Nifi starter " ${NIFI_REGISTRYBASE}
 # `/sbin/setuser memcache` runs the given command as the user `memcache`.
 # If you omit that part, the command will be run as root.
 
-workifile="$NIFI_REGISTRYBASE/conf/nifi.properties"
+workifile="$NIFI_REGISTRYBASE/conf/nifi-registry.properties"
 if [ -f "$workifile" ]
 then
 	echo "$workifile found."
-    echo "workign folder already moved to persistant storage - skipping"
+    echo "Working folder already moved to persistant storage - skipping"
 else
 	echo "$workifile not found.  Creating copy to persistant storage"
     mkdir -p $NIFI_REGISTRYBASE/conf/
@@ -47,7 +47,7 @@ echo "Setting up local ip " ${TMPHOSTIP}
 #NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
 #export NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
 
-echo "TMAC Nifi running up nifi " 
+echo "TMAC Nifi registry - running up nifi " 
 #${NIFI_REGISTRYBASE}/scripts/start.sh
 
 /opt/nifiregistry/bin/nifi-registry.sh run 
