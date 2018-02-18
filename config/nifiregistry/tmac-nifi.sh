@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e 
-
+NIFI_REGISTRYBASE=/opt/nifiregistry
 echo "TMAC Nifi Registry starter for home dir  " ${NIFI_REGISTRYBASE}
 
 echo "Vars: CONF_INTERVAL = " ${CONF_INTERVAL}
@@ -48,15 +48,6 @@ cp -f /tlskit/generated/${EVS_SERVICEDNS}/keystore.jks $NIFI_REGISTRYBASE/conf/k
 echo "Update ssl config done"
 
 
-# update openod settings if needed
-#if [ -z "$EVS_AUTHDISCOVERYURL" ]
-#then
-echo "Update openid settings for " ${EVS_SERVICEDNS} 
-sed -i "s~{EVS_AUTHDISCOVERYURL}~${EVS_AUTHDISCOVERYURL}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
-sed -i "s~{EVS_AUTHCLIENTID}~${EVS_AUTHCLIENTID}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
-sed -i "s~{EVS_AUTHCLIENTSECRET}~${EVS_AUTHCLIENTSECRET}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
-echo "Update openid settings completed " 
-#fi
 
 echo "Setting up local ip " ${TMPHOSTIP}
 #NIFI_WEB_HTTP_HOST=${TMPHOSTIP}

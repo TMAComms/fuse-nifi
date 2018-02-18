@@ -11,20 +11,20 @@ RUN mkdir /downloads /opt/nifiregistry
 #toolkit
 RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-registry-0.1.0-bin.tar.gz http://mirror.ventraip.net.au/apache/nifi/nifi-registry/nifi-registry-0.1.0/nifi-registry-0.1.0-bin.tar.gz \
         && tar -xzvf /downloads/nifi-registry-0.1.0-bin.tar.gz -C $NIFI_REGISTRYBASE --strip-components=1 && rm /downloads/nifi-registry-0.1.0-bin.tar.gz 
-RUN ls -l $NIFI_REGISTRYBASE/bin
+
 
 # update config
 # copy a base versio of config 
 # create a copy of the base config
-RUN mkdir -p /config/base/ && cp -R $NIFI_REGISTRYBASE/conf/* /config/base &&  sudo chmod -R 0777 /config
+RUN mkdir -p /config/base/ && cp -R /opt/nifiregistry/conf/* /config/base &&  sudo chmod -R 0777 /config
 
 WORKDIR $NIFI_REGISTRYBASE
-ADD config/nifiregistry/tmac-nifi.sh ${NIFI_REGISTRYBASE}/scripts/tmac-nifi.sh
-RUN sudo chmod 0777 ${NIFI_REGISTRYBASE}/scripts/tmac-nifi.sh
+ADD config/nifiregistry/tmac-nifi.sh /opt/nifiregistry/scripts/tmac-nifi.sh
+RUN sudo chmod 0777 /opt/nifiregistry/scripts/tmac-nifi.sh
 
 
 EXPOSE 18080
-ENTRYPOINT  ["${NIFI_REGISTRYBASE}/scripts/tmac-nifi.sh"]
+ENTRYPOINT  ["/opt/nifiregistry/scripts/tmac-nifi.sh"]
 # ENTRYPOINT ["/opt/nifiregistry/bin/nifi-registry.sh","run"]
 #CMD ["RUN"]
 
