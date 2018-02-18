@@ -16,7 +16,8 @@ COPY tlskit/ /tlskit/
 
 #D:\bb\fuse\fuse-nifi\config\nifiregistry
 
-COPY config/nifiregistry/nifi-registry.properties /opt/nifiregistry/conf/#nifi-registry.properties
+COPY config/nifiregistry/authorizers.xml /opt/nifiregistry/conf/authorizers.xml
+COPY config/nifiregistry/nifi-registry.properties /opt/nifiregistry/conf/nifi-registry.properties
 
 # update config
 # copy a base versio of config 
