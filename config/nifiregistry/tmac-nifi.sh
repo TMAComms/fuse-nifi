@@ -50,5 +50,5 @@ echo "Setting up local ip " ${TMPHOSTIP}
 echo "TMAC Nifi running up nifi " 
 #${NIFI_REGISTRYBASE}/scripts/start.sh
 
-/opt/nifiregistry/bin/nifi-registry.sh
+/opt/nifiregistry/bin/nifi-registry.sh run 
 
