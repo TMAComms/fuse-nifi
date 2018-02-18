@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-
 <!--
     This file lists the userGroupProviders, accessPolicyProviders, and authorizers to use when running securely. In order
     to use a specific authorizer it must be configured here and it's identifier must be specified in the nifi.properties file.
@@ -33,6 +32,24 @@
 
 
 
+    <userGroupProvider><identifier>file-user-group-provider</identifier><class>org.apache.nifi.authorization.FileUserGroupProvider</class><property name="Users File">./conf/users.xml</property><property name="Legacy Authorized Users File"></property><property name="Initial Admin Identity 1">CN=user, OU=NIFI</property></userGroupProvider><accessPolicyProvider><identifier>file-access-policy-provider</identifier><class>org.apache.nifi.authorization.FileAccessPolicyProvider</class><property name="User Group Provider">file-user-group-provider</property><property name="Authorizations File">./conf/authorizations.xml</property><property name="Initial Admin Identity">CN=user, OU=NIFI</property><property name="Legacy Authorized Users File"></property><property name="Node Identity 1"></property></accessPolicyProvider><authorizer><identifier>managed-authorizer</identifier><class>org.apache.nifi.authorization.StandardManagedAuthorizer</class><property name="Access Policy Provider">file-access-policy-provider</property></authorizer>
+
+-->
+    <authorizer>
+        <identifier>file-provider</identifier>
+        <class>org.apache.nifi.authorization.FileAuthorizer</class>
+        <property name="Authorizations File">./conf/authorizations.xml</property>
+        <property name="Users File">./conf/users.xml</property>
+        <property name="Initial Admin Identity">CN=user, OU=NIFI</property>
+        <property name="Legacy Authorized Users File"></property>
+    </authorizer>
+    
+    <authorizer>
+        <identifier>managed-authorizer</identifier>
+        <class>org.apache.nifi.authorization.StandardManagedAuthorizer</class>
+        <property name="Access Policy Provider">file-access-policy-provider</property>
+    </authorizer>
+
     <userGroupProvider>
         <identifier>file-user-group-provider</identifier>
         <class>org.apache.nifi.authorization.FileUserGroupProvider</class>
@@ -40,6 +57,7 @@
         <property name="Legacy Authorized Users File"></property>
         <property name="Initial Admin Identity 1">CN=user, OU=NIFI</property>
     </userGroupProvider>
+
     <accessPolicyProvider>
         <identifier>file-access-policy-provider</identifier>
         <class>org.apache.nifi.authorization.FileAccessPolicyProvider</class>
@@ -49,24 +67,9 @@
         <property name="Legacy Authorized Users File"></property>
         <property name="Node Identity 1"></property>
     </accessPolicyProvider>
-    <authorizer>
-        <identifier>managed-authorizer</identifier>
-        <class>org.apache.nifi.authorization.StandardManagedAuthorizer</class>
-        <property name="Access Policy Provider">file-access-policy-provider</property>
-    </authorizer>
 
--->
 
-  <authorizer>
-        <identifier>file-provider</identifier>
-        <class>org.apache.nifi.authorization.FileAuthorizer</class>
-        <property name="Authorizations File">./conf/authorizations.xml</property>
-        <property name="Users File">./conf/users.xml</property>
-        <property name="Initial Admin Identity">CN=user, OU=NIFI</property>
-        <property name="Legacy Authorized Users File"></property>
-    </authorizer>        
-
-    <!--
+        <!--
         The LdapUserGroupProvider will retrieve users and groups from an LDAP server. The users and groups
         are not configurable.
 
@@ -135,10 +138,10 @@
         NOTE: Any identity mapping rules specified in nifi.properties will also be applied to the user identities.
             Group names are not mapped.
     -->
-    <!-- To enable the ldap-user-group-provider remove 2 lines. This is 1 of 2.
+        <!-- To enable the ldap-user-group-provider remove 2 lines. This is 1 of 2.
     <userGroupProvider><identifier>ldap-user-group-provider</identifier><class>org.apache.nifi.ldap.tenants.LdapUserGroupProvider</class><property name="Authentication Strategy">START_TLS</property><property name="Manager DN"></property><property name="Manager Password"></property><property name="TLS - Keystore"></property><property name="TLS - Keystore Password"></property><property name="TLS - Keystore Type"></property><property name="TLS - Truststore"></property><property name="TLS - Truststore Password"></property><property name="TLS - Truststore Type"></property><property name="TLS - Client Auth"></property><property name="TLS - Protocol"></property><property name="TLS - Shutdown Gracefully"></property><property name="Referral Strategy">FOLLOW</property><property name="Connect Timeout">10 secs</property><property name="Read Timeout">10 secs</property><property name="Url"></property><property name="Page Size"></property><property name="Sync Interval">30 mins</property><property name="User Search Base"></property><property name="User Object Class">person</property><property name="User Search Scope">ONE_LEVEL</property><property name="User Search Filter"></property><property name="User Identity Attribute"></property><property name="User Group Name Attribute"></property><property name="User Group Name Attribute - Referenced Group Attribute"></property><property name="Group Search Base"></property><property name="Group Object Class">group</property><property name="Group Search Scope">ONE_LEVEL</property><property name="Group Search Filter"></property><property name="Group Name Attribute"></property><property name="Group Member Attribute"></property><property name="Group Member Attribute - Referenced User Attribute"></property></userGroupProvider>
     To enable the ldap-user-group-provider remove 2 lines. This is 2 of 2. -->
-    <!--
+        <!--
         The CompositeUserGroupProvider will provide support for retrieving users and groups from multiple sources.
 
         - User Group Provider [unique key] - The identifier of user group providers to load from. The name of
@@ -148,10 +151,10 @@
             NOTE: Any identity mapping rules specified in nifi.properties are not applied in this implementation. This behavior
             would need to be applied by the base implementation.
     -->
-    <!-- To enable the composite-user-group-provider remove 2 lines. This is 1 of 2.
+        <!-- To enable the composite-user-group-provider remove 2 lines. This is 1 of 2.
     <userGroupProvider><identifier>composite-user-group-provider</identifier><class>org.apache.nifi.authorization.CompositeUserGroupProvider</class><property name="User Group Provider 1"></property></userGroupProvider>
     To enable the composite-user-group-provider remove 2 lines. This is 2 of 2. -->
-    <!--
+        <!--
         The CompositeConfigurableUserGroupProvider will provide support for retrieving users and groups from multiple sources.
         Additionally, a single configurable user group provider is required. Users from the configurable user group provider
         are configurable, however users loaded from one of the User Group Provider [unique key] will not be.
@@ -165,10 +168,10 @@
             NOTE: Any identity mapping rules specified in nifi.properties are not applied in this implementation. This behavior
             would need to be applied by the base implementation.
     -->
-    <!-- To enable the composite-configurable-user-group-provider remove 2 lines. This is 1 of 2.
+        <!-- To enable the composite-configurable-user-group-provider remove 2 lines. This is 1 of 2.
     <userGroupProvider><identifier>composite-configurable-user-group-provider</identifier><class>org.apache.nifi.authorization.CompositeConfigurableUserGroupProvider</class><property name="Configurable User Group Provider">file-user-group-provider</property><property name="User Group Provider 1"></property></userGroupProvider>
     To enable the composite-configurable-user-group-provider remove 2 lines. This is 2 of 2. -->
-    <!--
+        <!--
         The FileAccessPolicyProvider will provide support for managing access policies which is backed by a file
         on the local file system.
 
@@ -200,7 +203,7 @@
             so the values should be the unmapped identities (i.e. full DN from a certificate). This identity must be found
             in the configured User Group Provider.
     -->
-    <!--
+        <!--
         The StandardManagedAuthorizer. This authorizer implementation must be configured with the
         Access Policy Provider which it will use to access and manage users, groups, and policies.
         These users, groups, and policies will be used to make all access decisions during authorization
@@ -212,7 +215,7 @@
 
 
         -->
-    <!--
+        <!--
         NOTE: This Authorizer has been replaced with the more granular approach configured above with the Standard
         Managed Authorizer. However, it is still available for backwards compatibility reasons.
 
@@ -243,6 +246,6 @@
             NOTE: Any identity mapping rules specified in nifi.properties will also be applied to the node identities,
             so the values should be the unmapped identities (i.e. full DN from a certificate).
     -->
-    <!-- <authorizer><identifier>file-provider</identifier><class>org.apache.nifi.authorization.FileAuthorizer</class><property name="Authorizations File">./conf/authorizations.xml</property><property name="Users File">./conf/users.xml</property><property name="Initial Admin Identity"></property><property name="Legacy Authorized Users File"></property><property name="Node Identity 1"></property></authorizer>
+        <!-- <authorizer><identifier>file-provider</identifier><class>org.apache.nifi.authorization.FileAuthorizer</class><property name="Authorizations File">./conf/authorizations.xml</property><property name="Users File">./conf/users.xml</property><property name="Initial Admin Identity"></property><property name="Legacy Authorized Users File"></property><property name="Node Identity 1"></property></authorizer>
     -->
-</authorizers>
+    </authorizers>
