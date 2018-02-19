@@ -39,7 +39,7 @@ TMPHOSTIP=$(ip route get 1 | awk '{print $NF;exit}')
 echo "Container IP " ${TMPHOSTIP}
 echo "EVS Service DNS " ${EVS_SERVICEDNS}
 cp /etc/hosts /etc/hosts.tmacbak
-echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
+echo "127.0.0.1 ${EVS_SERVICEDNS}" >> /etc/hosts
 
 
 echo "Update ssl config for " ${EVS_SERVICEDNS}
