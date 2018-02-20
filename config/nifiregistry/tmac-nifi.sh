@@ -55,6 +55,7 @@ sed -i "s~{EVS_AUTHCLIENTID}~${EVS_AUTHCLIENTID}~" $NIFI_REGISTRYBASE/conf/nifi-
 sed -i "s~{EVS_AUTHCLIENTSECRET}~${EVS_AUTHCLIENTSECRET}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
 echo "Update openid settings completed " 
 
+#EVS_SERVICEDNS EVS_AUTHDISCOVERYURL
 
 
 echo "Setting up local ip " ${TMPHOSTIP}
