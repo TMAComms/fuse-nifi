@@ -35,7 +35,7 @@ else
     mkdir -p $NIFI_HOME/conf/
     cp -R /config/base/* $NIFI_HOME/conf/
     echo "Update ssl config for " ${EVS_SERVICEDNS}
-    cp -f /tlskit/generated/${EVS_SERVICEDNS}/nifi.properties $NIFI_HOME/conf/nifi.properties
+    #cp -f /tlskit/generated/${EVS_SERVICEDNS}/nifi.properties $NIFI_HOME/conf/nifi.properties
     cp -f /tlskit/generated/${EVS_SERVICEDNS}/truststore.jks $NIFI_HOME/conf/truststore.jks
     cp -f /tlskit/generated/${EVS_SERVICEDNS}/keystore.jks $NIFI_HOME/conf/keystore.jks
     echo "Update ssl config done"
@@ -47,7 +47,7 @@ TMPHOSTIP=$(ip route get 1 | awk '{print $NF;exit}')
 echo "Container IP " ${TMPHOSTIP}
 echo "EVS Service DNS " ${EVS_SERVICEDNS}
 cp /etc/hosts /etc/hosts.tmacbak
-echo "127.0.0.1 ${EVS_SERVICEDNS}" >> /etc/hosts
+echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
 
 
 # update openod settings if needed
