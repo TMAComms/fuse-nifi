@@ -24,9 +24,6 @@ services:
       - NIFI_WEB_HTTPS_PORT=9443
 #      - NIFI_REMOTE_INPUT_HOST=localhost
       - EVS_SERVICEDNS=nifi-dev.tmacomms.com
-      
-
-      
       #- NIFI_REMOTE_INPUT_SOCKET_PORT=-10000
       - NIFI_HOME=/opt/nifi/nifi-1.5.0
     volumes:
@@ -51,20 +48,11 @@ services:
       - EVSENVIRONMENT=development
       - NIFI_WEB_HTTPS_HOST=nifiregistry-dev.tmacomms.com  
       - NIFI_WEB_HTTPS_PORT=9443
-#      - NIFI_REMOTE_INPUT_HOST=localhost
       - EVS_SERVICEDNS=nifi-dev.tmacomms.com
+      
    privileged: true
    stdin_open: true
    tty: true
-#    volumes:
-#     - ./temp/:/opt/nifi/nifi-1.4.0/work/
-#networks:
-#  host:
-#    external: true     
-#networks:
-#  default:
-#    external:
-#      name: host
 
 
 volumes:
