@@ -58,12 +58,15 @@ sed -i "s~{EVS_SERVICEDNS}~${EVS_SERVICEDNS}~" $NIFI_HOME/conf/nifi.properties
 # update openod settings if needed
 #if [ -z "$EVS_AUTHDISCOVERYURL" ]
 #then
-#echo "Update openid settings for " ${EVS_SERVICEDNS} 
-#sed -i "s~{EVS_AUTHDISCOVERYURL}~${EVS_AUTHDISCOVERYURL}~" $NIFI_HOME/conf/nifi.properties
-#sed -i "s~{EVS_AUTHCLIENTID}~${EVS_AUTHCLIENTID}~" $NIFI_HOME/conf/nifi.properties
-#sed -i "s~{EVS_AUTHCLIENTSECRET}~${EVS_AUTHCLIENTSECRET}~" $NIFI_HOME/conf/nifi.properties
+echo "Update openid settings for " ${EVS_SERVICEDNS} 
+sed -i "s~{EVS_AUTHDISCOVERYURL}~${EVS_AUTHDISCOVERYURL}~" $NIFI_HOME/conf/nifi.properties
+sed -i "s~{EVS_AUTHCLIENTID}~${EVS_AUTHCLIENTID}~" $NIFI_HOME/conf/nifi.properties
+sed -i "s~{EVS_AUTHCLIENTSECRET}~${EVS_AUTHCLIENTSECRET}~" $NIFI_HOME/conf/nifi.properties
+sed -i "s~{BANNER_TEXT}~${BANNER_TEXT}~" $NIFI_HOME/conf/nifi.properties
 echo "Update openid settings completed " 
 #fi
+
+
 
 echo "Setting up local ip " ${TMPHOSTIP}
 #NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
