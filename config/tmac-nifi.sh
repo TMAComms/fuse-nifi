@@ -53,10 +53,10 @@ echo "127.0.0.1 ${EVS_SERVICEDNS}" >> /etc/hosts
 # update openod settings if needed
 #if [ -z "$EVS_AUTHDISCOVERYURL" ]
 #then
-echo "Update openid settings for " ${EVS_SERVICEDNS} 
-sed -i "s~{EVS_AUTHDISCOVERYURL}~${EVS_AUTHDISCOVERYURL}~" $NIFI_HOME/conf/nifi.properties
-sed -i "s~{EVS_AUTHCLIENTID}~${EVS_AUTHCLIENTID}~" $NIFI_HOME/conf/nifi.properties
-sed -i "s~{EVS_AUTHCLIENTSECRET}~${EVS_AUTHCLIENTSECRET}~" $NIFI_HOME/conf/nifi.properties
+#echo "Update openid settings for " ${EVS_SERVICEDNS} 
+#sed -i "s~{EVS_AUTHDISCOVERYURL}~${EVS_AUTHDISCOVERYURL}~" $NIFI_HOME/conf/nifi.properties
+#sed -i "s~{EVS_AUTHCLIENTID}~${EVS_AUTHCLIENTID}~" $NIFI_HOME/conf/nifi.properties
+#sed -i "s~{EVS_AUTHCLIENTSECRET}~${EVS_AUTHCLIENTSECRET}~" $NIFI_HOME/conf/nifi.properties
 echo "Update openid settings completed " 
 #fi
 
