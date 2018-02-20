@@ -48,6 +48,8 @@ echo "Container IP " ${TMPHOSTIP}
 echo "EVS Service DNS " ${EVS_SERVICEDNS}
 cp /etc/hosts /etc/hosts.tmacbak
 echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
+THISHOST=$(hostname -f)
+echo "${TMPHOSTIP} ${THISHOST}" >> /etc/hosts
 
 
 # update openod settings if needed
