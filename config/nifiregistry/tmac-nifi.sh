@@ -49,6 +49,10 @@ cp -f /tlskit/generated/${EVS_SERVICEDNS}/keystore.jks $NIFI_REGISTRYBASE/conf/k
 echo "Update ssl config done"
 
 
+sed -i "s~{EVS_SERVICEDNS}~${EVS_SERVICEDNS}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
+
+
+
 echo "Update openid settings for " ${EVS_SERVICEDNS} 
 sed -i "s~{EVS_AUTHDISCOVERYURL}~${EVS_AUTHDISCOVERYURL}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
 sed -i "s~{EVS_AUTHCLIENTID}~${EVS_AUTHCLIENTID}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
