@@ -2,6 +2,7 @@ FROM openjdk:8u151-jdk
 LABEL Name=nifiregistry Version=0.10
 USER root
 ENV NIFI_REGISTRYBASE=/opt/nifiregistry
+ENV TLSPATH=nifi-dev.tmacomms.com
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl git apt-transport-https ca-certificates git bash ncdu dos2unix nano  \
@@ -13,8 +14,8 @@ RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificat
         && tar -xzvf /downloads/nifi-registry-0.1.0-bin.tar.gz -C $NIFI_REGISTRYBASE --strip-components=1 && rm /downloads/nifi-registry-0.1.0-bin.tar.gz 
 
 COPY tlskit/ /tlskit/
-
-#D:\bb\fuse\fuse-nifi\config\nifiregistry
+COPY tlskit/generated/${TLSPATH}/truststore.jks $NIFI_HOME/conf/truststore.jks
+COPY tlskit/generated/${TLSPATH}/keystore.jks $NIFI_HOME/conf/keystore.jks
 
 COPY config/nifiregistry/authorizers.xml /opt/nifiregistry/conf/authorizers.xml
 COPY config/nifiregistry/nifi-registry.properties /opt/nifiregistry/conf/nifi-registry.properties
@@ -31,7 +32,5 @@ RUN sudo chmod 0777 /opt/nifiregistry/scripts/tmac-nifi.sh
 
 EXPOSE 18080
 CMD ["/opt/nifiregistry/scripts/tmac-nifi.sh"]
-#ENTRYPOINT  ["/opt/nifiregistry/scripts/tmac-nifi.sh"]
-# ENTRYPOINT ["/opt/nifiregistry/bin/nifi-registry.sh","run"]
-#CMD ["RUN"]
+
 

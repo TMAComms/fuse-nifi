@@ -33,12 +33,13 @@ else
     cp -R /config/base/* $NIFI_REGISTRYBASE/conf/
 fi
 
-
 TMPHOSTIP=$(ip route get 1 | awk '{print $NF;exit}')
 echo "Container IP " ${TMPHOSTIP}
 echo "EVS Service DNS " ${EVS_SERVICEDNS}
 cp /etc/hosts /etc/hosts.tmacbak
 echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
+THISHOST=$(hostname -f)
+echo "${TMPHOSTIP} ${THISHOST}" >> /etc/hosts
 
 
 echo "Update ssl config for " ${EVS_SERVICEDNS}
@@ -57,8 +58,6 @@ echo "Update openid settings completed "
 
 
 echo "Setting up local ip " ${TMPHOSTIP}
-#NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
-#export NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
 
 echo "TMAC Nifi registry - running up nifi " 
 #${NIFI_REGISTRYBASE}/scripts/start.sh
