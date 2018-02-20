@@ -66,8 +66,11 @@ EXPOSE 8080 8181 8443
 
 #USER nifi
 WORKDIR $NIFI_HOME
-ADD config/tmac-nifi.sh ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
-RUN sudo chmod 0777 ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
+COPY config/tmac-nifi.sh ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
+COPY config/start.sh ${NIFI_BASE_DIR}/scripts/start.sh
+RUN sudo chmod 0777 ${NIFI_BASE_DIR}/scripts/*.sh
+
+
 
 # Apply configuration and start NiFi
 #ENTRYPOINT  ["${NIFI_BASE_DIR}/scripts/tmac-nifi.sh"]
