@@ -39,7 +39,7 @@ else
     cp -f /tlskit/generated/${EVS_SERVICEDNS}/truststore.jks $NIFI_HOME/conf/truststore.jks
     cp -f /tlskit/generated/${EVS_SERVICEDNS}/keystore.jks $NIFI_HOME/conf/keystore.jks
     echo "Update ssl config done"
-
+ 
 fi
 
 
@@ -51,6 +51,8 @@ echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
 THISHOST=$(hostname -f)
 echo "${TMPHOSTIP} ${THISHOST}" >> /etc/hosts
 
+
+sed -i "s~{EVS_SERVICEDNS}~${EVS_SERVICEDNS}~" $NIFI_HOME/conf/nifi.properties
 
 # update openod settings if needed
 #if [ -z "$EVS_AUTHDISCOVERYURL" ]
