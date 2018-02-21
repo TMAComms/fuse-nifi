@@ -1,37 +1,26 @@
-FROM openjdk:8u151-jdk
-LABEL Name=nifiregistry Version=0.10
-USER root
-ENV NIFI_REGISTRYBASE=/opt/nifiregistry
-ENV TLSPATH=nifi-dev.tmacomms.com
+FROM openjdk:8-jdk-alpine
+
+ARG VERSION
+
+ENV DIST_MIRROR             https://archive.apache.org/dist/nifi/nifi-registry
+ENV NIFI_REGISTRY_HOME      /opt/nifi-registry
+ENV VERSION                 ${VERSION}
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl git apt-transport-https ca-certificates git bash ncdu dos2unix nano  \
      && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
 
-RUN mkdir /downloads /opt/nifiregistry
-#toolkit
-RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-registry-0.1.0-bin.tar.gz http://mirror.ventraip.net.au/apache/nifi/nifi-registry/nifi-registry-0.1.0/nifi-registry-0.1.0-bin.tar.gz \
-        && tar -xzvf /downloads/nifi-registry-0.1.0-bin.tar.gz -C $NIFI_REGISTRYBASE --strip-components=1 && rm /downloads/nifi-registry-0.1.0-bin.tar.gz 
+RUN set -x && \
+    apk --no-cache add tar wget && \
+	mkdir -p ${NIFI_REGISTRY_HOME} && \
+	wget -qO- ${DIST_MIRROR}/nifi-registry-${VERSION}/nifi-registry-${VERSION}-bin.tar.gz | tar xvz -C ${NIFI_REGISTRY_HOME} --strip-components=1 && \
+    addgroup nifi && \
+    adduser -D -G nifi nifi && \
+    chown -R nifi:nifi ${NIFI_REGISTRY_HOME}
+	
+USER nifi
+WORKDIR ${NIFI_REGISTRY_HOME}
 
-COPY tlskit/ /tlskit/
-COPY tlskit/generated/${TLSPATH}/truststore.jks $NIFI_HOME/conf/truststore.jks
-COPY tlskit/generated/${TLSPATH}/keystore.jks $NIFI_HOME/conf/keystore.jks
-
-COPY config/nifiregistry/authorizers.xml /opt/nifiregistry/conf/authorizers.xml
-COPY config/nifiregistry/nifi-registry.properties /opt/nifiregistry/conf/nifi-registry.properties
-COPY config/nifiregistry/logback.xml /opt/nifiregistry/conf/logback.xml
-
-# update config
-# copy a base versio of config 
-# create a copy of the base config
-RUN mkdir -p /config/base/ && cp -R /opt/nifiregistry/conf/* /config/base &&  sudo chmod -R 0777 /config
-
-WORKDIR $NIFI_REGISTRYBASE
-ADD config/nifiregistry/tmac-nifi.sh /opt/nifiregistry/scripts/tmac-nifi.sh
-RUN sudo chmod 0777 /opt/nifiregistry/scripts/tmac-nifi.sh
-
-
-EXPOSE 18080
-CMD ["/opt/nifiregistry/scripts/tmac-nifi.sh"]
+CMD ["bin/nifi-registry.sh","run"]
 
 
