@@ -85,16 +85,16 @@
     </logger>
 
     <!-- Everything written to NiFi Registry's Standard Out will be logged with the logger org.apache.nifi.StdOut at INFO level -->
-    <logger name="org.apache.nifi.registry.StdOut" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.registry.StdOut" level="INFO" additivity="false">
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
 
     <!-- Everything written to NiFi Registry's Standard Error will be logged with the logger org.apache.nifi.StdErr at ERROR level -->
-    <logger name="org.apache.nifi.registry.StdErr" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.registry.StdErr" level="INFO" additivity="false">
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="APP_FILE"/>
     </root>
 
