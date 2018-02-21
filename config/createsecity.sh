@@ -12,3 +12,7 @@ keytool -export -alias server-alias -storepass $STOREPASS -file server.cer -keys
 
 echo "Create trust store"
 ${JAVA_HOME}/bin/keytool -import -v -trustcacerts -alias server-alias -file server.cer -keystore tmac-truststore.jks -keypass $KEYPASS -storepass $STOREPASS
+
+
+openssl pkcs12 -export -in config/securitystores/nifi-dev.cer -inkey  config/securitystores/nifi-dev.key  -out config/securitystores/nifi-dev.p12 -name nifidev  
+-CAfile ca.crt -caname root
