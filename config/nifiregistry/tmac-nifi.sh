@@ -69,3 +69,7 @@ echo "TMAC Nifi registry - running up nifi "
 
 /opt/nifiregistry/bin/nifi-registry.sh run 
 
+# Continuously provide logs so that 'docker logs' can    produce them
+tail -F "${NIFI_REGISTRYBASE}/logs/nifi-registry-app.log" &
+"${NIFI_REGISTRYBASE}/bin/nifi-registry.sh " run &
+nifi_pid="$!"

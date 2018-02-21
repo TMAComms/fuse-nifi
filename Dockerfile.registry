@@ -19,6 +19,7 @@ COPY tlskit/generated/${TLSPATH}/keystore.jks $NIFI_HOME/conf/keystore.jks
 
 COPY config/nifiregistry/authorizers.xml /opt/nifiregistry/conf/authorizers.xml
 COPY config/nifiregistry/nifi-registry.properties /opt/nifiregistry/conf/nifi-registry.properties
+COPY config/nifiregistry/logback.xml /opt/nifiregistry/conf/logback.xml
 
 # update config
 # copy a base versio of config 
