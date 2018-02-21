@@ -6,27 +6,19 @@ ENV REGISTRY_HOME=/schema-registry
 ENV NIFIREGISTRY_HOME=/nifi-registry
 ENV VERSION=0.5.1
 USER root
-RUN apt-get update &&  apt-get install -y apt-transport-https ca-certificates wget nano
-RUN wget -S -nc -progress=dot -O /usr/local/share/ca-certificates/tmac-devops.crt  https://caddy.tmacomms.com/myca.crt
-
-#ENV http_proxy="http://squid.tmacomms.com:3128"
-#ENV https_proxy="http://squid.tmacomms.com:3128"
-#ENV no_proxy="127.0.0.1, localhost, *.tmacomms.com, *.calljourney.com"
-RUN update-ca-certificates
-
+RUN apt-get update &&  apt-get install -y apt-transport-https ca-certificates wget nano apt-utils
 
 
 RUN mkdir /downloads /schema-registry /nifi-registry
 WORKDIR /downloads
  
+
+ 
 # hortonworks registry
-RUN wget -N --show-progress --progress=bar:force --no-cookies -O /downloads/hortonworks-registry-${VERSION}.tar.gz --no-check-certificate https://github.com/hortonworks/registry/releases/download/${VERSION}/hortonworks-registry-${VERSION}.tar.gz
+RUN wget -N --show-progress --progress=bar:force --no-cookies -O /downloads/hortonworks-registry-${VERSION}.tar.gz --no-check-certificate https://github.com/hortonworks/registry/releases/download/v${VERSION}/hortonworks-registry-${VERSION}.tar.gz
 RUN tar -xzvf /downloads/hortonworks-registry-${VERSION}.tar.gz -C $REGISTRY_HOME --strip-components=1 && rm  /downloads/hortonworks-registry-${VERSION}.tar.gz
 RUN cp $REGISTRY_HOME/conf/registry.yaml.inmemory.example $REGISTRY_HOME/conf/registry.yaml     
 
-# nifi registry
-RUN wget -N --show-progress --progress=bar:force --no-cookies -O /downloads/registry-${VERSION}.tar.gz --no-check-certificate https://github.com/hortonworks/registry/releases/download/${VERSION}/registry-${VERSION}.tar.gz
-RUN tar -xzvf /downloads/registry-${VERSION}.tar.gz -C $NIFIREGISTRY_HOME --strip-components=1 && rm  /downloads/registry-${VERSION}.tar.gz
 
 
 # https://github.com/hortonworks/registry/releases/download/v0.3.0/hortonworks-registry-0.3.0.tar.gz
