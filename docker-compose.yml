@@ -48,11 +48,26 @@ services:
       - EVSENVIRONMENT=development
       - NIFI_WEB_HTTPS_HOST=nifiregistry-dev.tmacomms.com  
       - NIFI_WEB_HTTPS_PORT=9443
-      - EVS_SERVICEDNS=nifi-dev.tmacomms.com
-      
+      - EVS_SERVICEDNS=nifi-dev.tmacomms.com      
    privileged: true
    stdin_open: true
    tty: true
+  schemaregistry:
+   image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifischemaregistry:latest
+   build: 
+    context: .
+    dockerfile: Dockerfile.schemaregistry
+   ports:
+      - 9090:9090/tcp    
+   environment:
+      - CONF_INTERVAL=10
+      - EVSENVIRONMENT=development
+      - NIFI_WEB_HTTPS_HOST=nifiregistry-dev.tmacomms.com  
+      - NIFI_WEB_HTTPS_PORT=9443
+      - EVS_SERVICEDNS=nifi-dev.tmacomms.com      
+   privileged: true
+   stdin_open: true
+   tty: true   
 
 
 volumes:
