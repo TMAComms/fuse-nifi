@@ -17,7 +17,7 @@ RUN set -x && \
     chown -R nifi:nifi ${NIFI_REGISTRY_HOME}
 
 
-COPY config/securitystores/truststore.jks${NIFI_REGISTRY_HOME}/conf/truststore.jks
+COPY config/securitystores/truststore.jks ${NIFI_REGISTRY_HOME}/conf/truststore.jks
 COPY config/securitystores/keystore.jks ${NIFI_REGISTRY_HOME}/conf/keystore.jks
 
 # update config
