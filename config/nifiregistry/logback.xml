@@ -76,10 +76,10 @@
     <!--
         Logger for capturing Bootstrap logs and NiFi Registry's standard error and standard out.
     -->
-    <logger name="org.apache.nifi.registry.bootstrap" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.registry.bootstrap" level="INFO" additivity="false">
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>
-    <logger name="org.apache.nifi.registry.bootstrap.Command" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.registry.bootstrap.Command" level="INFO" additivity="false">
         <appender-ref ref="CONSOLE" />
         <appender-ref ref="BOOTSTRAP_FILE" />
     </logger>

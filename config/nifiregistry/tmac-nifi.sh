@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e 
-NIFI_REGISTRYBASE=/opt/nifiregistry
+NIFI_REGISTRYBASE=/opt/nifi-registry
 echo "TMAC Nifi Registry starter for home dir  " ${NIFI_REGISTRYBASE}
 
 echo "Vars: CONF_INTERVAL = " ${CONF_INTERVAL}
@@ -61,6 +61,8 @@ echo "TMAC Nifi registry - running up nifi "
 
 
 # Continuously provide logs so that 'docker logs' can    produce them
-tail -F "${NIFI_REGISTRYBASE}/logs/nifi-registry-app.log" &
-"${NIFI_REGISTRYBASE}/bin/nifi-registry.sh " run &
-nifi_pid="$!"
+tail -F "${NIFI_REGISTRYBASE}/logs/nifi-registry-app.log" & /opt/nifi-registry/bin/nifi-registry.sh run
+
+#"${NIFI_REGISTRYBASE}/bin/nifi-registry.sh " run & nifi_pid="$!"
+
+#/opt/nifi-registry/bin/nifi-registry.sh
