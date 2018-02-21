@@ -15,9 +15,12 @@ WORKDIR /downloads
  
 # hortonworks registry
 RUN wget -N --show-progress --progress=bar:force --no-cookies -O /downloads/hortonworks-registry-${VERSION}.tar.gz --no-check-certificate https://github.com/hortonworks/registry/releases/download/v${VERSION}/hortonworks-registry-${VERSION}.tar.gz
-RUN tar -xzvf /downloads/hortonworks-registry-${VERSION}.tar.gz -C $REGISTRY_HOME --strip-components=1 && rm  /downloads/hortonworks-registry-${VERSION}.tar.gz
-RUN ls -l ${REGISTRY_HOME}
-RUN cp ${REGISTRY_HOME}/conf/registry.yaml.inmemory.example $REGISTRY_HOME/conf/registry.yaml     
+RUN tar -xzvf /downloads/hortonworks-registry-${VERSION}.tar.gz -C ${REGISTRY_HOME} --strip-components=1 && rm  /downloads/hortonworks-registry-${VERSION}.tar.gz
+RUN ls -l ${REGISTRY_HOME}/conf
+
+# set base config
+COPY config/schemaregistry/registry.yaml ${REGISTRY_HOME}/conf/registry.yaml     
+#RUN cp -f ${REGISTRY_HOME}/conf/registry-inmemory-example.yaml ${REGISTRY_HOME}/conf/registry.yaml     
 
 
 
