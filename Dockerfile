@@ -24,23 +24,22 @@ RUN tar -xzvf /downloads/${NIFITOOLKIT_FILE} -C $NIFI_TOOLKIT --strip-components
 
 #ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 #COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
-COPY config/nifi.properties $NIFI_HOME/conf/nifi.properties
+
 #COPY config/nifi/nifi.openid.properties $NIFI_HOME/conf/nifi.properties
 #COPY tlskit/genssl.sh /opt/nifi/genssl.sh
 #RUN sudo chmod 0777 /opt/nifi/genssl.sh
 
 ENV TLSPATH=nifi-dev.tmacomms.com
 COPY tlskit/ /tlskit/
-#COPY comfig/nifiregistry/nifi-registry.properties $NIFI_HOME/conf/#nifi-registry.properties
-COPY tlskit/generated/${TLSPATH}/truststore.jks $NIFI_HOME/conf/truststore.jks
-COPY tlskit/generated/${TLSPATH}/keystore.jks $NIFI_HOME/conf/keystore.jks
 
-
-COPY config/authorizers.xml $NIFI_HOME/conf/authorizers.xml
-#  https://community.hortonworks.com/questions/131557/nifi-authorizercreationexception-unable-to-locate.html
+# reset base users 
 RUN rm -f $NIFI_HOME/conf/authorizations.xml $NIFI_HOME/conf/users.xml
+
+COPY config/securitystores/truststore.jks $NIFI_HOME/conf/truststore.jks
+COPY config/securitystores/keystore.jks $NIFI_HOME/conf/keystore.jks
+COPY config/nifi.properties $NIFI_HOME/conf/nifi.properties
+COPY config/authorizers.xml $NIFI_HOME/conf/authorizers.xml
 COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
-#COPY config/nifi/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
 
 # add sample templates
 COPY config/templates/ $NIFI_HOME/conf/templates/ 
@@ -70,9 +69,5 @@ COPY config/tmac-nifi.sh ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
 COPY config/start.sh ${NIFI_BASE_DIR}/scripts/start.sh
 RUN sudo chmod 0777 ${NIFI_BASE_DIR}/scripts/*.sh
 
-
-
-# Apply configuration and start NiFi
-#ENTRYPOINT  ["${NIFI_BASE_DIR}/scripts/tmac-nifi.sh"]
 
 CMD ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh

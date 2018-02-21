@@ -15,8 +15,19 @@ RUN set -x && \
     addgroup nifi && \
     adduser -D -G nifi nifi && \
     chown -R nifi:nifi ${NIFI_REGISTRY_HOME}
-	
+
+
+COPY config/securitystores/truststore.jks${NIFI_REGISTRY_HOME}/conf/truststore.jks
+COPY config/securitystores/keystore.jks ${NIFI_REGISTRY_HOME}/conf/keystore.jks
+
+# update config
+# copy a base versio of config 
+# create a copy of the base config
+RUN mkdir -p /config/base/ && cp -R ${NIFI_REGISTRY_HOME}/conf/* /config/base &&  sudo chmod -R 0777 /config
+
 USER nifi
+
+
 WORKDIR ${NIFI_REGISTRY_HOME}
 
 CMD ["bin/nifi-registry.sh","run"]

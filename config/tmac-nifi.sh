@@ -34,11 +34,11 @@ else
 	echo "$workifile not found.  Creating copy to persistant storage"
     mkdir -p $NIFI_HOME/conf/
     cp -R /config/base/* $NIFI_HOME/conf/
-    echo "Update ssl config for " ${EVS_SERVICEDNS}
-    cp -f $NIFI_HOME/conf/nifi.properties $NIFI_HOME/conf/nifi.bak
-    cp -f /tlskit/generated/${EVS_SERVICEDNS}/truststore.jks $NIFI_HOME/conf/truststore.jks
-    cp -f /tlskit/generated/${EVS_SERVICEDNS}/keystore.jks $NIFI_HOME/conf/keystore.jks
-    echo "Update ssl config done"
+#    echo "Update ssl config for " ${EVS_SERVICEDNS}
+#    cp -f $NIFI_HOME/conf/nifi.properties $NIFI_HOME/conf/nifi.bak
+#    cp -f /tlskit/generated/${EVS_SERVICEDNS}/truststore.jks $NIFI_HOME/conf/truststore.jks
+#    cp -f /tlskit/generated/${EVS_SERVICEDNS}/keystore.jks $NIFI_HOME/conf/keystore.jks
+#    echo "Update ssl config done"
  
 fi
 
