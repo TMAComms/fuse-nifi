@@ -53,7 +53,7 @@ services:
    stdin_open: true
    tty: true
   schemaregistry:
-   image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifischemaregistry:latest
+   image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-schemaregistry:latest
    build: 
     context: .
     dockerfile: Dockerfile.schemaregistry
