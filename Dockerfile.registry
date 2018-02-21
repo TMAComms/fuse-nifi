@@ -4,15 +4,13 @@ ARG VERSION
 
 ENV DIST_MIRROR             https://archive.apache.org/dist/nifi/nifi-registry
 ENV NIFI_REGISTRY_HOME      /opt/nifi-registry
-ENV VERSION                 ${VERSION}
+ENV VERSION                 0.1.0
 RUN apk update && apk upgrade 
-#RUN apt-get update && apt-get upgrade -y
-#RUN apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl git apt-transport-https ca-certificates git bash ncdu dos2unix nano  \
-#&& apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* 
+RUN apk --no-cache add tar wget nano curl
+
 
 RUN set -x && \
-    apk --no-cache add tar wget nano curl && \
-	mkdir -p ${NIFI_REGISTRY_HOME} && \
+  	mkdir -p ${NIFI_REGISTRY_HOME} && \
 	wget -qO- ${DIST_MIRROR}/nifi-registry-${VERSION}/nifi-registry-${VERSION}-bin.tar.gz | tar xvz -C ${NIFI_REGISTRY_HOME} --strip-components=1 && \
     addgroup nifi && \
     adduser -D -G nifi nifi && \
