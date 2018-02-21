@@ -16,7 +16,7 @@ RUN set -x && \
     adduser -D -G nifi nifi && \
     chown -R nifi:nifi ${NIFI_REGISTRY_HOME}
 
-
+COPY config/nifiregistry/logback.xml ${NIFI_REGISTRY_HOME}/conf/logback.xml
 COPY config/securitystores/truststore.jks ${NIFI_REGISTRY_HOME}/conf/truststore.jks
 COPY config/securitystores/keystore.jks ${NIFI_REGISTRY_HOME}/conf/keystore.jks
 # back up stores..
@@ -30,7 +30,7 @@ RUN mkdir -p /config/base/ && cp -R ${NIFI_REGISTRY_HOME}/conf/* /config/base &&
 USER nifi
 
 COPY config/nifiregistry/tmac-nifi.sh ${NIFI_REGISTRY_HOME}/scripts/tmac-nifi.sh
-RUN sudo chmod 0777 ${NIFI_REGISTRY_HOME}/scripts/tmac-nifi.sh
+RUN chmod 0777 ${NIFI_REGISTRY_HOME}/scripts/tmac-nifi.sh
 
 WORKDIR ${NIFI_REGISTRY_HOME}
 

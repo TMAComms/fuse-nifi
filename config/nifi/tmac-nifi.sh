@@ -55,6 +55,14 @@ echo "EVS Service DNS Updateing config to " ${EVS_SERVICEDNS}
 sed -i "s~{EVS_SERVICEDNS}~${EVS_SERVICEDNS}~" $NIFI_HOME/conf/nifi.properties
 
 
+# always grabn latest jks backed into images
+echo "Update jks stores for " ${EVS_SERVICEDNS}
+#cp -f /tlskit/generated/${EVS_SERVICEDNS}/nifi.properties $NIFI_HOME/conf/nifi.properties
+cp -f /config/securitystores/truststore.jks $NIFI_HOME/conf/truststore.jks
+cp -f /config/securitystores/keystore.jks $NIFI_HOME/conf/keystore.jks
+echo "Update ssl config done"
+
+
 # update openod settings if needed
 #if [ -z "$EVS_AUTHDISCOVERYURL" ]
 #then
