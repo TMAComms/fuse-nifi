@@ -3,7 +3,7 @@ FROM apache/nifi:1.5.0
 LABEL Name=fuse-nifi Version=1.5.0
 #FROM openjdk:8-jre
 ENV NIFI_HOME=/opt/nifi/nifi-1.5.0 NIFI_BASE=/opt/nifi  NIFI_TOOLKIT=/opt/nifitoolkit  NIFITOOLKIT_FILE=nifi-toolkit-1.5.0-bin.tar.gz TZ=Australia/Melbourne 
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ && echo $TZ > /etc/timezone
 #USER root
 
 # Install kubectl binary via curl
