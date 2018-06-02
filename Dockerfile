@@ -1,16 +1,17 @@
 #FROM tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:150base
-FROM apache/nifi:1.5.0
-LABEL Name=fuse-nifi Version=1.5.0
+FROM apache/nifi:1.6.0
+LABEL Name=fuse-nifi Version=1.6.0
+USER root
 #FROM openjdk:8-jre
-ENV NIFI_HOME=/opt/nifi/nifi-1.5.0 NIFI_BASE=/opt/nifi  NIFI_TOOLKIT=/opt/nifitoolkit  NIFITOOLKIT_FILE=nifi-toolkit-1.5.0-bin.tar.gz TZ=Australia/Melbourne 
-RUN ln -snf /usr/share/zoneinfo/$TZ && echo $TZ > /etc/timezone
+ENV NIFI_HOME=/opt/nifi/nifi-1.6.0 NIFI_BASE=/opt/nifi  NIFI_TOOLKIT=/opt/nifitoolkit  NIFITOOLKIT_FILE=nifi-toolkit-1.6.0-bin.tar.gz TZ=Australia/Melbourne 
+#RUN ln -snf /usr/share/zoneinfo/$TZ && echo $TZ > /etc/timezone
 #USER root
 
 # Install kubectl binary via curl
 #RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
 #  &&  chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
 
-RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/${NIFITOOLKIT_FILE} http://apache.mirror.amaze.com.au/nifi/1.5.0/${NIFITOOLKIT_FILE} 
+RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/${NIFITOOLKIT_FILE} http://apache.melbourneitmirror.net/nifi/1.6.0/nifi-toolkit-1.6.0-bin.tar.gz  
 RUN tar -xzvf /downloads/${NIFITOOLKIT_FILE} -C $NIFI_TOOLKIT --strip-components=1 && rm /downloads/${NIFITOOLKIT_FILE}
 
 
@@ -62,7 +63,7 @@ VOLUME /config
 # Web HTTP Port & Remote Site-to-Site Ports
 EXPOSE 8080 8181 8443
 # Startup NiFi
-#ENTRYPOINT ["/opt/nifi/nifi-1.5.0/bin/tmac-nifi.sh"]
+#ENTRYPOINT ["/opt/nifi/nifi-1.6.0/bin/tmac-nifi.sh"]
 #USER nifi
 
 #USER nifi
