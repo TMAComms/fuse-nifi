@@ -7,6 +7,10 @@ ENV NIFI_HOME=/opt/nifi/nifi-1.6.0 NIFI_BASE=/opt/nifi  NIFI_TOOLKIT=/opt/nifito
 #RUN ln -snf /usr/share/zoneinfo/$TZ && echo $TZ > /etc/timezone
 #USER root
 
+RUN apt-get update && apt-get upgrade -y && \
+ apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl git apt-transport-https ca-certificates git bash ncdu dos2unix nano  \
+ && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && mkdir -p /opt/nifitoolkit /downloads
+
 # Install kubectl binary via curl
 #RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
 #  &&  chmod +x ./kubectl && mv ./kubectl /usr/local/bin/kubectl
