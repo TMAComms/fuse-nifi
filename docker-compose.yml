@@ -1,4 +1,5 @@
-version: '3'
+version: '3.6'
+
 services:
 
 ## docker run -it --rm -p 8080:8080 -e NIFI_WEB_HTTP_HOST=tmac-devops1681939944003.australiaeast.cloudapp.azure.com -v nifi:/tmac fusenifi
@@ -25,10 +26,10 @@ services:
 #      - NIFI_REMOTE_INPUT_HOST=localhost
       - EVS_SERVICEDNS=nifi-dev.tmacomms.com
       #- NIFI_REMOTE_INPUT_SOCKET_PORT=-10000
-      - NIFI_HOME=/opt/nifi/nifi-1.5.0
+      - NIFI_HOME=/opt/nifi/nifi-1.6.0
     volumes:
-     - /datadrive/nifi/work:/opt/nifi/nifi-1.5.0/work \
-     - /datadrive/nifi/toolkit:/toolkit 
+     - nifidata:/opt/nifi/nifi-1.6.0/work 
+     - nifitoolkit:/toolkit 
     links:
       - registry
 
@@ -72,4 +73,5 @@ services:
 
 volumes:
   nificonfig:
-  
+  nifidata:
+  nifitoolkit:
