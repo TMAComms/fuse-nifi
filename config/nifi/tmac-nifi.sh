@@ -20,7 +20,11 @@ echo "Vars: EVS_AUTHCLIENTSECRET = " ${EVS_AUTHCLIENTSECRET}
 
 echo "TMAC Nifi starter " ${NIFI_HOME}
 
+<<<<<<< HEAD
 ls -l ${NIFI_HOME}/conf
+=======
+ls -l /opt/nifi/nifi-1.6.0/conf
+>>>>>>> 57ad6a0da7a5cbe8f4cb1e148033de149aa4a180
 
 # `/sbin/setuser memcache` runs the given command as the user `memcache`.
 # If you omit that part, the command will be run as root.
