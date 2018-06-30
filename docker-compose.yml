@@ -26,9 +26,9 @@ services:
 #      - NIFI_REMOTE_INPUT_HOST=localhost
       - EVS_SERVICEDNS=nifi-dev.tmacomms.com
       #- NIFI_REMOTE_INPUT_SOCKET_PORT=-10000
-      - NIFI_HOME=/opt/nifi/nifi-1.6.0
+      - NIFI_HOME=/opt/nifi/nifi-1.7.0
     volumes:
-     - nifidata:/opt/nifi/nifi-1.6.0/work 
+     - nifidata:/opt/nifi/nifi-1.7.0/work 
      - nifitoolkit:/toolkit 
     links:
       - registry

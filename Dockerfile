@@ -1,6 +1,6 @@
 #FROM tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:150base
-FROM apache/nifi:1.6.0
-LABEL Name=fuse-nifi Version=1.6.0
+FROM apache/nifi:1.7.0
+LABEL Name=fuse-nifi Version=1.7.0
 USER root
 
 RUN apt-get update && apt-get upgrade -y && \
@@ -9,10 +9,10 @@ RUN apt-get update && apt-get upgrade -y && \
 
 
 #FROM openjdk:8-jre
-ENV NIFI_HOME=/opt/nifi/nifi-1.6.0 NIFI_BASE=/opt/nifi  NIFI_TOOLKIT=/opt/nifitoolkit  NIFITOOLKIT_FILE=nifi-toolkit-1.6.0-bin.tar.gz TZ=Australia/Melbourne 
+ENV NIFI_HOME=/opt/nifi/nifi-1.7.0 NIFI_BASE=/opt/nifi  NIFI_TOOLKIT=/opt/nifitoolkit  NIFITOOLKIT_FILE=nifi-toolkit-1.7.0-bin.tar.gz TZ=Australia/Melbourne 
 #RUN ln -snf /usr/share/zoneinfo/$TZ && echo $TZ > /etc/timezone
 
-RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/${NIFITOOLKIT_FILE} http://www.strategylions.com.au/mirror/nifi/1.6.0/nifi-toolkit-1.6.0-bin.tar.gz
+RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/${NIFITOOLKIT_FILE} http://www.strategylions.com.au/mirror/nifi/1.7.0/nifi-toolkit-1.7.0-bin.tar.gz
 RUN tar -xzvf /downloads/${NIFITOOLKIT_FILE} -C $NIFI_TOOLKIT --strip-components=1 && rm /downloads/${NIFITOOLKIT_FILE}
 
 
@@ -56,7 +56,7 @@ VOLUME /config
 # Web HTTP Port & Remote Site-to-Site Ports
 EXPOSE 8080 8181 8443
 # Startup NiFi
-#ENTRYPOINT ["/opt/nifi/nifi-1.6.0/bin/tmac-nifi.sh"]
+#ENTRYPOINT ["/opt/nifi/nifi-1.7.0/bin/tmac-nifi.sh"]
 #USER nifi
 
 #USER nifi

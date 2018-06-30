@@ -27,7 +27,7 @@ CMD ["bin/nifi-registry.sh","run"]
 
 
 FROM openjdk:8u151-jdk
-LABEL Name=nifiregistry Version=0.10
+LABEL Name=nifiregistry Version=0.2.0
 USER root
 ENV NIFI_REGISTRYBASE=/opt/nifiregistry
 ENV TLSPATH=nifi-dev.tmacomms.com
@@ -38,8 +38,8 @@ RUN apt-get install -y software-properties-common unzip apt-utils tar zip sudo w
 
 RUN mkdir /downloads /opt/nifiregistry
 #toolkit
-RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-registry-0.1.0-bin.tar.gz http://mirror.ventraip.net.au/apache/nifi/nifi-registry/nifi-registry-0.1.0/nifi-registry-0.1.0-bin.tar.gz \
-        && tar -xzvf /downloads/nifi-registry-0.1.0-bin.tar.gz -C $NIFI_REGISTRYBASE --strip-components=1 && rm /downloads/nifi-registry-0.1.0-bin.tar.gz 
+RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/nifi-registry-0.2.0-bin.tar.gz http://mirror.ventraip.net.au/apache/nifi/nifi-registry/nifi-registry-0.2.0/nifi-registry-0.2.0-bin.tar.gz \
+        && tar -xzvf /downloads/nifi-registry-0.2.0-bin.tar.gz -C $NIFI_REGISTRYBASE --strip-components=1 && rm /downloads/nifi-registry-0.2.0-bin.tar.gz 
 
 COPY tlskit/ /tlskit/
 COPY tlskit/generated/${TLSPATH}/truststore.jks $NIFI_HOME/conf/truststore.jks

@@ -1,6 +1,6 @@
-FROM apache/nifi:1.6.0
-LABEL Name=fuse-nifi Version=1.6.0
-ENV NIFI_HOME=/opt/nifi/nifi-1.6.0 NIFI_BASE=/opt/nifi
+FROM apache/nifi:1.7.0
+LABEL Name=fuse-nifi Version=1.7.0
+ENV NIFI_HOME=/opt/nifi/nifi-1.7.0 NIFI_BASE=/opt/nifi
 USER root
 
 RUN apt-get update && apt-get upgrade -y && \
