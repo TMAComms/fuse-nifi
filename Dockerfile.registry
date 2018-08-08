@@ -4,7 +4,7 @@ ARG VERSION
 
 ENV DIST_MIRROR             https://archive.apache.org/dist/nifi/nifi-registry
 ENV NIFI_REGISTRY_HOME      /opt/nifi-registry
-ENV VERSION                 0.1.0
+ENV VERSION                 0.2.0
 RUN apk update && apk upgrade 
 RUN apk --no-cache add tar wget nano curl bash sudo sed
 

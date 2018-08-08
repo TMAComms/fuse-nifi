@@ -1,9 +1,9 @@
 FROM openjdk:8-jre
-LABEL Name=fuse-schemaregistry Version=0.3
+LABEL Name=fuse-schemaregistry Version=0.5.3
 ENV        BANNER_TEXT="" \
            S2S_PORT=""
 ENV REGISTRY_HOME=/schema-registry
-ENV VERSION=0.5.1
+ENV SCHEMA_REGISTRY_VERSION=0.5.3
 USER root
 RUN apt-get update &&  apt-get install -y apt-transport-https ca-certificates wget nano apt-utils && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -14,8 +14,8 @@ WORKDIR /downloads
 
  
 # hortonworks registry
-RUN wget -N --show-progress --progress=bar:force --no-cookies -O /downloads/hortonworks-registry-${VERSION}.tar.gz --no-check-certificate https://github.com/hortonworks/registry/releases/download/v${VERSION}/hortonworks-registry-${VERSION}.tar.gz
-RUN tar -xzvf /downloads/hortonworks-registry-${VERSION}.tar.gz -C ${REGISTRY_HOME} --strip-components=1 && rm  /downloads/hortonworks-registry-${VERSION}.tar.gz
+RUN wget -N --show-progress --progress=bar:force --no-cookies -O /downloads/hortonworks-registry-${SCHEMA_REGISTRY_VERSION}.tar.gz --no-check-certificate https://github.com/hortonworks/registry/releases/download/v${SCHEMA_REGISTRY_VERSION}/hortonworks-registry-${SCHEMA_REGISTRY_VERSION}.tar.gz
+RUN tar -xzvf /downloads/hortonworks-registry-${SCHEMA_REGISTRY_VERSION}.tar.gz -C ${REGISTRY_HOME} --strip-components=1 && rm  /downloads/hortonworks-registry-${SCHEMA_REGISTRY_VERSION}.tar.gz
 RUN ls -l ${REGISTRY_HOME}/conf
 
 # set base config
@@ -24,8 +24,8 @@ COPY config/schemaregistry/registry.yaml ${REGISTRY_HOME}/conf/registry.yaml
 
 
 
-# https://github.com/hortonworks/registry/releases/download/v0.3.0/hortonworks-registry-0.3.0.tar.gz
-# https://github.com/hortonworks/registry/releases/download/v0.3.0/registry-0.3.0.tar.gz
+# https://github.com/hortonworks/registry/releases/download/v${SCHEMA_REGISTRY_VERSION}/hortonworks-registry-${SCHEMA_REGISTRY_VERSION}.tar.gz
+# https://github.com/hortonworks/registry/releases/download/v${SCHEMA_REGISTRY_VERSION}/registry-${SCHEMA_REGISTRY_VERSION}.tar.gz
 # start the server in fore-ground  
 # To start in daemon mode    
 # sudo  $REGISTRY_HOME/bin/registry start
