@@ -64,8 +64,8 @@ WORKDIR $NIFI_HOME
 COPY config/nifi/tmac-nifi.sh ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
 COPY config/nifi/start.sh ${NIFI_BASE_DIR}/scripts/start.sh
 RUN chmod 0777 ${NIFI_BASE_DIR}/scripts/*.sh
-ENV NIFI_WEB_HTTP_PORT='9090'
-ENV NIFI_WEB_HTTPS_PORT=''
+ENV NIFI_WEB_HTTP_PORT='8080'
+#ENV NIFI_WEB_HTTPS_PORT=''
 
 
 

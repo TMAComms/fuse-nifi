@@ -35,7 +35,7 @@ scripts_dir='/opt/nifi/scripts'
 #prop_replace 'nifi.security.truststorePasswd'   "${TRUSTSTORE_PASSWORD}"
 
 # Disable HTTP and enable HTTPS
-prop_replace 'nifi.web.http.port'   "${NIFI_WEB_HTTP_PORT:-9090}"
+prop_replace 'nifi.web.http.port'   "${NIFI_WEB_HTTP_PORT:-8080}"
 prop_replace 'nifi.web.http.host'   "${NIFI_WEB_HTTP_HOST:-$HOSTNAME}"
 prop_replace 'nifi.web.https.port'  '' #"${NIFI_WEB_HTTPS_PORT:-8443}"
 prop_replace 'nifi.web.https.host'  '' #"${NIFI_WEB_HTTPS_HOST:-$HOSTNAME}"
