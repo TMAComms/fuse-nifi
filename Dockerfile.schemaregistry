@@ -14,7 +14,8 @@ WORKDIR /downloads
 
  
 # hortonworks registry
-RUN wget -N --show-progress --progress=bar:force --no-cookies -O /downloads/hortonworks-registry-${SCHEMA_REGISTRY_VERSION}.tar.gz --no-check-certificate https://github.com/hortonworks/registry/releases/download/v${SCHEMA_REGISTRY_VERSION}/hortonworks-registry-${SCHEMA_REGISTRY_VERSION}.tar.gz
+#https://github.com/hortonworks/registry/releases/download/0.5.3/hortonworks-registry-0.5.3.tar.gz
+RUN wget -N --show-progress --progress=bar:force --no-cookies -O /downloads/hortonworks-registry-${SCHEMA_REGISTRY_VERSION}.tar.gz --no-check-certificate https://github.com/hortonworks/registry/releases/download/${SCHEMA_REGISTRY_VERSION}/hortonworks-registry-${SCHEMA_REGISTRY_VERSION}.tar.gz
 RUN tar -xzvf /downloads/hortonworks-registry-${SCHEMA_REGISTRY_VERSION}.tar.gz -C ${REGISTRY_HOME} --strip-components=1 && rm  /downloads/hortonworks-registry-${SCHEMA_REGISTRY_VERSION}.tar.gz
 RUN ls -l ${REGISTRY_HOME}/conf
 
