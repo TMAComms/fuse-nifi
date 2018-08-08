@@ -1,6 +1,6 @@
 #FROM tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:150base
-FROM apache/nifi:1.7.0
-LABEL Name=fuse-nifi Version=1.7.0
+FROM apache/nifi:1.7.1
+LABEL Name=fuse-nifi Version=1.7.1
 USER root
 
 RUN apt-get update && apt-get upgrade -y && \
@@ -9,10 +9,10 @@ RUN apt-get update && apt-get upgrade -y && \
 
 
 #FROM openjdk:8-jre
-ENV NIFI_HOME=/opt/nifi/nifi-1.7.0 NIFI_BASE=/opt/nifi  NIFI_TOOLKIT=/opt/nifitoolkit  NIFITOOLKIT_FILE=nifi-toolkit-1.7.0-bin.tar.gz TZ=Australia/Melbourne 
+ENV NIFI_HOME=/opt/nifi/nifi-1.7.1 NIFI_BASE=/opt/nifi  NIFI_TOOLKIT=/opt/nifitoolkit  NIFITOOLKIT_FILE=nifi-toolkit-1.7.1-bin.tar.gz TZ=Australia/Melbourne 
 #RUN ln -snf /usr/share/zoneinfo/$TZ && echo $TZ > /etc/timezone
 
-RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/${NIFITOOLKIT_FILE} http://www.strategylions.com.au/mirror/nifi/1.7.0/nifi-toolkit-1.7.0-bin.tar.gz
+RUN wget --show-progress --progress=bar:force --no-cookies --no-check-certificate -O /downloads/${NIFITOOLKIT_FILE} http://mirror.intergrid.com.au/apache/nifi/1.7.1/nifi-toolkit-1.7.1-bin.tar.gz 
 RUN tar -xzvf /downloads/${NIFITOOLKIT_FILE} -C $NIFI_TOOLKIT --strip-components=1 && rm /downloads/${NIFITOOLKIT_FILE}
 
 
@@ -29,12 +29,12 @@ COPY tlskit/ /tlskit/
 COPY config/securitystores/ /config/securitystores/
 
 # reset base users 
-RUN rm -f $NIFI_HOME/conf/authorizations.xml $NIFI_HOME/conf/users.xml
+#RUN rm -f $NIFI_HOME/conf/authorizations.xml $NIFI_HOME/conf/users.xml
 
-COPY config/securitystores/truststore.jks $NIFI_HOME/conf/truststore.jks
-COPY config/securitystores/keystore.jks $NIFI_HOME/conf/keystore.jks
+#COPY config/securitystores/truststore.jks $NIFI_HOME/conf/truststore.jks
+#COPY config/securitystores/keystore.jks $NIFI_HOME/conf/keystore.jks
 #COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
-COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
+#COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
 COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 
 # add sample templates
@@ -54,7 +54,7 @@ ADD config/ssl/* /ssl/
 VOLUME /config
 
 # Web HTTP Port & Remote Site-to-Site Ports
-EXPOSE 8080 8181 8443
+EXPOSE 8080 8181 8443 9090
 # Startup NiFi
 #ENTRYPOINT ["/opt/nifi/nifi-1.7.0/bin/tmac-nifi.sh"]
 #USER nifi
@@ -64,6 +64,9 @@ WORKDIR $NIFI_HOME
 COPY config/nifi/tmac-nifi.sh ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
 COPY config/nifi/start.sh ${NIFI_BASE_DIR}/scripts/start.sh
 RUN chmod 0777 ${NIFI_BASE_DIR}/scripts/*.sh
+ENV NIFI_WEB_HTTP_PORT='9090'
+ENV NIFI_WEB_HTTPS_PORT=''
+
 
 
 CMD ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
