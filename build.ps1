@@ -20,7 +20,7 @@ docker build --file Dockerfile.registry --squash -t $tmacRegistryBaseImage .
 
 echo "Building image $tmacSchemaRegistryBaseImage"
 docker build --file Dockerfile.schemaregistry --squash -t $tmacSchemaRegistryBaseImage .
-
+echo "docker run -it --name schemareg --rm  -p 9040:9090 $tmacSchemaRegistryBaseImage"
 
 echo "docker run -it --name nifi --rm -v ${pwd}/working:/working -p 9090:9090 $tmacBaseImage"
 
