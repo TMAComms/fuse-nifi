@@ -26,6 +26,11 @@ prop_replace 'nifi.remote.input.host'           "${NIFI_REMOTE_INPUT_HOST:-$HOST
 prop_replace 'nifi.remote.input.socket.port'    "${NIFI_REMOTE_INPUT_SOCKET_PORT:-10000}"
 prop_replace 'nifi.remote.input.secure'         'false'
 
+prop_replace 'nifi.security.user.oidc.discovery.url'    "${EVS_AUTHDISCOVERYURL:-none}"
+prop_replace 'nifi.security.user.oidc.client.id'    "${EVS_AUTHCLIENTID:-none}"
+prop_replace 'nifi.security.user.oidc.client.secret'    "${EVS_AUTHCLIENTSECRET:-none}"
+
+
 # Check if we are secured or unsecured
 echo "Auth is set to ${AUTH}"
 

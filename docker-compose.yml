@@ -29,6 +29,9 @@ services:
       #- NIFI_REMOTE_INPUT_SOCKET_PORT=-10000
       - NIFI_HOME=/opt/nifi/nifi-1.7.1
       - AUTH=tls
+      - EVS_AUTHCLIENTSECRET=vtUoJWyS2BfS9Owwuoi0W5ieDlkFfvHLXij3O9bigma7dIHluntCq8RaSxJsdIvs
+      - EVS_AUTHCLIENTID=Q4pHFVlqO2LID0LoGYeNxfgjPEhQfCWz
+      - EVS_AUTHDISCOVERYURL=https://tmacomms.au.auth0.com/.well-known/openid-configuration
       - KEYSTORE_PATH=/opt/certs/keystore.jks
       - KEYSTORE_TYPE=JKS
       - KEYSTORE_PASSWORD=77record
@@ -40,7 +43,7 @@ services:
     # - nifidata:/opt/nifi/nifi-1.7.0/work 
      #- nifitoolkit:/toolkit 
      -  D:\bb\fuse\fuse-nifi\working\work:/opt/nifi/nifi-1.7.1/work 
-     - D:\bb\fuse\fuse-nifi\working\conf:/opt/nifi/nifi-1.7.1/conf 
+     - D:\bb\fuse\fuse-nifi\working\conf2:/opt/nifi/nifi-1.7.1/conf 
      - D:\bb\fuse\fuse-nifi\working\stuff:/stuff
      - D:\bb\fuse\fuse-nifi\working\securitystores:/opt/certs
      
@@ -57,3 +60,4 @@ volumes:
   nificonfig:
   nifidata:
   nifitoolkit:
+

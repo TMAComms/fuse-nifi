@@ -34,7 +34,7 @@ COPY config/securitystores/ /config/securitystores/
 #COPY config/securitystores/truststore.jks $NIFI_HOME/conf/truststore.jks
 #COPY config/securitystores/keystore.jks $NIFI_HOME/conf/keystore.jks
 #COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
-#COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
+COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
 #COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 
 # add sample templates
@@ -63,7 +63,7 @@ EXPOSE 8080 8181 8443 9090
 #USER nifi
 WORKDIR $NIFI_HOME
 COPY config/nifi/tmac-nifi.sh ${NIFI_BASE}/scripts/tmac-nifi.sh
-#COPY config/nifi/start.sh ${NIFI_BASE}/scripts/start.sh
+COPY config/nifi/start.sh ${NIFI_BASE}/scripts/start.sh
 RUN chmod 0777 ${NIFI_BASE}/scripts/*.sh
 
 #ENV NIFI_WEB_HTTPS_PORT=''
