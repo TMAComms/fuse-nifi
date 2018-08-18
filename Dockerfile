@@ -68,6 +68,6 @@ RUN chmod 0777 ${NIFI_BASE}/scripts/*.sh
 
 #ENV NIFI_WEB_HTTPS_PORT=''
 #ENTRYPOINT ["../scripts/start.sh"]
-#ENTRYPOINT ["/opt/nifi/scripts/tmac-nifi.sh"]
+ENTRYPOINT ["/opt/nifi/scripts/tmac-nifi.sh"]
 
 #CMD ${NIFI_BASE}/scripts/tmac-nifi.sh
