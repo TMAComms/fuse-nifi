@@ -20,27 +20,35 @@ scripts_dir='/opt/nifi/scripts'
 [ -f "${scripts_dir}/common.sh" ] && . "${scripts_dir}/common.sh"
 
 # Establish baseline properties
-#prop_replace 'nifi.web.http.port'               "${NIFI_WEB_HTTP_PORT:-8080}"
-#prop_replace 'nifi.web.http.host'               "${NIFI_WEB_HTTP_HOST:-$HOSTNAME}"
-#prop_replace 'nifi.remote.input.host'           "${NIFI_REMOTE_INPUT_HOST:-$HOSTNAME}"
-#prop_replace 'nifi.remote.input.socket.port'    "${NIFI_REMOTE_INPUT_SOCKET_PORT:-10000}"
-#prop_replace 'nifi.remote.input.secure'         'false'
+prop_replace 'nifi.web.http.port'               "${NIFI_WEB_HTTP_PORT:-8080}"
+prop_replace 'nifi.web.http.host'               "${NIFI_WEB_HTTP_HOST:-$HOSTNAME}"
+prop_replace 'nifi.remote.input.host'           "${NIFI_REMOTE_INPUT_HOST:-$HOSTNAME}"
+prop_replace 'nifi.remote.input.socket.port'    "${NIFI_REMOTE_INPUT_SOCKET_PORT:-10000}"
+prop_replace 'nifi.remote.input.secure'         'false'
 
+# Check if we are secured or unsecured
+echo "Auth is set to ${AUTH}"
 
-#prop_replace 'nifi.security.keystore'           "${KEYSTORE_PATH}"
-#prop_replace 'nifi.security.keystoreType'       "${KEYSTORE_TYPE}"
-#prop_replace 'nifi.security.keystorePasswd'     "${KEYSTORE_PASSWORD}"
-#prop_replace 'nifi.security.truststore'         "${TRUSTSTORE_PATH}"
-#prop_replace 'nifi.security.truststoreType'     "${TRUSTSTORE_TYPE}"
-#prop_replace 'nifi.security.truststorePasswd'   "${TRUSTSTORE_PASSWORD}"
+case ${AUTH} in
+    tls)
+        echo 'Enabling Two-Way SSL user authentication'
+        . "${scripts_dir}/secure.sh"
+        ;;
+    ldap)
+        echo 'Enabling LDAP user authentication'
+        # Reference ldap-provider in properties
+        prop_replace 'nifi.security.user.login.identity.provider' 'ldap-provider'
+        prop_replace 'nifi.security.needClientAuth' 'WANT'
 
-# Disable HTTP and enable HTTPS
-prop_replace 'nifi.web.http.port'   "${NIFI_WEB_HTTP_PORT:-8080}"
-prop_replace 'nifi.web.http.host'   "${NIFI_WEB_HTTP_HOST:-$HOSTNAME}"
-prop_replace 'nifi.web.https.port'  '' #"${NIFI_WEB_HTTPS_PORT:-8443}"
-prop_replace 'nifi.web.https.host'  '' #"${NIFI_WEB_HTTPS_HOST:-$HOSTNAME}"
-prop_replace 'nifi.remote.input.secure' 'false'
-
+        . "${scripts_dir}/secure.sh"
+        . "${scripts_dir}/update_login_providers.sh"
+        ;;
+    *)
+        if [ ! -z "${NIFI_WEB_PROXY_HOST}" ]; then
+            echo 'NIFI_WEB_PROXY_HOST was set but NiFi is not configured to run in a secure mode.  Will not update nifi.web.proxy.host.'
+        fi
+        ;;
+esac
 
 # Continuously provide logs so that 'docker logs' can    produce them
 tail -F "${NIFI_HOME}/logs/nifi-app.log" &

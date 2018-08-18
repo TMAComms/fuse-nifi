@@ -24,9 +24,9 @@ RUN tar -xzvf /downloads/${NIFITOOLKIT_FILE} -C $NIFI_TOOLKIT --strip-components
 #COPY tlskit/genssl.sh /opt/nifi/genssl.sh
 #RUN sudo chmod 0777 /opt/nifi/genssl.sh
 
-ENV TLSPATH=nifi-dev.tmacomms.com
-COPY tlskit/ /tlskit/
-COPY config/securitystores/ /config/securitystores/
+#ENV TLSPATH=nifi-dev.tmacomms.com
+#COPY tlskit/ /tlskit/
+#COPY config/securitystores/ /config/securitystores/
 
 # reset base users 
 #RUN rm -f $NIFI_HOME/conf/authorizations.xml $NIFI_HOME/conf/users.xml
@@ -35,11 +35,12 @@ COPY config/securitystores/ /config/securitystores/
 #COPY config/securitystores/keystore.jks $NIFI_HOME/conf/keystore.jks
 #COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
 #COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
-COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
+#COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 
 # add sample templates
 #COPY config/templates/ $NIFI_HOME/conf/templates/ 
-RUN chown -R nifi:nifi $NIFI_HOME/conf/ && chmod 0777 /tlskit/genssl.sh
+RUN chown -R nifi:nifi $NIFI_HOME/conf/ 
+    # && chmod 0777 /tlskit/genssl.sh
 
 
 # update config
@@ -49,7 +50,7 @@ RUN mkdir -p /config/base/ && cp -R $NIFI_HOME/conf/* /config/base && sudo chown
 
 #nifi-registry.properties
 #RUN sudo chmod 0777 bin/tmac-nifi.sh
-ADD config/ssl/* /ssl/
+#ADD config/ssl/* /ssl/
 
 VOLUME /config
 
@@ -64,9 +65,9 @@ WORKDIR $NIFI_HOME
 COPY config/nifi/tmac-nifi.sh ${NIFI_BASE}/scripts/tmac-nifi.sh
 COPY config/nifi/start.sh ${NIFI_BASE}/scripts/start.sh
 RUN chmod 0777 ${NIFI_BASE}/scripts/*.sh
-ENV NIFI_WEB_HTTP_PORT='8080'
-#ENV NIFI_WEB_HTTPS_PORT=''
 
+#ENV NIFI_WEB_HTTPS_PORT=''
+#ENTRYPOINT ["../scripts/start.sh"]
 ENTRYPOINT ["/opt/nifi/scripts/tmac-nifi.sh"]
 
 #CMD ${NIFI_BASE}/scripts/tmac-nifi.sh
