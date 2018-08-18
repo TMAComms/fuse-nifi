@@ -61,12 +61,12 @@ EXPOSE 8080 8181 8443 9090
 
 #USER nifi
 WORKDIR $NIFI_HOME
-COPY config/nifi/tmac-nifi.sh ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
-COPY config/nifi/start.sh ${NIFI_BASE_DIR}/scripts/start.sh
-RUN chmod 0777 ${NIFI_BASE_DIR}/scripts/*.sh
+COPY config/nifi/tmac-nifi.sh ${NIFI_BASE}/scripts/tmac-nifi.sh
+COPY config/nifi/start.sh ${NIFI_BASE}/scripts/start.sh
+RUN chmod 0777 ${NIFI_BASE}/scripts/*.sh
 ENV NIFI_WEB_HTTP_PORT='8080'
 #ENV NIFI_WEB_HTTPS_PORT=''
 
+ENTRYPOINT ["/opt/nifi/scripts/tmac-nifi.sh"]
 
-
-CMD ${NIFI_BASE_DIR}/scripts/tmac-nifi.sh
+#CMD ${NIFI_BASE}/scripts/tmac-nifi.sh
