@@ -11,7 +11,7 @@
     "pipelines.username": "andreipapay",
     "pipelines.password": "Jt74YbDzMAwRRF4k9TrA",
     "pipelines.repository": "https://bitbucket.org/tmacomms/fuse-nifi/",
-    "pipelines.notificationsForBuildResults": false
-
-
+    "pipelines.notificationsForBuildResults": false,
+    "favorites.sortDirection": "ASC",
+    "favorites.groupsFirst": true
 }
