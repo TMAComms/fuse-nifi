@@ -33,9 +33,9 @@ COPY config/securitystores/ /config/securitystores/
 
 #COPY config/securitystores/truststore.jks $NIFI_HOME/conf/truststore.jks
 #COPY config/securitystores/keystore.jks $NIFI_HOME/conf/keystore.jks
-#COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
+COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
 COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
-#COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
+COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 
 # add sample templates
 #COPY config/templates/ $NIFI_HOME/conf/templates/ 
