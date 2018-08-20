@@ -26,7 +26,7 @@ RUN sudo chmod 0777 /opt/nifi/genssl.sh
 
 #ENV TLSPATH=nifi-dev.tmacomms.com
 COPY tlskit/ /tlskit/
-ADD config/securitystores/* /securitystores/
+ADD config/securitystores/* /config/securitystores/
 
 # reset base users 
 #RUN rm -f $NIFI_HOME/conf/authorizations.xml $NIFI_HOME/conf/users.xml
