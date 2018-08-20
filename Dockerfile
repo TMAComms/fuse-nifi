@@ -26,16 +26,16 @@ RUN sudo chmod 0777 /opt/nifi/genssl.sh
 
 #ENV TLSPATH=nifi-dev.tmacomms.com
 COPY tlskit/ /tlskit/
-COPY config/securitystores/ /config/securitystores/
+ADD config/securitystores/* /securitystores/
 
 # reset base users 
 #RUN rm -f $NIFI_HOME/conf/authorizations.xml $NIFI_HOME/conf/users.xml
 
 #COPY config/securitystores/truststore.jks $NIFI_HOME/conf/truststore.jks
 #COPY config/securitystores/keystore.jks $NIFI_HOME/conf/keystore.jks
-COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
-COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
-COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
+#COPY config/nifi/nifi.properties $NIFI_HOME/conf/nifi.properties
+#COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
+#COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 
 # add sample templates
 #COPY config/templates/ $NIFI_HOME/conf/templates/ 
@@ -50,7 +50,7 @@ RUN mkdir -p /config/base/ && cp -R $NIFI_HOME/conf/* /config/base && sudo chown
 
 #nifi-registry.properties
 #RUN sudo chmod 0777 bin/tmac-nifi.sh
-ADD config/ssl/* /ssl/
+
 
 VOLUME /config
 

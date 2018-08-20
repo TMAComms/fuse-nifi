@@ -7,7 +7,7 @@ services:
     image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest
     #apache/nifi:1.5.0  
     # 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest'
-#    network_mode: "host"
+    network_mode: "host"
     build: 
       context: .
       dockerfile: Dockerfile
@@ -31,10 +31,10 @@ services:
       - EVS_AUTHCLIENTSECRET=vtUoJWyS2BfS9Owwuoi0W5ieDlkFfvHLXij3O9bigma7dIHluntCq8RaSxJsdIvs
       - EVS_AUTHCLIENTID=Q4pHFVlqO2LID0LoGYeNxfgjPEhQfCWz
       - EVS_AUTHDISCOVERYURL=https://tmacomms.au.auth0.com/.well-known/openid-configuration
-      - KEYSTORE_PATH=/opt/certs/keystore.jks
+      - KEYSTORE_PATH=/securitystores/keystore.jks
       - KEYSTORE_TYPE=JKS
       - KEYSTORE_PASSWORD=77record
-      - TRUSTSTORE_PATH=/opt/certs/truststore.jks 
+      - TRUSTSTORE_PATH=/securitystores/truststore.jks 
       - TRUSTSTORE_PASSWORD=77record
       - TRUSTSTORE_TYPE=JKS
       - INITIAL_ADMIN_IDENTITY='CN=Random User, O=Apache, OU=NiFi, C=US'
@@ -47,7 +47,7 @@ services:
      - D:\bb\fuse\fuse-nifi\working\securitystores:/opt/certs
      
 #    links:
-#      - registry
+#      - registryD:\bb\fuse\fuse-nifi
 
     #restart: never
     privileged: true
