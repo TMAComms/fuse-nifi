@@ -124,19 +124,19 @@
         log events to the root logger. These messages are only sent to the
         user-log appender.
     -->
-    <logger name="org.apache.nifi.web.security" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.web.security" level="INFO" additivity="false">
         <appender-ref ref="USER_FILE"/>
     </logger>
-    <logger name="org.apache.nifi.web.api.config" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.web.api.config" level="INFO" additivity="false">
         <appender-ref ref="USER_FILE"/>
     </logger>
-    <logger name="org.apache.nifi.authorization" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.authorization" level="INFO" additivity="false">
         <appender-ref ref="USER_FILE"/>
     </logger>
-    <logger name="org.apache.nifi.cluster.authorization" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.cluster.authorization" level="INFO" additivity="false">
         <appender-ref ref="USER_FILE"/>
     </logger>
-    <logger name="org.apache.nifi.web.filter.RequestLogger" level="DEBUG" additivity="false">
+    <logger name="org.apache.nifi.web.filter.RequestLogger" level="INFO" additivity="false">
         <appender-ref ref="USER_FILE"/>
     </logger>
 
@@ -170,8 +170,9 @@
     <root level="ERRROR">
         <appender-ref ref="CONSOLE"/>
     </root>
-    <root level="DEBUG">
+
+      <!--<root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
     </root>
-
+ -->
 </configuration>
