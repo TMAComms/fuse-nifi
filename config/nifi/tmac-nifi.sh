@@ -100,22 +100,22 @@ echo "Update openid settings for client sec " ${EVS_AUTHCLIENTSECRET}
 prop_replace 'nifi.security.user.oidc.client.secret'    "${EVS_AUTHCLIENTSECRET}"
 echo "Update openid settings for jwsa" ${EVS_AUTHJWSTYPE} 
 prop_replace 'nifi.security.user.oidc.preferred.jwsalgorithm'    "${EVS_AUTHJWSTYPE:-RS256}"
-echo "Update openid settings completed " 
+echo "Update openid settings completed" 
 
 prop_replace 'nifi.security.keystore'           "${KEYSTORE_PATH}"
 prop_replace 'nifi.security.keystoreType'       "${KEYSTORE_TYPE:-JKS}"
 prop_replace 'nifi.security.keystorePasswd'     "${KEYSTORE_PASSWORD}"
+echo "Update keystore settings completed" 
 prop_replace 'nifi.security.truststore'         "${TRUSTSTORE_PATH}"
 prop_replace 'nifi.security.truststoreType'     "${TRUSTSTORE_TYPE:-JKS}"
 prop_replace 'nifi.security.truststorePasswd'   "${TRUSTSTORE_PASSWORD}"
+echo "Update truststore settings completed" 
 
-echo "Setting up local ip " ${TMPHOSTIP}
+#echo "Setting up local ip " ${TMPHOSTIP}
 #NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
 #export NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
 
 echo "TMAC Nifi running up nifi " 
-
-
 # Continuously provide logs so that 'docker logs' can    produce them
 tail -F "${NIFI_HOME}/logs/nifi-app.log" &
 "${NIFI_HOME}/bin/nifi.sh" run &
