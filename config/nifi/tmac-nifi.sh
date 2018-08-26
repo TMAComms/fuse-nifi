@@ -88,6 +88,7 @@ prop_replace 'nifi.web.http.host'   ''
 prop_replace 'nifi.web.https.port'  "${NIFI_WEB_HTTPS_PORT:-8443}"
 prop_replace 'nifi.web.https.host'  "${NIFI_WEB_HTTPS_HOST:-$HOSTNAME}"
 prop_replace 'nifi.remote.input.secure' 'true'
+prop_replace 'nifi.remote.input.http.enabled' 'false'
 
 # Check if the user has specified a nifi.web.proxy.host setting and handle appropriately
 if [ -z "${NIFI_WEB_PROXY_HOST}" ]; then
@@ -99,6 +100,7 @@ fi
 prop_replace 'nifi.security.user.oidc.discovery.url'    "${EVS_AUTHDISCOVERYURL:-none}"
 prop_replace 'nifi.security.user.oidc.client.id'    "${EVS_AUTHCLIENTID:-none}"
 prop_replace 'nifi.security.user.oidc.client.secret'    "${EVS_AUTHCLIENTSECRET:-none}"
+prop_replace 'nifi.security.user.oidc.preferred.jwsalgorithm'    "${EVS_AUTHJWSTYPE:-RS256}"
 
 prop_replace 'nifi.security.keystore'           "${KEYSTORE_PATH}"
 prop_replace 'nifi.security.keystoreType'       "${KEYSTORE_TYPE}"
