@@ -1,6 +1,12 @@
 #!/bin/sh
 set -e 
 
+
+scripts_dir='/opt/nifi/scripts'
+
+[ -f "${scripts_dir}/common.sh" ] && . "${scripts_dir}/common.sh"
+
+
 echo "TMAC Nifi starter for home dir  " ${NIFI_HOME}
 echo "TMAC Nifi starter for base dir  " ${NIFI_BASE_DIR}
 
@@ -74,7 +80,32 @@ sed -i "s~{BANNER_TEXT}~${BANNER_TEXT}~" $NIFI_HOME/conf/nifi.properties
 echo "Update openid settings completed " 
 #fi
 
+# Establish baseline properties
 
+# Disable HTTP and enable HTTPS
+prop_replace 'nifi.web.http.port'   ''
+prop_replace 'nifi.web.http.host'   ''
+prop_replace 'nifi.web.https.port'  "${NIFI_WEB_HTTPS_PORT:-8443}"
+prop_replace 'nifi.web.https.host'  "${NIFI_WEB_HTTPS_HOST:-$HOSTNAME}"
+prop_replace 'nifi.remote.input.secure' 'true'
+
+# Check if the user has specified a nifi.web.proxy.host setting and handle appropriately
+if [ -z "${NIFI_WEB_PROXY_HOST}" ]; then
+    echo 'NIFI_WEB_PROXY_HOST was not set but NiFi is configured to run in a secure mode.  The NiFi UI may be inaccessible if using port mapping.'
+else
+    prop_replace 'nifi.web.proxy.host' "${NIFI_WEB_PROXY_HOST}"
+fi
+
+prop_replace 'nifi.security.user.oidc.discovery.url'    "${EVS_AUTHDISCOVERYURL:-none}"
+prop_replace 'nifi.security.user.oidc.client.id'    "${EVS_AUTHCLIENTID:-none}"
+prop_replace 'nifi.security.user.oidc.client.secret'    "${EVS_AUTHCLIENTSECRET:-none}"
+
+prop_replace 'nifi.security.keystore'           "${KEYSTORE_PATH}"
+prop_replace 'nifi.security.keystoreType'       "${KEYSTORE_TYPE}"
+prop_replace 'nifi.security.keystorePasswd'     "${KEYSTORE_PASSWORD}"
+prop_replace 'nifi.security.truststore'         "${TRUSTSTORE_PATH}"
+prop_replace 'nifi.security.truststoreType'     "${TRUSTSTORE_TYPE}"
+prop_replace 'nifi.security.truststorePasswd'   "${TRUSTSTORE_PASSWORD}"
 
 echo "Setting up local ip " ${TMPHOSTIP}
 #NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
