@@ -99,10 +99,10 @@ prop_replace 'nifi.security.user.oidc.preferred.jwsalgorithm'    "${EVS_AUTHJWST
 echo "Update openid settings completed " 
 
 prop_replace 'nifi.security.keystore'           "${KEYSTORE_PATH}"
-prop_replace 'nifi.security.keystoreType'       "${KEYSTORE_TYPE}"
+prop_replace 'nifi.security.keystoreType'       "${KEYSTORE_TYPE:-JKS}"
 prop_replace 'nifi.security.keystorePasswd'     "${KEYSTORE_PASSWORD}"
 prop_replace 'nifi.security.truststore'         "${TRUSTSTORE_PATH}"
-prop_replace 'nifi.security.truststoreType'     "${TRUSTSTORE_TYPE}"
+prop_replace 'nifi.security.truststoreType'     "${TRUSTSTORE_TYPE:-JKS}"
 prop_replace 'nifi.security.truststorePasswd'   "${TRUSTSTORE_PASSWORD}"
 
 echo "Setting up local ip " ${TMPHOSTIP}

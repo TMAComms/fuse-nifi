@@ -7,21 +7,21 @@ services:
     image: tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest
     #apache/nifi:1.5.0  
     # 'tmacregistry-tmacomms.azurecr.io/tmacomms/fuse-nifi:latest'
-    network_mode: "host"
+    #network_mode: "host"
     build: 
       context: .
       dockerfile: Dockerfile
-    hostname: nifi.home.tmacomms.com
+    #hostname: nifi.home.tmacomms.com
     ports:
       - 9443:9443/tcp      
       #- 8443/tcp
     labels:
-      io.rancher.container.hostname_override: nifi15
+      #io.rancher.container.hostname_override: nifi15
       io.rancher.container.pull_image: always
     environment:
       - CONF_INTERVAL=10
       - EVSENVIRONMENT=development
-      #- NIFI_WEB_HTTP_HOST=nifi.home.tmacomms.com
+      #- NIFI_WEB_HTTPS_HOST=localhost
       - NIFI_WEB_HTTPS_PORT=9443
 #      - NIFI_REMOTE_INPUT_HOST=localhost
       #- EVS_SERVICEDNS=nifi.home.tmacomms.com
@@ -31,18 +31,18 @@ services:
       - EVS_AUTHCLIENTSECRET=vtUoJWyS2BfS9Owwuoi0W5ieDlkFfvHLXij3O9bigma7dIHluntCq8RaSxJsdIvs
       - EVS_AUTHCLIENTID=Q4pHFVlqO2LID0LoGYeNxfgjPEhQfCWz
       - EVS_AUTHDISCOVERYURL=https://tmacomms.au.auth0.com/.well-known/openid-configuration
-      - KEYSTORE_PATH=/securitystores/keystore.jks
+      - KEYSTORE_PATH=/opt/nifi/nifi-1.7.1/conf/keystore.jks
       - KEYSTORE_TYPE=JKS
       - KEYSTORE_PASSWORD=77record
-      - TRUSTSTORE_PATH=/securitystores/truststore.jks 
+      - TRUSTSTORE_PATH=/opt/nifi/nifi-1.7.1/conf/truststore.jks
       - TRUSTSTORE_PASSWORD=77record
       - TRUSTSTORE_TYPE=JKS
       #- INITIAL_ADMIN_IDENTITY='CN=Random User, O=Apache, OU=NiFi, C=US'
     volumes:
     # - nifidata:/opt/nifi/nifi-1.7.0/work 
      #- nifitoolkit:/toolkit 
-     -  D:\bb\fuse\fuse-nifi\working\work:/opt/nifi/nifi-1.7.1/work 
-     - D:\bb\fuse\fuse-nifi\working\conf2:/opt/nifi/nifi-1.7.1/conf 
+     -  D:\bb\fuse\fuse-nifi\working\workfolder:/opt/nifi/nifi-1.7.1/work 
+     #- D:\bb\fuse\fuse-nifi\working\conf2:/opt/nifi/nifi-1.7.1/conf 
      - D:\bb\fuse\fuse-nifi\working\temp:/stuff
      #- D:\bb\fuse\fuse-nifi\working\securitystores:/opt/certs
      
