@@ -1,22 +1,23 @@
-FROM openjdk:8-jdk-alpine
-
-ARG VERSION
+FROM apache/nifi-registry
+#ARG VERSION
 
 ENV DIST_MIRROR             https://archive.apache.org/dist/nifi/nifi-registry
-ENV NIFI_REGISTRY_HOME      /opt/nifi-registry
+ENV NIFI_REGISTRY_HOME     /opt/nifi-registry/nifi-registry-0.2.0
 ENV VERSION                 0.2.0
-RUN apk update && apk upgrade 
-RUN apk --no-cache add tar wget nano curl bash sudo sed
+ENV TZ=Australia/Melbourne
+USER root
+RUN apt-get update && apt-get upgrade -y && \
+ apt-get install -y unzip apt-utils tar zip sudo wget sed curl git apt-transport-https ca-certificates git bash ncdu dos2unix nano  \
+ && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && mkdir /opt/nifitoolkit /downloads
 
 
-RUN set -x && \
-  	mkdir -p ${NIFI_REGISTRY_HOME} && \
-	wget -qO- ${DIST_MIRROR}/nifi-registry-${VERSION}/nifi-registry-${VERSION}-bin.tar.gz | tar xvz -C ${NIFI_REGISTRY_HOME} --strip-components=1 && \
-    addgroup nifi && \
-    adduser -D -G nifi nifi && \
-    chown -R nifi:nifi ${NIFI_REGISTRY_HOME}
+# RUN set -x && \
+#  	mkdir -p ${NIFI_REGISTRY_HOME} && \
+#	wget -qO- ${DIST_MIRROR}/nifi-registry-${VERSION}/nifi-registry-${VERSION}-bin.tar.gz | tar xvz -C ${NIFI_REGISTRY_HOME} --strip-components=1 && \
+#    addgroup nifi && \
+#    adduser -D -G nifi nifi && \
+#    chown -R nifi:nifi ${NIFI_REGISTRY_HOME}
 
-COPY config/nifiregistry/logback.xml ${NIFI_REGISTRY_HOME}/conf/logback.xml
 COPY config/securitystores/truststore.jks ${NIFI_REGISTRY_HOME}/conf/truststore.jks
 COPY config/securitystores/keystore.jks ${NIFI_REGISTRY_HOME}/conf/keystore.jks
 # back up stores..
@@ -32,7 +33,10 @@ RUN chmod 0777 ${NIFI_REGISTRY_HOME}/scripts/tmac-nifi.sh
 
 WORKDIR ${NIFI_REGISTRY_HOME}
 
-CMD ["scripts/tmac-nifi.sh"]
+#CMD ["scripts/tmac-nifi.sh"]
+ENTRYPOINT ["/opt/nifi-registry/nifi-registry-0.2.0/scripts/tmac-nifi.sh"]
+
+
 
 
 

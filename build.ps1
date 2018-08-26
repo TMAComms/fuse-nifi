@@ -24,4 +24,3 @@ echo "docker run -it --name schemareg --rm  -p 9040:9090 $tmacSchemaRegistryBase
 
 echo "docker run -it --name nifi --rm -v ${pwd}/working:/working -p 9090:9090 $tmacBaseImage"
 
-1
