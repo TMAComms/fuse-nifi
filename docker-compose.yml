@@ -12,6 +12,9 @@ services:
       context: .
       dockerfile: Dockerfile
     #hostname: nifi.home.tmacomms.com
+      cache_from:
+      - apache/nifi:1.7.1
+      #- corp/web_app:3.14    
     ports:
       - 9443:9443/tcp      
       #- 8443/tcp

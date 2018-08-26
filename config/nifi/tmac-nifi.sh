@@ -91,10 +91,14 @@ else
     prop_replace 'nifi.web.proxy.host' "${NIFI_WEB_PROXY_HOST}"
 fi
 
-echo "Update openid settings for " ${EVS_SERVICEDNS} 
-prop_replace 'nifi.security.user.oidc.discovery.url'    "${EVS_AUTHDISCOVERYURL:-none}"
-prop_replace 'nifi.security.user.oidc.client.id'    "${EVS_AUTHCLIENTID:-none}"
-prop_replace 'nifi.security.user.oidc.client.secret'    "${EVS_AUTHCLIENTSECRET:-none}"
+echo "Update openid settings for" ${EVS_SERVICEDNS} 
+echo "Update openid settings for discovery url " ${EVS_AUTHDISCOVERYURL} 
+prop_replace 'nifi.security.user.oidc.discovery.url'    "${EVS_AUTHDISCOVERYURL}"
+echo "Update openid settings for client id " ${EVS_AUTHCLIENTID} 
+prop_replace 'nifi.security.user.oidc.client.id'    "${EVS_AUTHCLIENTID}"
+echo "Update openid settings for client sec " ${EVS_AUTHCLIENTSECRET} 
+prop_replace 'nifi.security.user.oidc.client.secret'    "${EVS_AUTHCLIENTSECRET}"
+echo "Update openid settings for jwsa" ${EVS_AUTHJWSTYPE} 
 prop_replace 'nifi.security.user.oidc.preferred.jwsalgorithm'    "${EVS_AUTHJWSTYPE:-RS256}"
 echo "Update openid settings completed " 
 
