@@ -102,8 +102,11 @@ echo "Update openid settings for jwsa" ${EVS_AUTHJWSTYPE}
 prop_replace 'nifi.security.user.oidc.preferred.jwsalgorithm'    "${EVS_AUTHJWSTYPE:-RS256}"
 echo "Update openid settings completed" 
 
+echo "Update KEYSTORE_PATH settings for " ${KEYSTORE_PATH} 
 prop_replace 'nifi.security.keystore'           "${KEYSTORE_PATH}"
+echo "Update KEYSTORE_TYPE settings for " ${KEYSTORE_TYPE} 
 prop_replace 'nifi.security.keystoreType'       "${KEYSTORE_TYPE:-JKS}"
+echo "Update KEYSTORE_PASSWORD settings for " ${KEYSTORE_PASSWORD} 
 prop_replace 'nifi.security.keystorePasswd'     "${KEYSTORE_PASSWORD}"
 echo "Update keystore settings completed" 
 prop_replace 'nifi.security.truststore'         "${TRUSTSTORE_PATH}"
@@ -117,7 +120,7 @@ echo "Update truststore settings completed"
 
 echo "TMAC Nifi running up nifi " 
 # Continuously provide logs so that 'docker logs' can    produce them
-tail -F "${NIFI_HOME}/logs/nifi-app.log" &
+tail -F "${NIFI_HOME}/logs/nifi-app.log" "${NIFI_HOME}/logs/nifi-user.log"  &
 "${NIFI_HOME}/bin/nifi.sh" run &
 nifi_pid="$!"
 
