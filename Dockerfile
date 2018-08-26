@@ -18,7 +18,7 @@ RUN tar -xzvf /downloads/${NIFITOOLKIT_FILE} -C $NIFI_TOOLKIT --strip-components
 
 
 #ADD conf/bootstrap.conf $NIFI_HOME/conf/bootstrap.conf
-#COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
+COPY config/nifi/authorizers.xml $NIFI_HOME/conf/authorizers.xml
 
 #COPY config/nifi/nifi.openid.properties $NIFI_HOME/conf/nifi.properties
 COPY tlskit/genssl.sh /opt/nifi/genssl.sh
