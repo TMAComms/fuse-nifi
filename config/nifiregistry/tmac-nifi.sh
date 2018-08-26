@@ -1,7 +1,12 @@
 #!/bin/sh
 set -e 
 NIFI_REGISTRYBASE=/opt/nifi-registry/nifi-registry-0.2.0
-echo "TMAC Nifi Registry starter for home dir  " ${NIFI_REGISTRYBASE}
+echo "TMAC Nifi Registry starter for home dir " ${NIFI_REGISTRYBASE}
+
+scripts_dir="${NIFI_REGISTRYBASE}/scripts" # '/opt/nifi/scripts'
+
+[ -f "${scripts_dir}/common.sh" ] && . "${scripts_dir}/common.sh"
+
 
 echo "Vars: CONF_INTERVAL = " ${CONF_INTERVAL}
 echo "Vars: EVSENVIRONMENT = " ${EVSENVIRONMENT}
@@ -34,14 +39,6 @@ else
 fi
 
 
-# always update ip and hosts 
-TMPHOSTIP=$(ip route get 1 | awk '{print $NF;exit}')
-echo "Container IP " ${TMPHOSTIP}
-echo "EVS Service DNS " ${EVS_SERVICEDNS}
-cp /etc/hosts /etc/hosts.tmacbak
-echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
-THISHOST=$(hostname -f)
-echo "${TMPHOSTIP} ${THISHOST}" >> /etc/hosts
 
 # always grabn latest jks backed into images
 echo "Update jks stores for " ${EVS_SERVICEDNS}
@@ -54,7 +51,45 @@ echo "Update ssl config done"
 #sed -i "s~{EVS_SERVICEDNS}~${EVS_SERVICEDNS}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
 
 
-echo "Setting up local ip " ${TMPHOSTIP}
+# Disable HTTP and enable HTTPS
+prop_replace 'nifi.web.http.port'   ''
+prop_replace 'nifi.web.http.host'   ''
+prop_replace 'nifi.web.https.port'  "${NIFI_WEB_HTTPS_PORT:-8443}"
+prop_replace 'nifi.web.https.host'  "${NIFI_WEB_HTTPS_HOST:-$HOSTNAME}"
+prop_replace 'nifi.remote.input.secure' 'true'
+prop_replace 'nifi.remote.input.http.enabled' 'false'
+
+# Check if the user has specified a nifi.web.proxy.host setting and handle appropriately
+if [ -z "${NIFI_WEB_PROXY_HOST}" ]; then
+    echo 'NIFI_WEB_PROXY_HOST was not set but NiFi is configured to run in a secure mode.  The NiFi UI may be inaccessible if using port mapping.'
+else
+    prop_replace 'nifi.web.proxy.host' "${NIFI_WEB_PROXY_HOST}"
+fi
+
+echo "Update openid settings for" ${EVS_SERVICEDNS} 
+echo "Update openid settings for discovery url " ${EVS_AUTHDISCOVERYURL} 
+prop_replace 'nifi.security.user.oidc.discovery.url'    "${EVS_AUTHDISCOVERYURL}"
+echo "Update openid settings for client id " ${EVS_AUTHCLIENTID} 
+prop_replace 'nifi.security.user.oidc.client.id'    "${EVS_AUTHCLIENTID}"
+echo "Update openid settings for client sec " ${EVS_AUTHCLIENTSECRET} 
+prop_replace 'nifi.security.user.oidc.client.secret'    "${EVS_AUTHCLIENTSECRET}"
+echo "Update openid settings for jwsa" ${EVS_AUTHJWSTYPE} 
+prop_replace 'nifi.security.user.oidc.preferred.jwsalgorithm'    "${EVS_AUTHJWSTYPE:-RS256}"
+echo "Update openid settings completed" 
+
+echo "Update KEYSTORE_PATH settings for " ${KEYSTORE_PATH} 
+prop_replace 'nifi.security.keystore'           "${KEYSTORE_PATH}"
+echo "Update KEYSTORE_TYPE settings for " ${KEYSTORE_TYPE} 
+prop_replace 'nifi.security.keystoreType'       "${KEYSTORE_TYPE:-JKS}"
+echo "Update KEYSTORE_PASSWORD settings for " ${KEYSTORE_PASSWORD} 
+prop_replace 'nifi.security.keystorePasswd'     "${KEYSTORE_PASSWORD}"
+echo "Update keystore settings completed" 
+prop_replace 'nifi.security.truststore'         "${TRUSTSTORE_PATH}"
+prop_replace 'nifi.security.truststoreType'     "${TRUSTSTORE_TYPE:-JKS}"
+prop_replace 'nifi.security.truststorePasswd'   "${TRUSTSTORE_PASSWORD}"
+echo "Update truststore settings completed" 
+
+
 
 echo "TMAC Nifi registry - running up nifi " 
 #${NIFI_REGISTRYBASE}/scripts/start.sh
