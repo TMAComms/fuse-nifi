@@ -24,7 +24,7 @@ services:
       #- NIFI_WEB_HTTP_HOST=nifi.home.tmacomms.com
       - NIFI_WEB_HTTPS_PORT=9443
 #      - NIFI_REMOTE_INPUT_HOST=localhost
-      - EVS_SERVICEDNS=nifi.home.tmacomms.com
+      #- EVS_SERVICEDNS=nifi.home.tmacomms.com
       #- NIFI_REMOTE_INPUT_SOCKET_PORT=-10000
       - NIFI_HOME=/opt/nifi/nifi-1.7.1
       #- AUTH=tls

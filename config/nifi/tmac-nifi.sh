@@ -26,7 +26,7 @@ echo "Vars: EVS_AUTHCLIENTSECRET = " ${EVS_AUTHCLIENTSECRET}
 
 echo "TMAC Nifi starter " ${NIFI_HOME}
 
-ls -l ${NIFI_HOME}/conf
+#ls -l ${NIFI_HOME}/conf
 
 # `/sbin/setuser memcache` runs the given command as the user `memcache`.
 # If you omit that part, the command will be run as root.
@@ -49,16 +49,16 @@ else
 fi
 
 
-TMPHOSTIP=$(ip route get 1 | awk '{print $NF;exit}')
-echo "Container IP " ${TMPHOSTIP}
-echo "EVS Service DNS " ${EVS_SERVICEDNS}
-cp /etc/hosts /etc/hosts.tmacbak
-echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
-THISHOST=$(hostname -f)
-echo "${TMPHOSTIP} ${THISHOST}" >> /etc/hosts
+#TMPHOSTIP=$(ip route get 1 | awk '{print $NF;exit}')
+#echo "Container IP " ${TMPHOSTIP}
+#echo "EVS Service DNS " ${EVS_SERVICEDNS}
+#cp /etc/hosts /etc/hosts.tmacbak
+#echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
+#THISHOST=$(hostname -f)
+#echo "${TMPHOSTIP} ${THISHOST}" >> /etc/hosts
 
-echo "EVS Service DNS Updateing config to " ${EVS_SERVICEDNS}
-sed -i "s~{EVS_SERVICEDNS}~${EVS_SERVICEDNS}~" $NIFI_HOME/conf/nifi.properties
+#echo "EVS Service DNS Updateing config to " ${EVS_SERVICEDNS}
+#sed -i "s~{EVS_SERVICEDNS}~${EVS_SERVICEDNS}~" $NIFI_HOME/conf/nifi.properties
 
 
 # always grabn latest jks backed into images
@@ -72,13 +72,7 @@ echo "Update ssl config done"
 # update openod settings if needed
 #if [ -z "$EVS_AUTHDISCOVERYURL" ]
 #then
-echo "Update openid settings for " ${EVS_SERVICEDNS} 
-sed -i "s~{EVS_AUTHDISCOVERYURL}~${EVS_AUTHDISCOVERYURL}~" $NIFI_HOME/conf/nifi.properties
-sed -i "s~{EVS_AUTHCLIENTID}~${EVS_AUTHCLIENTID}~" $NIFI_HOME/conf/nifi.properties
-sed -i "s~{EVS_AUTHCLIENTSECRET}~${EVS_AUTHCLIENTSECRET}~" $NIFI_HOME/conf/nifi.properties
-sed -i "s~{BANNER_TEXT}~${BANNER_TEXT}~" $NIFI_HOME/conf/nifi.properties
-echo "Update openid settings completed " 
-#fi
+
 
 # Establish baseline properties
 
@@ -97,10 +91,12 @@ else
     prop_replace 'nifi.web.proxy.host' "${NIFI_WEB_PROXY_HOST}"
 fi
 
+echo "Update openid settings for " ${EVS_SERVICEDNS} 
 prop_replace 'nifi.security.user.oidc.discovery.url'    "${EVS_AUTHDISCOVERYURL:-none}"
 prop_replace 'nifi.security.user.oidc.client.id'    "${EVS_AUTHCLIENTID:-none}"
 prop_replace 'nifi.security.user.oidc.client.secret'    "${EVS_AUTHCLIENTSECRET:-none}"
 prop_replace 'nifi.security.user.oidc.preferred.jwsalgorithm'    "${EVS_AUTHJWSTYPE:-RS256}"
+echo "Update openid settings completed " 
 
 prop_replace 'nifi.security.keystore'           "${KEYSTORE_PATH}"
 prop_replace 'nifi.security.keystoreType'       "${KEYSTORE_TYPE}"
