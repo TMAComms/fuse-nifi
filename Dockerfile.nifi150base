@@ -1,9 +1,0 @@
-FROM apache/nifi:1.7.0
-LABEL Name=fuse-nifi Version=1.7.0
-ENV NIFI_HOME=/opt/nifi/nifi-1.7.0 NIFI_BASE=/opt/nifi
-USER root
-
-RUN apt-get update && apt-get upgrade -y && \
- apt-get install -y software-properties-common unzip apt-utils tar zip sudo wget curl git apt-transport-https ca-certificates git bash ncdu dos2unix nano  \
- && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && mkdir -p /opt/nifitoolkit /downloads
-

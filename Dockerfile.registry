@@ -11,15 +11,11 @@ RUN apt-get update && apt-get upgrade -y && \
  && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && mkdir /opt/nifitoolkit /downloads
 
 
-# RUN set -x && \
-#  	mkdir -p ${NIFI_REGISTRY_HOME} && \
-#	wget -qO- ${DIST_MIRROR}/nifi-registry-${VERSION}/nifi-registry-${VERSION}-bin.tar.gz | tar xvz -C ${NIFI_REGISTRY_HOME} --strip-components=1 && \
-#    addgroup nifi && \
-#    adduser -D -G nifi nifi && \
-#    chown -R nifi:nifi ${NIFI_REGISTRY_HOME}
-
 COPY config/securitystores/truststore.jks ${NIFI_REGISTRY_HOME}/conf/truststore.jks
+COPY config/securitystores/truststore.jks /opt/certs/truststore.jks
 COPY config/securitystores/keystore.jks ${NIFI_REGISTRY_HOME}/conf/keystore.jks
+COPY config/securitystores/keystore.jks /opt/certs/keystore.jks
+
 # back up stores..
 COPY config/securitystores/ /config/securitystores/
 
@@ -28,8 +24,10 @@ COPY config/securitystores/ /config/securitystores/
 # create a copy of the base config
 RUN mkdir -p /config/base/ && cp -R ${NIFI_REGISTRY_HOME}/conf/* /config/base &&  chmod -R 0777 /config
 
+COPY config/nifiregistry/authorizers.xml $NIFI_REGISTRY_HOME/conf/authorizers.xml
 COPY config/nifiregistry/tmac-nifi.sh ${NIFI_REGISTRY_HOME}/scripts/tmac-nifi.sh
-RUN chmod 0777 ${NIFI_REGISTRY_HOME}/scripts/tmac-nifi.sh
+COPY config/nifiregistry/*.sh ${NIFI_REGISTRY_HOME}/scripts/
+RUN chmod 0777 ${NIFI_REGISTRY_HOME}/scripts/*.sh
 
 WORKDIR ${NIFI_REGISTRY_HOME}
 
