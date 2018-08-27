@@ -68,7 +68,7 @@ prop_replace 'nifi.web.https.host'  "${NIFI_WEB_HTTPS_HOST:-$HOSTNAME}"
 prop_replace 'nifi.remote.input.host'  "${NIFI_WEB_HTTPS_HOST:-$HOSTNAME}"
 prop_replace 'nifi.remote.input.secure' 'true'
 prop_replace 'nifi.remote.input.http.enabled' 'true'
-prop_replace 'nifi.sensitive.props.key' 'vS19#f23sb'   
+prop_replace 'nifi.sensitive.props.key' 'vS197f23sb'   
 
 
 
