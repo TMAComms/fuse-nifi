@@ -49,18 +49,6 @@ else
 fi
 
 
-#TMPHOSTIP=$(ip route get 1 | awk '{print $NF;exit}')
-#echo "Container IP " ${TMPHOSTIP}
-#echo "EVS Service DNS " ${EVS_SERVICEDNS}
-#cp /etc/hosts /etc/hosts.tmacbak
-#echo "${TMPHOSTIP} ${EVS_SERVICEDNS}" >> /etc/hosts
-#THISHOST=$(hostname -f)
-#echo "${TMPHOSTIP} ${THISHOST}" >> /etc/hosts
-
-#echo "EVS Service DNS Updateing config to " ${EVS_SERVICEDNS}
-#sed -i "s~{EVS_SERVICEDNS}~${EVS_SERVICEDNS}~" $NIFI_HOME/conf/nifi.properties
-
-
 # always grabn latest jks backed into images
 echo "Update jks stores for " ${EVS_SERVICEDNS}
 #cp -f /tlskit/generated/${EVS_SERVICEDNS}/nifi.properties $NIFI_HOME/conf/nifi.properties
@@ -68,10 +56,6 @@ cp -f /config/securitystores/truststore.jks $NIFI_HOME/conf/truststore.jks
 cp -f /config/securitystores/keystore.jks $NIFI_HOME/conf/keystore.jks
 echo "Update ssl config done"
 
-
-# update openod settings if needed
-#if [ -z "$EVS_AUTHDISCOVERYURL" ]
-#then
 
 
 # Establish baseline properties
@@ -84,6 +68,9 @@ prop_replace 'nifi.web.https.host'  "${NIFI_WEB_HTTPS_HOST:-$HOSTNAME}"
 prop_replace 'nifi.remote.input.host'  "${NIFI_WEB_HTTPS_HOST:-$HOSTNAME}"
 prop_replace 'nifi.remote.input.secure' 'true'
 prop_replace 'nifi.remote.input.http.enabled' 'true'
+prop_replace 'nifi.sensitive.props.key' 'vS19#f23sb'   
+
+
 
 # Check if the user has specified a nifi.web.proxy.host setting and handle appropriately
 if [ -z "${NIFI_WEB_PROXY_HOST}" ]; then
@@ -92,6 +79,9 @@ else
     prop_replace 'nifi.web.proxy.host' "${NIFI_WEB_PROXY_HOST}"
 fi
 
+
+
+echo "Update openid settings for discovery url " ${EVS_AUTHDISCOVERYURL} 
 echo "Update openid settings for" ${EVS_SERVICEDNS} 
 echo "Update openid settings for discovery url " ${EVS_AUTHDISCOVERYURL} 
 prop_replace 'nifi.security.user.oidc.discovery.url'    "${EVS_AUTHDISCOVERYURL}"
@@ -116,10 +106,6 @@ prop_replace 'nifi.security.truststoreType'     "${TRUSTSTORE_TYPE:-JKS}"
 prop_replace 'nifi.security.truststorePasswd'   "${TRUSTSTORE_PASSWORD}"
 echo "Update truststore settings completed" 
 
-#echo "Setting up local ip " ${TMPHOSTIP}
-#NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
-#export NIFI_WEB_HTTP_HOST=${TMPHOSTIP}
-
 echo "TMAC Nifi running up nifi " 
 # Continuously provide logs so that 'docker logs' can    produce them
 tail -F "${NIFI_HOME}/logs/nifi-app.log" "${NIFI_HOME}/logs/nifi-user.log"  &
@@ -131,5 +117,5 @@ trap "echo Received trapped signal, beginning shutdown...;" KILL TERM HUP INT EX
 echo NiFi running with PID ${nifi_pid}.
 wait ${nifi_pid}
 
-#${NIFI_BASE_DIR}/scripts/start.sh
+
 

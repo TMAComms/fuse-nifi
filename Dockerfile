@@ -38,7 +38,7 @@ ADD config/securitystores/* /config/securitystores/
 #COPY config/nifi/logback.xml $NIFI_HOME/conf/logback.xml
 
 # add sample templates
-#COPY config/templates/ $NIFI_HOME/conf/templates/ 
+COPY config/templates/ $NIFI_HOME/conf/templates/ 
 RUN chown -R nifi:nifi $NIFI_HOME/conf/ 
     # && chmod 0777 /tlskit/genssl.sh
 
