@@ -34,8 +34,8 @@ then
     echo "Working folder already moved to persistant storage - skipping"
 else
 	echo "$workifile not found.  Creating copy to persistant storage"
-    mkdir -p $NIFI_REGISTRYBASE/conf/
-    cp -R /config/base/* $NIFI_REGISTRYBASE/conf/
+    mkdir -p ${NIFI_REGISTRYBASE}/conf/
+    cp -R /config/base/* ${NIFI_REGISTRYBASE}/conf/
 fi
 
 
@@ -43,12 +43,12 @@ fi
 # always grabn latest jks backed into images
 echo "Update jks stores for " ${EVS_SERVICEDNS}
 #cp -f /tlskit/generated/${EVS_SERVICEDNS}/nifi.properties $NIFI_HOME/conf/nifi.properties
-cp -f /config/securitystores/truststore.jks $NIFI_REGISTRYBASE/conf/truststore.jks
-cp -f /config/securitystores/keystore.jks $NIFI_REGISTRYBASE/conf/keystore.jks
+cp -f /config/securitystores/truststore.jks ${NIFI_REGISTRYBASE}/conf/truststore.jks
+cp -f /config/securitystores/keystore.jks ${NIFI_REGISTRYBASE}/conf/keystore.jks
 echo "Update ssl config done"
 
 
-#sed -i "s~{EVS_SERVICEDNS}~${EVS_SERVICEDNS}~" $NIFI_REGISTRYBASE/conf/nifi-registry.properties
+#sed -i "s~{EVS_SERVICEDNS}~${EVS_SERVICEDNS}~" ${NIFI_REGISTRYBASE}/conf/nifi-registry.properties
 
 
 # Disable HTTP and enable HTTPS
