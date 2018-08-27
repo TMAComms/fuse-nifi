@@ -52,12 +52,14 @@ echo "Update ssl config done"
 
 
 # Disable HTTP and enable HTTPS
-prop_replace 'nifi.registry.web.http.port'   ''
+prop_replace 'nifi.registry.web.http.port'   "${NIFI_WEB_HTTP_PORT:-8443}"
 prop_replace 'nifi.registry.web.http.host'   ''
-prop_replace 'nifi.registry.web.https.port'  "${NIFI_WEB_HTTPS_PORT:-8443}"
-prop_replace 'nifi.registry.web.https.host'  "${NIFI_WEB_HTTPS_HOST:-$HOSTNAME}"
-prop_replace 'nifi.registry.remote.input.secure' 'true'
-prop_replace 'nifi.registry.remote.input.http.enabled' 'false'
+prop_replace 'nifi.registry.web.https.host'   ''
+prop_replace 'nifi.registry.web.https.port'   ''
+#prop_replace 'nifi.registry.web.https.port'  "${NIFI_WEB_HTTPS_PORT:-8443}"
+#prop_replace 'nifi.registry.web.https.host'  "${NIFI_WEB_HTTPS_HOST:-$HOSTNAME}"
+prop_replace 'nifi.registry.remote.input.secure' 'false'
+prop_replace 'nifi.registry.remote.input.http.enabled' 'true'
 
 # Check if the user has specified a nifi.web.proxy.host setting and handle appropriately
 if [ -z "${NIFI_WEB_PROXY_HOST}" ]; then
