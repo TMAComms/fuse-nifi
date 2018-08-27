@@ -100,6 +100,7 @@ echo "Update openid settings for client sec " ${EVS_AUTHCLIENTSECRET}
 prop_replace 'nifi.security.user.oidc.client.secret'    "${EVS_AUTHCLIENTSECRET}"
 echo "Update openid settings for jwsa" ${EVS_AUTHJWSTYPE} 
 prop_replace 'nifi.security.user.oidc.preferred.jwsalgorithm'    "${EVS_AUTHJWSTYPE:-RS256}"
+prop_replace 'nifi.security.needClientAuth' 'false' 
 echo "Update openid settings completed" 
 
 echo "Update KEYSTORE_PATH settings for " ${KEYSTORE_PATH} 
