@@ -40,7 +40,7 @@ services:
       - TRUSTSTORE_TYPE=JKS
       - INITIAL_ADMIN_IDENTITY='CN=Random User, O=Apache, OU=NiFi, C=US'
     volumes:
-     - D:\bb\fuse\fuse-nifi\working\registry\conf:/opt/nifi-registry/nifi-registry-0.2.0/conf 
+     - D:\bb\fuse\fuse-nifi\working\registry\conf43:/opt/nifi-registry/nifi-registry-0.2.0/conf 
 
      
 #    links:
