@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tenants>
+    <groups>
+        <group identifier="75f9b747-0165-1000-1995-ab4485ec4a2a" name="DevOps">
+            <user identifier="cb810925-67fd-3837-b0d9-29133aabffee"/>
+            <user identifier="75fa0eac-0165-1000-950b-3a74b0a1f84b"/>
+            <user identifier="75fa512e-0165-1000-c8b5-fd8a7f9b57fa"/>
+            <user identifier="7ab261db-0165-1000-8da9-e10a472b1452"/>
+        </group>
+        <group identifier="7ab18fbd-0165-1000-039a-ae09e2e1d55e" name="Servers">
+            <user identifier="7ab261db-0165-1000-8da9-e10a472b1452"/>
+        </group>
+    </groups>
+    <users>
+        <user identifier="cb810925-67fd-3837-b0d9-29133aabffee" identity="andrei.papay@tmacomms.com"/>
+        <user identifier="75fa0eac-0165-1000-950b-3a74b0a1f84b" identity="adrian.kilduff@tmacomms.com"/>
+        <user identifier="75fa512e-0165-1000-c8b5-fd8a7f9b57fa" identity="anthony.murphy@tmacomms.com"/>
+        <user identifier="7ab261db-0165-1000-8da9-e10a472b1452" identity="CN=*.prod.us.tmacomms.com"/>
+    </users>
+</tenants>
