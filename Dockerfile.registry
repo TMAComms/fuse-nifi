@@ -2,8 +2,8 @@ FROM apache/nifi-registry
 #ARG VERSION
 
 ENV DIST_MIRROR             https://archive.apache.org/dist/nifi/nifi-registry
-ENV NIFI_REGISTRY_HOME     /opt/nifi-registry/nifi-registry-0.2.0
-ENV VERSION                 0.2.0
+ENV NIFI_REGISTRY_HOME     /opt/nifi-registry/nifi-registry-0.3.0
+ENV VERSION                 0.3.0
 ENV TZ=Australia/Melbourne
 USER root
 RUN apt-get update && apt-get upgrade -y && \
@@ -33,7 +33,7 @@ RUN chmod 0777 ${NIFI_REGISTRY_HOME}/scripts/*.sh
 WORKDIR ${NIFI_REGISTRY_HOME}
 
 #CMD ["scripts/tmac-nifi.sh"]
-ENTRYPOINT ["/opt/nifi-registry/nifi-registry-0.2.0/scripts/tmac-nifi.sh"]
+ENTRYPOINT ["/opt/nifi-registry/nifi-registry-0.3.0/scripts/tmac-nifi.sh"]
 
 
 
