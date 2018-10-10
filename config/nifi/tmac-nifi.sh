@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e 
 
+echo "TMAC Nifi starter - env vars "
+env
+
 
 scripts_dir='/opt/nifi/scripts'
 
