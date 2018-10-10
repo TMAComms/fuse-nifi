@@ -13,6 +13,8 @@
 		"workbench.editor.showIcons": true,
 		"workbench.statusBar.visible": true,
 		"docker.defaultRegistryPath": "tmacomms",
-		"docker.defaultRegistry": "tmacregistry-tmacomms.azurecr.io"
+		"docker.defaultRegistry": "tmacregistry-tmacomms.azurecr.io",
+		"favorites.sortDirection": "ASC",
+		"favorites.groupsFirst": true
 	}
 }

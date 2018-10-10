@@ -15,12 +15,19 @@ echo "Building image $tmacBaseImage"
 
 #docker build --file Dockerfile-jobserver.build --squash -t  tmacomms/evs-jobserver:latest .
 docker build --file Dockerfile --squash -t $tmacBaseImage .
-echo "Building image $tmacRegistryBaseImage"
-docker build --file Dockerfile.registry --squash -t $tmacRegistryBaseImage .
+#echo "Building image $tmacRegistryBaseImage"
+#docker build --file Dockerfile.registry --squash -t $tmacRegistryBaseImage .
 
-echo "Building image $tmacSchemaRegistryBaseImage"
-docker build --file Dockerfile.schemaregistry --squash -t $tmacSchemaRegistryBaseImage .
-echo "docker run -it --name schemareg --rm  -p 9040:9090 $tmacSchemaRegistryBaseImage"
+#echo "Building image $tmacSchemaRegistryBaseImage"
+#docker build --file Dockerfile.schemaregistry --squash -t $tmacSchemaRegistryBaseImage .
+#echo "docker run -it --name schemareg --rm  -p 9040:9090 $tmacSchemaRegistryBaseImage"
 
 echo "docker run -it --name nifi --rm -v ${pwd}/working:/working -p 9090:9090 $tmacBaseImage"
+
+#D:\bb\fuse\fuse-nifi\working\stuff
+
+
+
+
+
 
